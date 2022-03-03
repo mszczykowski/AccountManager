@@ -21,7 +21,7 @@
         <TextBlock Grid.Row="1" Text="Name:" />
         <TextBox Grid.Row="2" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock Grid.Row="3" Text="Password:" />
-        <TextBox Grid.Row="4" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="4"  Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
 
         <StackPanel Grid.Row="5">
             <Button Content="Log in" Command="{Binding LogInCommand}"/>

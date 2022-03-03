@@ -8,6 +8,7 @@ using System.Windows;
 using AccountManager.ViewModels;
 using AccountManager.Stores;
 using AccountManager.Services;
+using AccountManager.Models;
 
 namespace AccountManager
 {
@@ -17,10 +18,13 @@ namespace AccountManager
     public partial class App : Application
     {
         private readonly NavigationStore _navigationStore;
+        private readonly UsersManagerModel _usersManagerModel;
 
         public App()
         {
             _navigationStore = new NavigationStore();
+
+            _usersManagerModel = new UsersManagerModel();
         }
         
         protected override void OnStartup(StartupEventArgs e)
@@ -43,7 +47,7 @@ namespace AccountManager
 
         private LogInViewModel CreateLogInViewModel()
         {
-            return new LogInViewModel(new NavigationService(_navigationStore, CreateMainMenuViewModel));
+            return new LogInViewModel(new NavigationService(_navigationStore, CreateMainMenuViewModel), _usersManagerModel);
         }
     }
 }

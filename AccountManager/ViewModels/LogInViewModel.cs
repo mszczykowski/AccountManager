@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AccountManager.Services;
 using System.ComponentModel;
+using AccountManager.Models;
 
 namespace AccountManager.ViewModels
 {
@@ -25,6 +26,8 @@ namespace AccountManager.ViewModels
         }
 
         private string _password;
+        private readonly UsersManagerModel _usersManagerModel;
+
         public string Password
         {
             get => _password;
@@ -38,9 +41,15 @@ namespace AccountManager.ViewModels
         public ICommand LogInCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public LogInViewModel(NavigationService mainMenuViewNavigationService)
+        public LogInViewModel(NavigationService mainMenuViewNavigationService, UsersManagerModel usersManagerModel)
         {
             CancelCommand = new NavigateCommand(mainMenuViewNavigationService);
+
+            
+            _usersManagerModel = usersManagerModel;
+
+            LogInCommand = new LogInCommand(this, _usersManagerModel);
         }
+
     }
 }

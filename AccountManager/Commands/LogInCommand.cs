@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 using AccountManager.ViewModels;
 using AccountManager.Models;
 using System.Windows;
+using AccountManager.Services;
 
 namespace AccountManager.Commands
 {
     internal class LogInCommand : CommandBase
     {
         private readonly LogInViewModel _logInViewModel;
-        private readonly UsersManagerModel _usersManagerModel;
+        private readonly IUsersManagerService _usersManagerService;
+        private readonly NavigationService _userMenuViewModelNavigationService;
 
-        public LogInCommand(LogInViewModel logInViewModel, UsersManagerModel usersManagerModel)
+        public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, NavigationService userMenuViewModelNavigationService)
         {
             _logInViewModel = logInViewModel;
-            _usersManagerModel = usersManagerModel;
+            _usersManagerService = usersManagerService;
+            _userMenuViewModelNavigationService = userMenuViewModelNavigationService;
             _logInViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -35,9 +38,12 @@ namespace AccountManager.Commands
 
         public override void Execute(object? parameter)
         {
-            if(_usersManagerModel.IsPasswordCorrect(new UserModel(_logInViewModel.Username, _logInViewModel.Password)))
+            var user = _usersManagerService.GetUser(_logInViewModel.Username);
+            if(user == null) MessageBox.Show("User not found");
+
+            else if (user.IsPasswordValid(_logInViewModel.Password))
             {
-                MessageBox.Show("Password correct!");
+                _userMenuViewModelNavigationService.Navigate();
             }
             else MessageBox.Show("Password incorrect!");
         }

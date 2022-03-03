@@ -18,6 +18,8 @@ namespace AccountManager.ViewModels
         public MainMenuViewModel(NavigationService logInViewNavigationService)
         {
             LogInCommand = new NavigateCommand(logInViewNavigationService);
+
+            ExitCommand = new ExitCommand();
         }
     }
 }

@@ -8,6 +8,7 @@ namespace AccountManager.Models
 {
     internal class UserModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
 
@@ -15,6 +16,13 @@ namespace AccountManager.Models
         {
             Name = name;
             Password = password;
+        }
+
+        public bool IsPasswordValid(string password)
+        {
+            if (Password == password) return true;
+
+            return false;
         }
     }
 }

@@ -1,18 +1,15 @@
 ﻿using AccountManager.Commands;
-using AccountManager.Stores;
+using AccountManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AccountManager.Services;
-using System.ComponentModel;
-using AccountManager.Models;
 
 namespace AccountManager.ViewModels
 {
-    internal class LogInViewModel : ViewModelBase
+    internal class AddEditUserViewModel : ViewModelBase
     {
         private string _userName;
         public string Username
@@ -38,18 +35,21 @@ namespace AccountManager.ViewModels
             }
         }
 
-        public ICommand LogInCommand { get; }
+        public ICommand AddEditUserCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public LogInViewModel(NavigationService mainMenuViewNavigationService, NavigationService userMenuViewNavigationService, IUsersManagerService usersManagerModel)
+        public AddEditUserViewModel(NavigationService userManagerViewNavigationService, IUsersManagerService usersManagerService)
         {
-            CancelCommand = new NavigateCommand(mainMenuViewNavigationService);
+            CancelCommand = new NavigateCommand(userManagerViewNavigationService);
 
-            
-            _usersManagerModel = usersManagerModel;
+            AddEditUserCommand = new AddUserCommand(this, usersManagerService);
 
-            LogInCommand = new LogInCommand(this, _usersManagerModel, userMenuViewNavigationService);
         }
 
+        public void ClearFields()
+        {
+            Username = "";
+            Password = "";
+        }
     }
 }

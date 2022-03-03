@@ -10,11 +10,25 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.Resources>
+            
+            
             <DataTemplate DataType="{x:Type viewmodels:MainMenuViewModel}">
                 <views:MainMenuView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:LogInViewModel}">
                 <views:LogInView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:UserMenuViewModel}">
+                <views:UserMenuView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:AddEditUserViewModel}">
+                <views:AddEditUserView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:ManageUsersViewModel}">
+                <views:ManageUsersView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodels:SearchUserViewModel}">
+                <views:SearchUserView/>
             </DataTemplate>
 
 

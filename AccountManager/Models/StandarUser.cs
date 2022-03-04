@@ -12,7 +12,7 @@ namespace AccountManager.Models
         {
         }
 
-        public override bool HasAdminPermission()
+        public override bool CanLogIn()
         {
             return false;
         }

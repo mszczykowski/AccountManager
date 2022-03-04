@@ -44,7 +44,7 @@ namespace AccountManager.Commands
 
             else if (!user.IsPasswordValid(_logInViewModel.Password)) MessageBox.Show("Password incorrect!");
 
-            else if (!user.HasAdminPermission()) MessageBox.Show("Insufficient permission!");
+            else if (!user.CanLogIn()) MessageBox.Show("Insufficient permission!");
             
             else _userMenuViewModelNavigationService.Navigate();
 

@@ -24,7 +24,7 @@
             <TextBox Grid.Row="4"  Width="300" Margin="0 10" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="5">
-            <Button Content="Edit user" Command="{Binding EditUserCommand}" />
+            <Button Content="Save changes" Command="{Binding EditUserCommand}" />
             <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="10 0"/>
         </StackPanel>
     </Grid>

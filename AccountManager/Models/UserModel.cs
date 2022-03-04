@@ -25,6 +25,6 @@ namespace AccountManager.Models
             return false;
         }
 
-        public abstract bool HasAdminPermission();
+        public abstract bool CanLogIn();
     }
 }

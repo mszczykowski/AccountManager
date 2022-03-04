@@ -44,8 +44,10 @@ namespace AccountManager.Services
             throw new NotImplementedException();
         }
 
-        public UserModel GetUser(string username)
+        public UserModel GetUser(string? username)
         {
+            if (username == null) return null;
+            
             UserModel user = null;
 
             foreach(var u in _context.Users)

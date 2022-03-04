@@ -13,7 +13,7 @@ namespace AccountManager.Services
         public void DeleteUser(string name);
         public void EditUser(string name, UserModel user);
         public UserModel GetUser(int userId);
-        public UserModel GetUser(string username);
+        public UserModel GetUser(string? username);
         public ICollection<UserModel> GetAllUsers();
     }
 }

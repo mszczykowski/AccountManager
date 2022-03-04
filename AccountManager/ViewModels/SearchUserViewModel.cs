@@ -63,7 +63,7 @@ namespace AccountManager.ViewModels
 
         private void ChangeSearchResult(object? sender, EventArgs e)
         {
-            if (_userStore.User.Name == null) SearchResult = "";
+            if (_userStore.User?.Name == null) SearchResult = "";
             else SearchResult = _userStore.User.Name;
         }
     }

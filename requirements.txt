@@ -1,0 +1,14 @@
+
+Manage Products:
+    Dodawanie produktu: Nazwa, Ilość, Cena (za sztukę ofc), Kategoria
+    Edycja produktu
+    Usuwanie produktu
+    
+    Wyszukiwanie produktu (po nazwie typ wyszukiwania - contains, po kategorii - tu typ wyszukiwania - equals) - tu będę jako wynik chciał zobaczyć listę produktów (nazwa | kategoria | ilość) <- jako kolumny
+     - Możliwość wejścia w wyszukany produkt (przekierowanie do edycji)
+     - Możlwość usunięcia wielu produktów na raz (jak macie GUI to chcę żeby można było zaznaczać checkboxy i przy kliknięciu delete usunąć zaznaczone, przy konsoli dodajcie sobie jeszcze kolumnę )
+     
+Przygotujcie sobie znowu listę statyczną z gotowymi produktami (po kilka z różnych kategorii), żeby przy pokazywaniu nie trzeba było tworzyć całej listy ręcznie
+
+
+Przemyślcie sobie jakbyście zorganizowali zamówienia, chciałbym usłyszeć wasz pomysł na implementację, plus modele jakie byście stworzyli

@@ -7,8 +7,9 @@
         xmlns:views ="clr-namespace:AccountManager.Views"
         xmlns:viewmodels ="clr-namespace:AccountManager.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800"
+        FontSize="14">
+    <Grid Margin="20 10">
         <Grid.Resources>
             
             
@@ -21,14 +22,18 @@
             <DataTemplate DataType="{x:Type viewmodels:UserMenuViewModel}">
                 <views:UserMenuView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodels:AddEditUserViewModel}">
-                <views:AddEditUserView/>
+            <DataTemplate DataType="{x:Type viewmodels:AddUserViewModel}">
+                <views:AddUserView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:ManageUsersViewModel}">
                 <views:ManageUsersView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:SearchUserViewModel}">
                 <views:SearchUserView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:EditUserViewModel}">
+                <views:EditUserView/>
             </DataTemplate>
 
 

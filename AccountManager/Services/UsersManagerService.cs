@@ -22,14 +22,16 @@ namespace AccountManager.Services
             _context.Users.Add(user);
         }
 
-        public void DeleteUser(int userId)
+        public void DeleteUser(string name)
         {
-            throw new NotImplementedException();
+            _context.Users.Remove(GetUser(name));
         }
 
-        public void EditUser(int userId, UserModel user)
+        public void EditUser(string name, UserModel user)
         {
-            throw new NotImplementedException();
+            var editedUser = GetUser(name);
+            editedUser.Name = user.Name;
+            editedUser.Password = user.Password;
         }
 
         public ICollection<UserModel> GetAllUsers()

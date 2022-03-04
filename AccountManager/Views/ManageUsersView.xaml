@@ -11,17 +11,27 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Button Content="Add user" Command="{Binding AddUserCommand}"/>
-            <Button Content="Search" Command="{Binding SearchCommand}"/>
-            <Button Content="Log out" Command="{Binding LogOutCommand}"/>
-        </StackPanel>
+            <TextBlock Text="Manage users" Style="{StaticResource Header}" Grid.Column="0"/>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="3">
+                <Button Content="Add user" Command="{Binding AddUserCommand}" Margin="5 0"/>
+                <Button Content="Search" Command="{Binding SearchCommand}" Margin="5 0"/>
+                <Button Content="Back" Command="{Binding BackCommand}" Margin="5 0"/>
+            </StackPanel>
+        </Grid>
 
 
-        <ListView Grid.Row="1" ItemsSource="{Binding Users}">
+        <ListView Grid.Row="2" ItemsSource="{Binding Users}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="User name">

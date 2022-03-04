@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace AccountManager.ViewModels
 {
-    internal class AddEditUserViewModel : ViewModelBase
+    internal class AddUserViewModel : ViewModelBase
     {
         private string _userName;
         public string Username
@@ -35,14 +35,14 @@ namespace AccountManager.ViewModels
             }
         }
 
-        public ICommand AddEditUserCommand { get; }
+        public ICommand AddUserCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public AddEditUserViewModel(NavigationService userManagerViewNavigationService, IUsersManagerService usersManagerService)
+        public AddUserViewModel(NavigationService userManagerViewNavigationService, IUsersManagerService usersManagerService)
         {
             CancelCommand = new NavigateCommand(userManagerViewNavigationService);
 
-            AddEditUserCommand = new AddUserCommand(this, usersManagerService);
+            AddUserCommand = new AddUserCommand(this, usersManagerService);
 
         }
 

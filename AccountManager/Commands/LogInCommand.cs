@@ -39,13 +39,17 @@ namespace AccountManager.Commands
         public override void Execute(object? parameter)
         {
             var user = _usersManagerService.GetUser(_logInViewModel.Username);
+            
             if(user == null) MessageBox.Show("User not found");
 
-            else if (user.IsPasswordValid(_logInViewModel.Password))
-            {
-                _userMenuViewModelNavigationService.Navigate();
-            }
-            else MessageBox.Show("Password incorrect!");
+            else if (!user.IsPasswordValid(_logInViewModel.Password)) MessageBox.Show("Password incorrect!");
+
+            else if (!user.HasAdminPermission()) MessageBox.Show("Insufficient permission!");
+            
+            else _userMenuViewModelNavigationService.Navigate();
+
+
+
         }
     }
 }

@@ -17,18 +17,18 @@ namespace AccountManager.ViewModels
         private readonly IUsersManagerService _usersManagerService;
         public ICommand AddUserCommand { get; }
         public ICommand SearchCommand { get; }
-        public ICommand LogOutCommand { get; }
+        public ICommand BackCommand { get; }
 
         private readonly ObservableCollection<UserViewModel> _users;
 
         public IEnumerable<UserViewModel> Users => _users;
 
-        public ManageUsersViewModel(NavigationService addUserViewNavigationService, NavigationService logInViewNavigationService,
+        public ManageUsersViewModel(NavigationService addUserViewNavigationService, NavigationService userMenuViewNavigationService,
             NavigationService searchViewNavigationService, IUsersManagerService usersManagerService)
         {
             AddUserCommand = new NavigateCommand(addUserViewNavigationService);
 
-            LogOutCommand = new NavigateCommand(logInViewNavigationService);
+            BackCommand = new NavigateCommand(userMenuViewNavigationService);
 
             SearchCommand = new NavigateCommand(searchViewNavigationService);
 

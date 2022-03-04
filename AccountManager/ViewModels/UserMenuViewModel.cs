@@ -14,9 +14,13 @@ namespace AccountManager.ViewModels
         public ICommand ManageUsersCommand { get; }
         public ICommand ExitCommand { get; }
 
-        public UserMenuViewModel(NavigationService manageUsersViewNavigationService)
+        public ICommand LogOutCommand { get; }
+
+        public UserMenuViewModel(NavigationService manageUsersViewNavigationService, NavigationService logInViewNavigationService)
         {
             ManageUsersCommand = new NavigateCommand(manageUsersViewNavigationService);
+
+            LogOutCommand = new NavigateCommand(logInViewNavigationService);
 
             ExitCommand = new ExitCommand();
         }

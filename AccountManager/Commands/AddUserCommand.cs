@@ -13,11 +13,11 @@ namespace AccountManager.Commands
 {
     internal class AddUserCommand : CommandBase
     {
-        private readonly AddEditUserViewModel _addEditViewModel;
+        private readonly AddUserViewModel _addEditViewModel;
         private readonly IUsersManagerService _usersManagerService;
 
 
-        public AddUserCommand(AddEditUserViewModel addEditViewModel, IUsersManagerService usersManagerService)
+        public AddUserCommand(AddUserViewModel addEditViewModel, IUsersManagerService usersManagerService)
         {
             _addEditViewModel = addEditViewModel;
             _usersManagerService = usersManagerService;
@@ -43,7 +43,7 @@ namespace AccountManager.Commands
 
             else
             {
-                _usersManagerService.AddUser(new UserModel(_addEditViewModel.Username, _addEditViewModel.Password));
+                _usersManagerService.AddUser(new StandarUser(_addEditViewModel.Username, _addEditViewModel.Password));
                 _addEditViewModel.ClearFields();
                 MessageBox.Show("User created");
             }

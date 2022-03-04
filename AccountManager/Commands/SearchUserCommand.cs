@@ -8,6 +8,7 @@ using AccountManager.ViewModels;
 using AccountManager.Models;
 using System.Windows;
 using AccountManager.Services;
+using AccountManager.Stores;
 
 namespace AccountManager.Commands
 {
@@ -15,11 +16,13 @@ namespace AccountManager.Commands
     {
         private readonly SearchUserViewModel _searchUserViewModel;
         private readonly IUsersManagerService _usersManagerService;
+        private readonly UserStore _userStore;
 
-        public SearchUserCommand(SearchUserViewModel searchUserViewModel, IUsersManagerService usersManagerService)
+        public SearchUserCommand(SearchUserViewModel searchUserViewModel, IUsersManagerService usersManagerService, UserStore userStore)
         {
             _searchUserViewModel = searchUserViewModel;
             _usersManagerService = usersManagerService;
+            _userStore = userStore;
             _searchUserViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -41,12 +44,12 @@ namespace AccountManager.Commands
             var user = _usersManagerService.GetUser(_searchUserViewModel.Search);
             if (user == null)
             {
-                _searchUserViewModel.SearchResult = String.Empty;
+                _userStore.User = null;
                 MessageBox.Show("User not found!");
             } 
             else
             {
-                _searchUserViewModel.SearchResult = user.Name;
+                _userStore.User = user;
                 MessageBox.Show("User found!");
             }
         }

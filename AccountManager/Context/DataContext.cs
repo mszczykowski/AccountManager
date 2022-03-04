@@ -14,7 +14,7 @@ namespace AccountManager.Context
         {
             Users = new List<UserModel>
             {
-                new UserModel("admin", "admin")
+                new AdminModel("admin", "admin")
             };
         }
     }

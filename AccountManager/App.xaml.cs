@@ -21,12 +21,15 @@ namespace AccountManager
     {
         private readonly NavigationStore _navigationStore;
         private readonly DataContext _dataContext;
+        private readonly UserStore _userStore;
 
         public App()
         {
             _navigationStore = new NavigationStore();
 
             _dataContext = new DataContext();
+
+            _userStore = new UserStore();
         }
         
         protected override void OnStartup(StartupEventArgs e)
@@ -56,28 +59,37 @@ namespace AccountManager
 
         private UserMenuViewModel CreateUserMenuViewModel()
         {
-            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel));
+            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+                new NavigationService(_navigationStore, CreateLogInViewModel));
         }
 
         private ManageUsersViewModel CreateManageUsersViewModel()
         {
-            return new ManageUsersViewModel(new NavigationService(_navigationStore, CreateAddEditUserViewModel), 
-                new NavigationService(_navigationStore, CreateLogInViewModel),
+            return new ManageUsersViewModel(new NavigationService(_navigationStore, CreateAddUserViewModel), 
+                new NavigationService(_navigationStore, CreateUserMenuViewModel),
                 new NavigationService(_navigationStore, CreateSearchUserViewModel),
                 new UsersManagerService(_dataContext));
         }
 
-        private AddEditUserViewModel CreateAddEditUserViewModel()
+        private AddUserViewModel CreateAddUserViewModel()
         {
-            return new AddEditUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+            return new AddUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
                 new UsersManagerService(_dataContext));
+        }
+
+        private EditUserViewModel CreateEditUserViewModel()
+        {
+            return new EditUserViewModel(new NavigationService(_navigationStore, CreateSearchUserViewModel),
+                new UsersManagerService(_dataContext),
+                _userStore);
         }
 
         private SearchUserViewModel CreateSearchUserViewModel()
         {
             return new SearchUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
-                new NavigationService(_navigationStore, CreateUserMenuViewModel),
-                new UsersManagerService(_dataContext));
+                new NavigationService(_navigationStore, CreateEditUserViewModel),
+                new UsersManagerService(_dataContext),
+                _userStore);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AccountManager.Models
 {
-    internal class UserModel
+    internal abstract class UserModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -24,5 +24,7 @@ namespace AccountManager.Models
 
             return false;
         }
+
+        public abstract bool HasAdminPermission();
     }
 }

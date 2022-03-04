@@ -10,18 +10,19 @@ using System.Windows;
 using AccountManager.Services;
 using AccountManager.Stores;
 
+
 namespace AccountManager.Commands
 {
-    internal class DeleteUserCommand : CommandBase
+    internal class NavigateToEditCommand : CommandBase
     {
-        private readonly NavigationService _manageUsersViewModelNavigationSercvice;
+        private readonly NavigationService _editUserViewModelNavigationSercvice;
         private readonly UserStore _userStore;
         private readonly IUsersManagerService _usersManagerService;
 
-        public DeleteUserCommand(SearchUserViewModel searchUserViewModel, NavigationService manageUsersViewModelNavigationSercvice, UserStore userStore,
+        public NavigateToEditCommand(NavigationService editUserViewModelNavigationSercvice, UserStore userStore,
             IUsersManagerService usersManagerService)
         {
-            _manageUsersViewModelNavigationSercvice = manageUsersViewModelNavigationSercvice;
+            _editUserViewModelNavigationSercvice = editUserViewModelNavigationSercvice;
             _userStore = userStore;
             _usersManagerService = usersManagerService;
 
@@ -35,20 +36,13 @@ namespace AccountManager.Commands
 
         public override bool CanExecute(object? parameter)
         {
-            return (_usersManagerService.GetUser(_userStore.User?.Name) != null) && base.CanExecute(parameter);
+            return (_usersManagerService.GetUser(_userStore?.User?.Name) != null) && base.CanExecute(parameter);
         }
 
 
         public override void Execute(object? parameter)
         {
-            if (_userStore.User.HasAdminPermission()) MessageBox.Show("Can't delete admin account!");
-            else if (MessageBox.Show("Delete user \"" + _userStore.User.Name + "\" ?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                _usersManagerService.DeleteUser(_userStore.User.Name);
-                
-                _manageUsersViewModelNavigationSercvice.Navigate();
-            }
+            _editUserViewModelNavigationSercvice.Navigate();
         }
-
     }
 }

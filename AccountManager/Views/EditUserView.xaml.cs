@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AccountManager.Views
 {
     /// <summary>
-    /// Interaction logic for AddEditUserView.xaml
+    /// Interaction logic for EditUserView.xaml
     /// </summary>
-    public partial class AddEditUserView : UserControl
+    public partial class EditUserView : UserControl
     {
-        public AddEditUserView()
+        public EditUserView()
         {
             InitializeComponent();
         }

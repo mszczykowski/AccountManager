@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AccountManager.Models
 {
-    internal class StandarUser : UserModel
+    internal class StandardUserModel : UserModel
     {
-        public StandarUser(string name, string password) : base(name, password)
+        public StandardUserModel(string name, string password) : base(name, password)
         {
         }
 

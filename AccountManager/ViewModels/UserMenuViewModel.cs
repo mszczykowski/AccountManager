@@ -12,17 +12,21 @@ namespace AccountManager.ViewModels
     internal class UserMenuViewModel : ViewModelBase
     {
         public ICommand ManageUsersCommand { get; }
+
+        public ICommand ManageProductsCommand { get; }
         public ICommand ExitCommand { get; }
 
         public ICommand LogOutCommand { get; }
 
-        public UserMenuViewModel(NavigationService manageUsersViewNavigationService, NavigationService logInViewNavigationService)
+        public UserMenuViewModel(NavigationService manageUsersViewNavigationService, NavigationService manageProductsViewNavigationService, NavigationService logInViewNavigationService)
         {
             ManageUsersCommand = new NavigateCommand(manageUsersViewNavigationService);
 
             LogOutCommand = new NavigateCommand(logInViewNavigationService);
 
             ExitCommand = new ExitCommand();
+
+            ManageProductsCommand = new NavigateCommand(manageProductsViewNavigationService);
         }
     }
 }

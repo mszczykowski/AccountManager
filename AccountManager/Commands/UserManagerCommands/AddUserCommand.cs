@@ -43,7 +43,7 @@ namespace AccountManager.Commands
 
             else
             {
-                _usersManagerService.AddUser(new StandarUser(_addEditViewModel.Username, _addEditViewModel.Password));
+                _usersManagerService.AddUser(new StandardUserModel(_addEditViewModel.Username, _addEditViewModel.Password));
                 _addEditViewModel.ClearFields();
                 MessageBox.Show("User created");
             }

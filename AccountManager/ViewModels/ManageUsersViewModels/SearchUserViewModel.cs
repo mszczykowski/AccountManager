@@ -43,8 +43,8 @@ namespace AccountManager.ViewModels
         public ICommand DeleteUserCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public SearchUserViewModel(NavigationService userManagerViewNavigationService, NavigationService editUserViewModelNavigationService, IUsersManagerService usersManagerService,
-            UserStore userStore)
+        public SearchUserViewModel(NavigationService userManagerViewNavigationService, NavigationService editUserViewModelNavigationService, 
+            IUsersManagerService usersManagerService, UserStore userStore)
         {
             _usersManagerModel = usersManagerService;
             _userStore = userStore;

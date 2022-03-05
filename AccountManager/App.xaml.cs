@@ -60,6 +60,7 @@ namespace AccountManager
         private UserMenuViewModel CreateUserMenuViewModel()
         {
             return new UserMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+                new NavigationService(_navigationStore, CreateManageProductsViewModel),
                 new NavigationService(_navigationStore, CreateLogInViewModel));
         }
 
@@ -90,6 +91,12 @@ namespace AccountManager
                 new NavigationService(_navigationStore, CreateEditUserViewModel),
                 new UsersManagerService(_dataContext),
                 _userStore);
+        }
+
+        private ManageProductsViewModel CreateManageProductsViewModel()
+        {
+            return new ManageProductsViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
+                new ProductManagerService(_dataContext));
         }
     }
 }

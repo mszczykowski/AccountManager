@@ -13,13 +13,15 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Style="{StaticResource Header}" Text="Menu" TextAlignment="Center"/>
 
         <Button Grid.Row="1" Content="Manage users" Command="{Binding ManageUsersCommand}" Width="150" Margin="0 20"/>
-        <Button Grid.Row="2" Content="Log out" Command="{Binding LogOutCommand}" Width="150" Margin="0 20"/>
-        <Button Grid.Row="3" Content="Exit" Command="{Binding ExitCommand}" Width="150" Margin="0 20"/>
+        <Button Grid.Row="2" Content="Manage products" Command="{Binding ManageProductsCommand}" Width="150" Margin="0 20"/>
+        <Button Grid.Row="3" Content="Log out" Command="{Binding LogOutCommand}" Width="150" Margin="0 20"/>
+        <Button Grid.Row="4" Content="Exit" Command="{Binding ExitCommand}" Width="150" Margin="0 20"/>
 
     </Grid>
 </UserControl>

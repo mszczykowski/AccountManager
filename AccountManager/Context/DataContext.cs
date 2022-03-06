@@ -47,6 +47,8 @@ namespace AccountManager.Context
                 new ProductModel(11, "IPad Air", 2099.99, 120, Categories.Tablets),
 
                 new ProductModel(12, "Logitech G120 Ligthsync", 120.10, 80, Categories.Accesories),
+
+                new ProductModel(13, "Sony Vaio", 699.99, 80, Categories.Notebooks),
             }; 
         }
     }

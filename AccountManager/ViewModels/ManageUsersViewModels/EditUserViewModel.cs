@@ -27,7 +27,7 @@ namespace AccountManager.ViewModels
         }
 
         private string _password;
-        private readonly IUsersManagerService _usersManagerModel;
+
         private readonly UserStore _userStore;
 
         public string Password
@@ -47,8 +47,8 @@ namespace AccountManager.ViewModels
         {
             _userStore = userStore;
 
-            Username = userStore.User.Name;
-            Password = userStore.User.Password;
+            _userName = userStore.User.Name;
+            _password = userStore.User.Password;
 
             CancelCommand = new NavigateCommand(searchUserViewNavigationService);
 

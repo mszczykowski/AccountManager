@@ -48,11 +48,12 @@ namespace AccountManager.ViewModels
         {
             _usersManagerModel = usersManagerService;
             _userStore = userStore;
+
             _userStore.Clear();
 
             _userStore.CurrentUserChanged += ChangeSearchResult;
 
-            EditUserCommand = new NavigateToEditCommand(editUserViewModelNavigationService, _userStore, _usersManagerModel);
+            EditUserCommand = new NavigateToEditUserCommand(editUserViewModelNavigationService, _userStore, _usersManagerModel);
 
             CancelCommand = new NavigateCommand(userManagerViewNavigationService);
 

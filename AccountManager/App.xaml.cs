@@ -10,6 +10,7 @@ using AccountManager.Stores;
 using AccountManager.Services;
 using AccountManager.Models;
 using AccountManager.Context;
+using AccountManager.ViewModels.ManageProductsViewModels;
 
 
 namespace AccountManager
@@ -22,6 +23,7 @@ namespace AccountManager
         private readonly NavigationStore _navigationStore;
         private readonly DataContext _dataContext;
         private readonly UserStore _userStore;
+        private readonly ProductStore _productStore;
 
         public App()
         {
@@ -30,6 +32,8 @@ namespace AccountManager
             _dataContext = new DataContext();
 
             _userStore = new UserStore();
+
+            _productStore = new ProductStore();
         }
         
         protected override void OnStartup(StartupEventArgs e)
@@ -96,7 +100,21 @@ namespace AccountManager
         private ManageProductsViewModel CreateManageProductsViewModel()
         {
             return new ManageProductsViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
-                new ProductManagerService(_dataContext));
+                new NavigationService(_navigationStore, CreateAddProductViewModel),
+                new NavigationService(_navigationStore, CreateEditProductViewModel),
+                new ProductsManagerService(_dataContext), _productStore);
+        }
+
+        private AddProductViewModel CreateAddProductViewModel()
+        {
+            return new AddProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
+                new ProductsManagerService(_dataContext));
+        }
+
+        private EditProductViewModel CreateEditProductViewModel()
+        {
+            return new EditProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
+                new ProductsManagerService(_dataContext), _productStore);
         }
     }
 }

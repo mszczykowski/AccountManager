@@ -10,21 +10,19 @@ using AccountManager.ViewModels;
 
 namespace AccountManager.Commands.ProductManagerCommands
 {
-    internal class SearchProductCommand : CommandBase
+    internal class FilterProductsCommand : CommandBase
     {
         private readonly ManageProductsViewModel _manageProductsViewModel;
-        private readonly IProductManagerService _productManagerService;
 
-        public SearchProductCommand(ManageProductsViewModel manageProductsViewModel, IProductManagerService productManagerService)
+        public FilterProductsCommand(ManageProductsViewModel manageProductsViewModel)
         {
             _manageProductsViewModel = manageProductsViewModel;
-            _productManagerService = productManagerService;
 
 
-            _manageProductsViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            //_manageProductsViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
         
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        /*private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(ManageProductsViewModel.Search))
             {
@@ -35,10 +33,10 @@ namespace AccountManager.Commands.ProductManagerCommands
         public override bool CanExecute(object? parameter)
         {
             return !string.IsNullOrEmpty(_manageProductsViewModel.Search) && base.CanExecute(parameter);
-        }
+        }*/
         public override void Execute(object? parameter)
         {
-            _manageProductsViewModel.UpdateProductsCollection(_productManagerService.SearchProductByName(_manageProductsViewModel.Search));
+            _manageProductsViewModel.UpdateProductsCollection();
         }
     }
 }

@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AccountManager"
         xmlns:views ="clr-namespace:AccountManager.Views"
+        xmlns:viewsProducts ="clr-namespace:AccountManager.Views.ManageProductsViews"
         xmlns:viewmodels ="clr-namespace:AccountManager.ViewModels"
+        xmlns:viewmodelsProducts ="clr-namespace:AccountManager.ViewModels.ManageProductsViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         FontSize="14">
@@ -40,6 +42,13 @@
                 <views:ManageProductsView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodelsProducts:AddProductViewModel}">
+                <viewsProducts:AddProductView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsProducts:EditProductViewModel}">
+                <viewsProducts:EditProductView/>
+            </DataTemplate>
 
         </Grid.Resources>
 

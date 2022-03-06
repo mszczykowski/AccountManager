@@ -13,13 +13,13 @@ using AccountManager.Stores;
 
 namespace AccountManager.Commands
 {
-    internal class NavigateToEditCommand : CommandBase
+    internal class NavigateToEditUserCommand : CommandBase
     {
         private readonly NavigationService _editUserViewModelNavigationSercvice;
         private readonly UserStore _userStore;
         private readonly IUsersManagerService _usersManagerService;
 
-        public NavigateToEditCommand(NavigationService editUserViewModelNavigationSercvice, UserStore userStore,
+        public NavigateToEditUserCommand(NavigationService editUserViewModelNavigationSercvice, UserStore userStore,
             IUsersManagerService usersManagerService)
         {
             _editUserViewModelNavigationSercvice = editUserViewModelNavigationSercvice;

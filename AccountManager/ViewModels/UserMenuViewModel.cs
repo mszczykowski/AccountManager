@@ -18,7 +18,9 @@ namespace AccountManager.ViewModels
 
         public ICommand LogOutCommand { get; }
 
-        public UserMenuViewModel(NavigationService manageUsersViewNavigationService, NavigationService manageProductsViewNavigationService, NavigationService logInViewNavigationService)
+        public UserMenuViewModel(NavigationService manageUsersViewNavigationService,
+            NavigationService manageProductsViewNavigationService, 
+            NavigationService logInViewNavigationService)
         {
             ManageUsersCommand = new NavigateCommand(manageUsersViewNavigationService);
 

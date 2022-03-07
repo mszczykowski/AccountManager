@@ -1,14 +1,15 @@
+Admin:
+    Po wejściu w usera, możliwość wejścia w jego zamówienia (lista) i wyszukania konkretnego zamówienia (typ szukania name - equals)
+    Możliwoeść edycji statusu zamówienia
 
-Manage Products:
-    Dodawanie produktu: Nazwa, Ilość, Cena (za sztukę ofc), Kategoria
-    Edycja produktu
-    Usuwanie produktu
-    
-    Wyszukiwanie produktu (po nazwie typ wyszukiwania - contains, po kategorii - tu typ wyszukiwania - equals) - tu będę jako wynik chciał zobaczyć listę produktów (nazwa | kategoria | ilość) <- jako kolumny
-     - Możliwość wejścia w wyszukany produkt (przekierowanie do edycji)
-     - Możlwość usunięcia wielu produktów na raz (jak macie GUI to chcę żeby można było zaznaczać checkboxy i przy kliknięciu delete usunąć zaznaczone, przy konsoli dodajcie sobie jeszcze kolumnę )
-     
-Przygotujcie sobie znowu listę statyczną z gotowymi produktami (po kilka z różnych kategorii), żeby przy pokazywaniu nie trzeba było tworzyć całej listy ręcznie
+Możliwość logowania się zwykłych użytkowników
 
-
-Przemyślcie sobie jakbyście zorganizowali zamówienia, chciałbym usłyszeć wasz pomysł na implementację, plus modele jakie byście stworzyli
+Opcje:
+    1. Products
+        - Search (możecie wykorzystać poprzedniego, czyli name - contains, category - equals)
+            - Zaznaczone produkty, które zaznaczycie możecie schować do koszyka
+            - Zaznaczone produkty możecie od razu kupić
+    2. Historia zamówień
+        - Lista z zamówieniami (Lp | Nazwa zamówienia) *nazwa zamówienia może wyglądać w ten sposób "Zamówienie_X", gdzie X to number zamówienia
+            - Po wejściu w konkretne zamówienie chcę widzieć nazwy produkty wraz z ceną obok, łączną sumę i status zamówienia
+                - Możliwość zrezygnowania z zamówienia, jeśli nie jest jeszcze Zrealizowane

@@ -27,9 +27,14 @@
         <TextBlock Grid.Row="0" Text="Add product" Style="{StaticResource Header}"/>
 
         <TextBlock Grid.Row="1" Grid.Column="0" Text="Name:" Margin="0 5"/>
-        <TextBox Grid.Row="2" Grid.Column="0" Width="200" Margin="0 10 20 10" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}"/>
+        
+        <TextBox Grid.Row="2" Grid.Column="0" Width="200" Margin="0 10 20 10" Text="{Binding ProductName,
+            UpdateSourceTrigger=PropertyChanged}"/>
+        
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Category:" Margin="0 5"/>
-        <ComboBox Grid.Row="2" Grid.Column="1"  Width="200" Margin="0 10 20 10" ItemsSource="{Binding Source={utils:EnumBindingSource categories:Categories}}"
+        
+        <ComboBox Grid.Row="2" Grid.Column="1"  Width="200" Margin="0 10 20 10" 
+                  ItemsSource="{Binding Source={utils:EnumBindingSource categories:Categories}}"
                   SelectedItem="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Price:" Margin="0 5"/>
@@ -40,12 +45,15 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Margin="0 10 5 10" Grid.Column="0" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Margin="0 10 5 10" Grid.Column="0" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
+                     PreviewTextInput="PriceTextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
             <TextBlock Text="PLN" Grid.Column="1" Margin="0 10 20 10" VerticalAlignment="Center"/>
         </Grid>
 
         <TextBlock Grid.Row="3" Grid.Column="1" Text="Quantity:" Margin="0 5"/>
-        <TextBox Grid.Row="4" Grid.Column="1"  Width="200" Margin="0 10 20 10" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="4" Grid.Column="1"  Width="200" Margin="0 10 20 10" Text="{Binding Quantity,
+            UpdateSourceTrigger=PropertyChanged}" Name="quantityTextBox"  
+                 PreviewTextInput="QuantityTextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="5">
             <Button Content="Add product" Command="{Binding AddProductCommand}" />

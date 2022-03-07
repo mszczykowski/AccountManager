@@ -24,7 +24,7 @@ namespace AccountManager.Stores
 
         public ProductStore()
         {
-
+            
         }
 
         public ProductStore(string name, double price, int quantity, Categories category)

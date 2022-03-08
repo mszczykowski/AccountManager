@@ -59,7 +59,7 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Product name" Width="270">
+                    <GridViewColumn Header="Product name" Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
@@ -75,7 +75,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Order Date" Width="90">
+                    <GridViewColumn Header="Order Date" Width="160">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding OrderDate}"/>
@@ -83,10 +83,10 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Category" Width="200">
+                    <GridViewColumn Header="Status" Width="180">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Source={utils:EnumBindingSource enums:OrderStatuses}}" SelectedItem="{Binding Status, UpdateSourceTrigger=PropertyChanged}"/>
+                                <ComboBox ItemsSource="{Binding Source={utils:EnumBindingSource enums:OrderStatuses}}" SelectedItem="{Binding Status, UpdateSourceTrigger=PropertyChanged}" Width="160"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

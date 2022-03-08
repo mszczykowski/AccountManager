@@ -24,7 +24,7 @@ namespace AccountManager.Commands.OrderManagerCommands
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(UserOrderViewModel.Status)) Execute(null);
+            if (e.PropertyName == nameof(UserOrderViewModel.Status)) Execute(sender);
         }
 
         public override void Execute(object? parameter)

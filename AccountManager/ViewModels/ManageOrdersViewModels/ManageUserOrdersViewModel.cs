@@ -56,18 +56,26 @@ namespace AccountManager.ViewModels.ManageOrdersViewModels
 
             BackCommand = new NavigateCommand(ManageUsersViewNavigationService);
 
-            SearchOrderCommand = new SearchOrderCommand();
+            SearchOrderCommand = new SearchOrderCommand(this);
 
             UpdateOrdersCollection();
         }
 
         public void UpdateOrdersCollection()
         {
+            _orders.Clear();
+            
             var orders = _orderManagerService.GetUserOrders(_customer.User.Id);
 
             foreach(var order in orders)
             {
-                _orders.Add(new UserOrderViewModel(order, _orderManagerService));
+                if(String.IsNullOrEmpty(Query)) _orders.Add(new UserOrderViewModel(order, _orderManagerService));
+                else
+                {
+                    if(("Order_" + order.Id).ToUpper() == Query.ToUpper()) _orders.Add(new UserOrderViewModel(order, _orderManagerService));
+                }
+
+
             }
         }
     }

@@ -23,22 +23,7 @@ namespace AccountManager.Services
 
         public void AddProduct(ProductModel product)
         {
-            bool isIdValid = true;
-
-            int id;
-
-            do
-            {
-                id = random.Next();
-
-                _context.Products.ForEach(p =>
-                {
-                    if (p.Id == id) isIdValid = false;
-                });
-            }
-            while(!isIdValid);
-
-            product.Id = id;
+            product.Id = GenerateId();
 
             _context.Products.Add(product);
         }
@@ -109,6 +94,25 @@ namespace AccountManager.Services
             }
 
             return products;
+        }
+
+        private int GenerateId()
+        {
+            int id;
+
+            bool isIdValid = true;
+            do
+            {
+                id = random.Next();
+
+                _context.Products.ForEach(p =>
+                {
+                    if (p.Id == id) isIdValid = false;
+                });
+            }
+            while (!isIdValid);
+
+            return id;
         }
     }
 }

@@ -61,12 +61,10 @@ namespace AccountManager.ViewModels
 
         public List<CategoryModel> CategoriesList { get => _categoriesList; }
 
-        public NavigationService _addProductViewModelNavigationService { get; set; }
-
-        public ManageProductsViewModel(NavigationService userMenuViewModelNavigationService, NavigationService addProductViewModelNavigationService,
+        public ManageProductsViewModel(NavigationService adminMenuViewModelNavigationService, NavigationService addProductViewModelNavigationService,
             NavigationService editProductViewModelNavigationService, IProductsManagerService productManagerService, ProductStore productStore)
         {
-            BackCommand = new NavigateCommand(userMenuViewModelNavigationService);
+            BackCommand = new NavigateCommand(adminMenuViewModelNavigationService);
 
             FilterProductsCommand = new FilterProductsCommand(this);
 
@@ -81,9 +79,6 @@ namespace AccountManager.ViewModels
 
             _products = new ObservableCollection<ProductViewModel>();
             
-
-
-            _addProductViewModelNavigationService = addProductViewModelNavigationService;
 
             InitialiseCategoriesList();
 
@@ -102,7 +97,7 @@ namespace AccountManager.ViewModels
             _products.Clear();
             foreach (var product in filteredProducts)
             {
-                _products.Add(new ProductViewModel(product, _addProductViewModelNavigationService));
+                _products.Add(new ProductViewModel(product));
             }
         }
 

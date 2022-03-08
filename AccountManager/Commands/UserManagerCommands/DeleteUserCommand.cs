@@ -41,7 +41,7 @@ namespace AccountManager.Commands
 
         public override void Execute(object? parameter)
         {
-            if (_userStore.User.CanLogIn()) MessageBox.Show("Can't delete admin account!");
+            if (_userStore.User.HasAdminPermissions()) MessageBox.Show("Can't delete admin account!");
             else if (MessageBox.Show("Delete user \"" + _userStore.User.Name + "\" ?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 _usersManagerService.DeleteUser(_userStore.User.Name);

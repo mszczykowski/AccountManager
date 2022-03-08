@@ -10,9 +10,14 @@ namespace AccountManager.Models
     {
         public StandardUserModel(string name, string password) : base(name, password)
         {
+
+        }
+        public StandardUserModel(int id, string name, string password) : base(id, name, password)
+        {
+
         }
 
-        public override bool CanLogIn()
+        public override bool HasAdminPermissions()
         {
             return false;
         }

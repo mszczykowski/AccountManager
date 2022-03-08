@@ -10,8 +10,10 @@ namespace AccountManager.Context
 {
     internal class DataContext
     {
-        public List<UserModel> Users { get; set; }
-        public List<ProductModel> Products { get; set; }
+        public List<UserModel> Users { get; private set; }
+        public List<ProductModel> Products { get; private set; }
+
+        public List<OrderModel> Orders { get; private set; }
 
 
         public DataContext()
@@ -23,10 +25,10 @@ namespace AccountManager.Context
         {
             Users = new List<UserModel>
             {
-                new AdminModel("admin", "admin"),
-                new StandardUserModel("user1", "user1"),
-                new StandardUserModel("user2", "user1"),
-                new StandardUserModel("user3", "user1")
+                new AdminModel(0, "admin", "admin"),
+                new StandardUserModel(1, "user1", "user1"),
+                new StandardUserModel(2, "user2", "user1"),
+                new StandardUserModel(3, "user3", "user1")
             };
 
             Products = new List<ProductModel>
@@ -49,7 +51,14 @@ namespace AccountManager.Context
                 new ProductModel(12, "Logitech G120 Ligthsync", 120.10, 80, Categories.Accesories),
 
                 new ProductModel(13, "Sony Vaio", 699.99, 80, Categories.Notebooks),
-            }; 
+            };
+
+            Orders = new List<OrderModel>
+            {
+                new OrderModel(1, 1),
+                new OrderModel(2, 1),
+                new OrderModel(3, 1)
+            };
         }
     }
 }

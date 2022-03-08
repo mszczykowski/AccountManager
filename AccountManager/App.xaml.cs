@@ -11,6 +11,7 @@ using AccountManager.Services;
 using AccountManager.Models;
 using AccountManager.Context;
 using AccountManager.ViewModels.ManageProductsViewModels;
+using AccountManager.ViewModels.ManageOrdersViewModels;
 
 
 namespace AccountManager
@@ -57,13 +58,14 @@ namespace AccountManager
         private LogInViewModel CreateLogInViewModel()
         {
             return new LogInViewModel(new NavigationService(_navigationStore, CreateMainMenuViewModel), 
+                new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateUserMenuViewModel), 
                 new UsersManagerService(_dataContext));
         }
 
-        private UserMenuViewModel CreateUserMenuViewModel()
+        private AdminMenuViewModel CreateAdminMenuViewModel()
         {
-            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+            return new AdminMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
                 new NavigationService(_navigationStore, CreateManageProductsViewModel),
                 new NavigationService(_navigationStore, CreateLogInViewModel));
         }
@@ -71,9 +73,10 @@ namespace AccountManager
         private ManageUsersViewModel CreateManageUsersViewModel()
         {
             return new ManageUsersViewModel(new NavigationService(_navigationStore, CreateAddUserViewModel), 
-                new NavigationService(_navigationStore, CreateUserMenuViewModel),
+                new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateSearchUserViewModel),
-                new UsersManagerService(_dataContext));
+                new NavigationService(_navigationStore, CreateManageUserOrdersViewModel),
+                new UsersManagerService(_dataContext), _userStore);
         }
 
         private AddUserViewModel CreateAddUserViewModel()
@@ -99,7 +102,7 @@ namespace AccountManager
 
         private ManageProductsViewModel CreateManageProductsViewModel()
         {
-            return new ManageProductsViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
+            return new ManageProductsViewModel(new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateAddProductViewModel),
                 new NavigationService(_navigationStore, CreateEditProductViewModel),
                 new ProductsManagerService(_dataContext), _productStore);
@@ -115,6 +118,17 @@ namespace AccountManager
         {
             return new EditProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
                 new ProductsManagerService(_dataContext), _productStore);
+        }
+
+        private UserMenuViewModel CreateUserMenuViewModel()
+        {
+            return new UserMenuViewModel(null, null, new NavigationService(_navigationStore, CreateLogInViewModel));
+        }
+
+        private ManageUserOrdersViewModel CreateManageUserOrdersViewModel()
+        {
+            return new ManageUserOrdersViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+                new OrderManagerService(_dataContext), _userStore);
         }
     }
 }

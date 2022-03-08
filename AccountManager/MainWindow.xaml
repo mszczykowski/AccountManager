@@ -6,8 +6,10 @@
         xmlns:local="clr-namespace:AccountManager"
         xmlns:views ="clr-namespace:AccountManager.Views"
         xmlns:viewsProducts ="clr-namespace:AccountManager.Views.ManageProductsViews"
+        xmlns:viewsOrders ="clr-namespace:AccountManager.Views.ManageOrdersViews"
         xmlns:viewmodels ="clr-namespace:AccountManager.ViewModels"
         xmlns:viewmodelsProducts ="clr-namespace:AccountManager.ViewModels.ManageProductsViewModels"
+        xmlns:viewmodelsOrders ="clr-namespace:AccountManager.ViewModels.ManageOrdersViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         FontSize="14">
@@ -21,8 +23,8 @@
             <DataTemplate DataType="{x:Type viewmodels:LogInViewModel}">
                 <views:LogInView/>
             </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodels:UserMenuViewModel}">
-                <views:UserMenuView/>
+            <DataTemplate DataType="{x:Type viewmodels:AdminMenuViewModel}">
+                <views:AdminMenuView/>
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:AddUserViewModel}">
                 <views:AddUserView/>
@@ -48,6 +50,14 @@
 
             <DataTemplate DataType="{x:Type viewmodelsProducts:EditProductViewModel}">
                 <viewsProducts:EditProductView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodels:UserMenuViewModel}">
+                <views:UserMenuView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsOrders:ManageUserOrdersViewModel}">
+                <viewsOrders:ManageUserOrdersView/>
             </DataTemplate>
 
         </Grid.Resources>

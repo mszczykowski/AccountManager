@@ -9,7 +9,9 @@ namespace AccountManager.ViewModels
 {
     internal class UserViewModel : ViewModelBase
     {
-        UserModel _user;
+        private UserModel _user;
+
+        public UserModel User { get => _user; }
         public string Name => _user.Name;
         public string Password => _user.Password;
 

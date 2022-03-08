@@ -12,10 +12,23 @@ namespace AccountManager.Models
         public string Name { get; set; }
         public string Password { get; set; }
 
+        public ICollection<OrderProductModel> ShoppingCart { get; set; }
+
         public UserModel(string name, string password)
         {
             Name = name;
             Password = password;
+
+            ShoppingCart = new List<OrderProductModel>();
+        }
+
+        public UserModel(int id, string name, string password)
+        {
+            Id = id;
+            Name = name;
+            Password = password;
+
+            ShoppingCart = new List<OrderProductModel>();
         }
 
         public bool IsPasswordValid(string password)
@@ -25,6 +38,6 @@ namespace AccountManager.Models
             return false;
         }
 
-        public abstract bool CanLogIn();
+        public abstract bool HasAdminPermissions();
     }
 }

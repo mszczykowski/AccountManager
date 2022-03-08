@@ -15,13 +15,18 @@ namespace AccountManager.Commands
     {
         private readonly LogInViewModel _logInViewModel;
         private readonly IUsersManagerService _usersManagerService;
-        private readonly NavigationService _userMenuViewModelNavigationService;
+        private readonly NavigationService _adminMenuViewNavigationService;
+        private readonly NavigationService _userMenuViewNavigationService;
 
-        public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, NavigationService userMenuViewModelNavigationService)
+        public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, NavigationService adminMenuViewNavigationService,
+            NavigationService userMenuViewNavigationService)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;
-            _userMenuViewModelNavigationService = userMenuViewModelNavigationService;
+            _adminMenuViewNavigationService = adminMenuViewNavigationService;
+            _userMenuViewNavigationService = userMenuViewNavigationService;
+
+
             _logInViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -39,14 +44,14 @@ namespace AccountManager.Commands
         public override void Execute(object? parameter)
         {
             var user = _usersManagerService.GetUser(_logInViewModel.Username);
-            
-            if(user == null) MessageBox.Show("User not found");
+
+            if (user == null) MessageBox.Show("User not found");
 
             else if (!user.IsPasswordValid(_logInViewModel.Password)) MessageBox.Show("Password incorrect!");
 
-            else if (!user.CanLogIn()) MessageBox.Show("Insufficient permission!");
-            
-            else _userMenuViewModelNavigationService.Navigate();
+            else if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
+
+            else _adminMenuViewNavigationService.Navigate();
 
 
 

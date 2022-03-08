@@ -1,34 +1,35 @@
 ﻿using AccountManager.Commands;
+using AccountManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AccountManager.Services;
 
 namespace AccountManager.ViewModels
 {
     internal class UserMenuViewModel : ViewModelBase
     {
-        public ICommand ManageUsersCommand { get; }
+        public ICommand ProductsNavigateCommand { get; }
 
-        public ICommand ManageProductsCommand { get; }
+        public ICommand OrderHistoryNavigateCommand { get; }
+
         public ICommand ExitCommand { get; }
 
         public ICommand LogOutCommand { get; }
 
-        public UserMenuViewModel(NavigationService manageUsersViewNavigationService,
-            NavigationService manageProductsViewNavigationService, 
+        public UserMenuViewModel(NavigationService productsViewNavigationService,
+            NavigationService orderHistoryViewNavigationService,
             NavigationService logInViewNavigationService)
         {
-            ManageUsersCommand = new NavigateCommand(manageUsersViewNavigationService);
+            ProductsNavigateCommand = new NavigateCommand(productsViewNavigationService);
+
+            OrderHistoryNavigateCommand = new NavigateCommand(orderHistoryViewNavigationService);
 
             LogOutCommand = new NavigateCommand(logInViewNavigationService);
 
             ExitCommand = new ExitCommand();
-
-            ManageProductsCommand = new NavigateCommand(manageProductsViewNavigationService);
         }
     }
 }

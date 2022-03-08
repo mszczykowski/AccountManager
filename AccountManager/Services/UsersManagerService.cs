@@ -10,15 +10,20 @@ namespace AccountManager.Services
 {
     internal class UsersManagerService : IUsersManagerService
     {
-        DataContext _context;
+        private DataContext _context;
+        private Random random;
 
         public UsersManagerService(DataContext context)
         {
             _context = context;
+
+            random = new Random();
         }
 
         public void AddUser(UserModel user)
         {
+            user.Id = GenerateId();
+            
             _context.Users.Add(user);
         }
 
@@ -56,6 +61,26 @@ namespace AccountManager.Services
             }
 
             return user;
+        }
+
+
+        private int GenerateId()
+        {
+            int id;
+
+            bool isIdValid = true;
+            do
+            {
+                id = random.Next();
+
+                _context.Users.ForEach(p =>
+                {
+                    if (p.Id == id) isIdValid = false;
+                });
+            }
+            while (!isIdValid);
+
+            return id;
         }
     }
 }

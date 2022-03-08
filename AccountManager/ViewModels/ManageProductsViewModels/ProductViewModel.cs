@@ -36,7 +36,7 @@ namespace AccountManager.ViewModels
             }
         }
 
-        public ProductViewModel(ProductModel product, NavigationService addProductViewModelNavigationService)
+        public ProductViewModel(ProductModel product)
         {
             _product = product;
             Category = _product.Category.ToString();

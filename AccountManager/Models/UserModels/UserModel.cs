@@ -12,14 +12,14 @@ namespace AccountManager.Models
         public string Name { get; set; }
         public string Password { get; set; }
 
-        public ICollection<OrderProductModel> ShoppingCart { get; set; }
+        public ICollection<ShoppingCartEntryModel> ShoppingCart { get; set; }
 
         public UserModel(string name, string password)
         {
             Name = name;
             Password = password;
 
-            ShoppingCart = new List<OrderProductModel>();
+            ShoppingCart = new HashSet<ShoppingCartEntryModel>();
         }
 
         public UserModel(int id, string name, string password)
@@ -28,7 +28,7 @@ namespace AccountManager.Models
             Name = name;
             Password = password;
 
-            ShoppingCart = new List<OrderProductModel>();
+            ShoppingCart = new HashSet<ShoppingCartEntryModel>();
         }
 
         public bool IsPasswordValid(string password)

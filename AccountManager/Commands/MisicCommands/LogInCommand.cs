@@ -8,24 +8,27 @@ using AccountManager.ViewModels;
 using AccountManager.Models;
 using System.Windows;
 using AccountManager.Services;
+using AccountManager.Stores;
 
 namespace AccountManager.Commands
 {
     internal class LogInCommand : CommandBase
     {
         private readonly LogInViewModel _logInViewModel;
+        private readonly LoggedUserStore _loggedUserStore;
         private readonly IUsersManagerService _usersManagerService;
         private readonly NavigationService _adminMenuViewNavigationService;
         private readonly NavigationService _userMenuViewNavigationService;
 
         public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, NavigationService adminMenuViewNavigationService,
-            NavigationService userMenuViewNavigationService)
+            NavigationService userMenuViewNavigationService, LoggedUserStore loggedUserStore)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;
             _adminMenuViewNavigationService = adminMenuViewNavigationService;
             _userMenuViewNavigationService = userMenuViewNavigationService;
 
+            _loggedUserStore = loggedUserStore;
 
             _logInViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
@@ -49,11 +52,14 @@ namespace AccountManager.Commands
 
             else if (!user.IsPasswordValid(_logInViewModel.Password)) MessageBox.Show("Password incorrect!");
 
-            else if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
+            else
+            {
+                _loggedUserStore.LoggedUser = user;
 
-            else _adminMenuViewNavigationService.Navigate();
+                if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
 
-
+                else _adminMenuViewNavigationService.Navigate();
+            }
 
         }
     }

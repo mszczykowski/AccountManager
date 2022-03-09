@@ -15,20 +15,14 @@ using AccountManager.Enums;
 
 namespace AccountManager.ViewModels.ProductsViewModels
 {
-    internal class ProductsViewModel : ViewModelBase
+    internal class ProductsListViewModel : ViewModelBase
     {
-        private readonly IProductsManagerService _productManagerService;
+        protected readonly IProductsManagerService _productManagerService;
         public ICommand BackCommand { get; }
 
         public ICommand FilterProductsCommand { get; }
 
-        public ICommand AddProductCommand { get; }
-
-        public ICommand EditProductCommand { get; }
-
         public ICommand ClearAllFiltersCommand { get; }
-
-        public ICommand DeleteSelectedCommand { get; private set; }
 
         private ObservableCollection<ProductViewModel> _products;
 
@@ -62,16 +56,13 @@ namespace AccountManager.ViewModels.ProductsViewModels
 
         public List<CategoryModel> CategoriesList { get => _categoriesList; }
 
-        public ProductsViewModel(NavigationService adminMenuViewModelNavigationService, NavigationService addProductViewModelNavigationService,
-            NavigationService editProductViewModelNavigationService, IProductsManagerService productManagerService, ProductStore productStore)
+        public ProductsListViewModel(NavigationService adminMenuViewModelNavigationService,
+            IProductsManagerService productManagerService)
         {
             BackCommand = new NavigateCommand(adminMenuViewModelNavigationService);
 
             FilterProductsCommand = new FilterProductsCommand(this);
 
-            AddProductCommand = new NavigateCommand(addProductViewModelNavigationService);
-
-            EditProductCommand = new NavigateToEditProductCommand(productStore, editProductViewModelNavigationService);
 
             ClearAllFiltersCommand = new ClearAllFiltersCommand(this);
 
@@ -84,8 +75,6 @@ namespace AccountManager.ViewModels.ProductsViewModels
             InitialiseCategoriesList();
 
             UpdateProductsCollection();
-
-            DeleteSelectedCommand = new DeleteSelectedCommand(this, _productManagerService);
         }
 
         public void UpdateProductsCollection()

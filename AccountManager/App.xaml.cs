@@ -12,6 +12,7 @@ using AccountManager.Models;
 using AccountManager.Context;
 using AccountManager.ViewModels.ManageProductsViewModels;
 using AccountManager.ViewModels.ManageOrdersViewModels;
+using AccountManager.ViewModels.ShopViewModels;
 
 
 namespace AccountManager
@@ -25,6 +26,7 @@ namespace AccountManager
         private readonly DataContext _dataContext;
         private readonly UserStore _userStore;
         private readonly ProductStore _productStore;
+        private readonly LoggedUserStore _loggedUserStore;
 
         public App()
         {
@@ -35,6 +37,8 @@ namespace AccountManager
             _userStore = new UserStore();
 
             _productStore = new ProductStore();
+
+            _loggedUserStore = new LoggedUserStore();
         }
         
         protected override void OnStartup(StartupEventArgs e)
@@ -60,7 +64,7 @@ namespace AccountManager
             return new LogInViewModel(new NavigationService(_navigationStore, CreateMainMenuViewModel), 
                 new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateUserMenuViewModel), 
-                new UsersManagerService(_dataContext));
+                new UsersManagerService(_dataContext), _loggedUserStore);
         }
 
         private AdminMenuViewModel CreateAdminMenuViewModel()
@@ -122,13 +126,20 @@ namespace AccountManager
 
         private UserMenuViewModel CreateUserMenuViewModel()
         {
-            return new UserMenuViewModel(null, null, new NavigationService(_navigationStore, CreateLogInViewModel));
+            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), null, 
+                new NavigationService(_navigationStore, CreateLogInViewModel));
         }
 
         private ManageUserOrdersViewModel CreateManageUserOrdersViewModel()
         {
             return new ManageUserOrdersViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
                 new OrderManagerService(_dataContext), _userStore);
+        }
+
+        private ProductsShopViewModel CreateProductsShopViewModel()
+        {
+            return new ProductsShopViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
+                new ProductsManagerService(_dataContext), _loggedUserStore);
         }
     }
 }

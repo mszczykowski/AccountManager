@@ -42,14 +42,14 @@ namespace AccountManager.ViewModels
         public ICommand CancelCommand { get; }
 
         public LogInViewModel(NavigationService mainMenuViewNavigationService, NavigationService adminMenuViewNavigationService,
-            NavigationService userMenuViewNavigationService, IUsersManagerService usersManagerModel)
+            NavigationService userMenuViewNavigationService, IUsersManagerService usersManagerModel, LoggedUserStore loggedUserStore)
         {
             CancelCommand = new NavigateCommand(mainMenuViewNavigationService);
 
             
             _usersManagerModel = usersManagerModel;
 
-            LogInCommand = new LogInCommand(this, _usersManagerModel, adminMenuViewNavigationService, userMenuViewNavigationService);
+            LogInCommand = new LogInCommand(this, _usersManagerModel, adminMenuViewNavigationService, userMenuViewNavigationService, loggedUserStore);
 
             Username = "admin";
             Password = "admin";

@@ -11,7 +11,20 @@ namespace AccountManager.Models
     {
         public int Id { get; }
         public DateTime OrderDate { get; }
-        public double TotalPrice { get; }
+        public double TotalPrice 
+        {
+            get
+            {
+                double totalPrice = 0;
+
+                foreach (var p in Products)
+                {
+                    totalPrice += p.Price * p.Quantity;
+                }
+
+                return totalPrice;
+            }
+        }
         public OrderStatuses Status { get; set; }
         public ICollection<OrderProductModel> Products { get; }
 

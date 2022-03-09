@@ -44,25 +44,13 @@ namespace AccountManager.ViewModels.ManageOrdersViewModels
 
             Name = "Order_" + _order.Id;
 
-            TotalPrice = CalculateTotalPrice().ToString("N2");
+            TotalPrice = _order.TotalPrice.ToString("N2");
 
             _status = _order.Status;
 
             upddateOrderStatusCommand = new UpdateOrderStatusCommand(this, orderManagerService);
 
 
-        }
-
-        public double CalculateTotalPrice()
-        {
-            double total = 0;
-            
-            foreach(var p in _order.Products)
-            {
-                total += p.Price * p.Quantity;
-            }
-
-            return total;
         }
 
     }

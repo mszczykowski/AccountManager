@@ -8,16 +8,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AccountManager.Commands;
+using AccountManager.Models;
+
 
 namespace AccountManager.ViewModels.ShopViewModels
 {
     internal class ProductsShopViewModel : ProductsListViewModel
     {
+        private LoggedUserStore _loggedUserStore;
+
         public ICommand UpdateShoppingCartCommand { get; }
-        public ProductsShopViewModel(NavigationService adminMenuViewModelNavigationService, IProductsManagerService productManagerService, 
-            LoggedUserStore loggedUserStore) : base(adminMenuViewModelNavigationService, productManagerService)
+
+        public ICommand NavigateToCartCommand { get; }
+
+        public ProductsShopViewModel(NavigationService adminMenuViewModelNavigationService, NavigationService shoppingCartViewModelNavigationService,
+            IProductsManagerService productManagerService, LoggedUserStore loggedUserStore) : base(adminMenuViewModelNavigationService, productManagerService)
         {
-            UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, loggedUserStore.LoggedUser.ShoppingCart);
+            _loggedUserStore = loggedUserStore;
+
+            LoadShoppingCartState();
+
+            UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, _loggedUserStore.User.ShoppingCart);
+
+            NavigateToCartCommand = new NavigateCommand(shoppingCartViewModelNavigationService);
+        }
+
+        private void LoadShoppingCartState()
+        {
+            foreach(var product in _products)
+            {
+                if (_loggedUserStore.User.ShoppingCart.Contains(new ShoppingCartEntryModel(product.Product.Id))) product.IsChecked = true;
+            }
         }
     }
 }

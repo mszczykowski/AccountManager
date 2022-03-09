@@ -34,7 +34,17 @@ namespace AccountManager.ViewModels.ShopViewModels
 
         public string Category => _productModel.Category.ToString();
 
-        public string TotalPrice { get; set; }
+        private string _totalPrice;
+
+        public string TotalPrice 
+        {
+            get => _totalPrice; 
+            set
+            {
+                _totalPrice = value;
+                OnPropertyChanged(nameof(TotalPrice));
+            }
+        }
 
         public ShoppingCartEntryViewModel(ProductModel productModel, ShoppingCartEntryModel shoppingCartEntry)
         {
@@ -53,7 +63,12 @@ namespace AccountManager.ViewModels.ShopViewModels
 
         public void UpdateTotalPrice()
         {
+            if (_shoppingCartEntry.Quantity > _productModel.Quantity) ActualQuantity = _productModel.Quantity;
+
+            else if (_shoppingCartEntry.Quantity < 1) ActualQuantity = 1;
+
             TotalPrice = (_productModel.Price * _shoppingCartEntry.Quantity).ToString("N2");
+
         }
     }
 }

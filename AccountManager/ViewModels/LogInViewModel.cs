@@ -51,8 +51,8 @@ namespace AccountManager.ViewModels
 
             LogInCommand = new LogInCommand(this, _usersManagerModel, adminMenuViewNavigationService, userMenuViewNavigationService, loggedUserStore);
 
-            Username = "admin";
-            Password = "admin";
+            Username = "user1";
+            Password = "user1";
         }
 
     }

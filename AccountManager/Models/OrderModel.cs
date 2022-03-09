@@ -9,7 +9,7 @@ namespace AccountManager.Models
 {
     internal class OrderModel
     {
-        public int Id { get; }
+        public int Id { get; set;  }
         public DateTime OrderDate { get; }
         public double TotalPrice 
         {
@@ -26,19 +26,24 @@ namespace AccountManager.Models
             }
         }
         public OrderStatuses Status { get; set; }
-        public ICollection<OrderProductModel> Products { get; }
+
+        private HashSet<OrderProductModel> _products;
+        public ICollection<OrderProductModel> Products { get => _products; }
 
         public int CustomerId { get; }
 
-        public OrderModel(int id, int customerId)
+        public OrderModel(int customerId)
         {
-            Id = id;
-
             CustomerId = customerId;
 
-            Products = new List<OrderProductModel>();
+            _products = new HashSet<OrderProductModel>();
 
             OrderDate = DateTime.Now;
+        }
+
+        public void AddProduct(OrderProductModel orderProductModel)
+        {
+            _products.Add(orderProductModel);
         }
 
     }

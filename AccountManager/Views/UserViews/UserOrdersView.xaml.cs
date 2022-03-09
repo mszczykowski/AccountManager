@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AccountManager.Views.ProductsViews
+namespace AccountManager.Views.UserViews
 {
     /// <summary>
-    /// Interaction logic for ProdcutView.xaml
+    /// Interaction logic for UserOrdersView.xaml
     /// </summary>
-    public partial class ProdcutsView : UserControl
+    public partial class UserOrdersView : UserControl
     {
-        public ProdcutsView()
+        public UserOrdersView()
         {
             InitializeComponent();
         }

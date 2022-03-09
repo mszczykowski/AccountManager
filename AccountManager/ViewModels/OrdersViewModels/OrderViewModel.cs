@@ -11,7 +11,7 @@ using AccountManager.Services;
 
 namespace AccountManager.ViewModels.ManageOrdersViewModels
 {
-    internal class UserOrderViewModel : ViewModelBase
+    internal class OrderViewModel : ViewModelBase
     {
 
         private OrderModel _order;
@@ -38,7 +38,7 @@ namespace AccountManager.ViewModels.ManageOrdersViewModels
             }
         }
 
-        public UserOrderViewModel(OrderModel order, IOrderManagerService orderManagerService)
+        public OrderViewModel(OrderModel order, IOrderManagerService orderManagerService)
         {
             _order = order;
 
@@ -47,10 +47,6 @@ namespace AccountManager.ViewModels.ManageOrdersViewModels
             TotalPrice = _order.TotalPrice.ToString("N2");
 
             _status = _order.Status;
-
-            upddateOrderStatusCommand = new UpdateOrderStatusCommand(this, orderManagerService);
-
-
         }
 
     }

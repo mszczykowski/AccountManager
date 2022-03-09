@@ -4,21 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AccountManager.ViewModels.ManageOrdersViewModels;
+using AccountManager.ViewModels.OrdersViewModels;
 
 namespace AccountManager.Commands.OrderManagerCommands
 {
     internal class SearchOrderCommand : CommandBase
     {
-        private ManageUserOrdersViewModel _manageUserOrdersViewModel;
-        public SearchOrderCommand(ManageUserOrdersViewModel manageUserOrdersViewModel)
+        private OrdersListViewModel _ordersListViewModel;
+        public SearchOrderCommand(OrdersListViewModel ordersListViewModel)
         {
-            _manageUserOrdersViewModel = manageUserOrdersViewModel;
+            _ordersListViewModel = ordersListViewModel;
         }
 
 
         public override void Execute(object? parameter)
         {
-            _manageUserOrdersViewModel.UpdateOrdersCollection();
+            _ordersListViewModel.UpdateOrdersCollection();
         }
     }
 }

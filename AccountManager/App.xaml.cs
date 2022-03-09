@@ -13,7 +13,7 @@ using AccountManager.Context;
 using AccountManager.ViewModels.ManageProductsViewModels;
 using AccountManager.ViewModels.ManageOrdersViewModels;
 using AccountManager.ViewModels.ShopViewModels;
-
+using AccountManager.ViewModels.UserViews;
 
 namespace AccountManager
 {
@@ -126,7 +126,8 @@ namespace AccountManager
 
         private UserMenuViewModel CreateUserMenuViewModel()
         {
-            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), null, 
+            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), 
+                new NavigationService(_navigationStore, CreateUserOrdersViewModel), 
                 new NavigationService(_navigationStore, CreateLogInViewModel));
         }
 
@@ -139,7 +140,20 @@ namespace AccountManager
         private ProductsShopViewModel CreateProductsShopViewModel()
         {
             return new ProductsShopViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
+                new NavigationService(_navigationStore, CreateShoppingCartViewModel),
                 new ProductsManagerService(_dataContext), _loggedUserStore);
+        }
+
+        private ShoppingCartViewModel CreateShoppingCartViewModel()
+        {
+            return new ShoppingCartViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), _loggedUserStore, 
+                new ProductsManagerService(_dataContext), new OrderManagerService(_dataContext));
+        }
+
+        private UserOrdersViewModel CreateUserOrdersViewModel()
+        {
+            return new UserOrdersViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+                new OrderManagerService(_dataContext), _loggedUserStore);
         }
     }
 }

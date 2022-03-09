@@ -74,14 +74,13 @@ namespace AccountManager.Services
 
         public ProductModel GetProduct(int id)
         {
-            ProductModel product = null;
+            return _context.Products.Find(x => x.Id == id);
+        }
 
-            foreach (var p in _context.Products)
-            {
-                if (p.Id == id) product = p;
-            }
-
-            return product;
+        public void ReduceProductQantity(int productId, int reduceBy)
+        {
+            var product = GetProduct(productId);
+            product.Quantity -= reduceBy;
         }
 
         public ICollection<ProductModel> SearchProductByName(string query)

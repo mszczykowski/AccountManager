@@ -11,6 +11,7 @@ namespace AccountManager.Context
     internal class DataContext
     {
         public List<UserModel> Users { get; private set; }
+
         public List<ProductModel> Products { get; private set; }
 
         public List<OrderModel> Orders { get; private set; }
@@ -53,12 +54,7 @@ namespace AccountManager.Context
                 new ProductModel(13, "Sony Vaio", 699.99, 80, Categories.Notebooks),
             };
 
-            Orders = new List<OrderModel>
-            {
-                new OrderModel(1, 1),
-                new OrderModel(2, 1),
-                new OrderModel(3, 1)
-            };
+            Orders = new List<OrderModel>();
         }
     }
 }

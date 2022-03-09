@@ -8,14 +8,14 @@ namespace AccountManager.Models
 {
     internal class OrderProductModel
     {
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public int Quantity { get; set; }
 
-        public OrderProductModel(int id, string name, double price, int quantity)
+        public OrderProductModel(int productId, string name, double price, int quantity)
         {
-            Id = id;
+            ProductId = productId;
             Name = name;
             Price = price;
             Quantity = quantity;

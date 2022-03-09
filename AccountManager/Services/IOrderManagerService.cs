@@ -15,5 +15,7 @@ namespace AccountManager.Services
         public OrderModel GetOrder(int id);
 
         public void UpdateStatus(int orderId, OrderStatuses orderStatuses);
+
+        public void AddOrder(OrderModel order);
     }
 }

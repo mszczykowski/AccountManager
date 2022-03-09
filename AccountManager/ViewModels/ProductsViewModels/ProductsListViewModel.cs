@@ -24,7 +24,7 @@ namespace AccountManager.ViewModels.ProductsViewModels
 
         public ICommand ClearAllFiltersCommand { get; }
 
-        private ObservableCollection<ProductViewModel> _products;
+        protected ObservableCollection<ProductViewModel> _products;
 
         public IEnumerable<ProductViewModel> Products => _products;
 

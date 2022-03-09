@@ -11,72 +11,43 @@ using AccountManager.Models;
 using AccountManager.Commands.OrderManagerCommands;
 using AccountManager.Stores;
 using System.Collections.ObjectModel;
-using AccountManager.Commands.OrderManagerCommands;
+using AccountManager.ViewModels.OrdersViewModels;
+using System.ComponentModel;
 
 namespace AccountManager.ViewModels.ManageOrdersViewModels
 {
-    internal class ManageUserOrdersViewModel : ViewModelBase
+    internal class ManageUserOrdersViewModel : OrdersListViewModel
     {
-        private readonly IOrderManagerService _orderManagerService;
-
-        private UserStore _customer;
-        
-        public ICommand BackCommand { get; }
-
-        public ICommand SearchOrderCommand { get; }
-
-        private ICommand UpdateOrderStatusCommand { get; }
-
-        private ObservableCollection<UserOrderViewModel> _orders;
-
-        public IEnumerable<UserOrderViewModel> Orders => _orders;
 
         public string CustomerName => _customer.User.Name;
 
 
-        private string _query;
-
-        public string Query
-        {
-            get => _query;
-            set
-            {
-                _query = value;
-                OnPropertyChanged(nameof(Query));
-            }
-        }
 
         public ManageUserOrdersViewModel(NavigationService ManageUsersViewNavigationService, IOrderManagerService orderManagerService, UserStore customer)
+            : base(ManageUsersViewNavigationService, orderManagerService, customer)
         {
-            _customer = customer;
-
-            _orderManagerService = orderManagerService;
-
-            _orders = new ObservableCollection<UserOrderViewModel>();
-
-            BackCommand = new NavigateCommand(ManageUsersViewNavigationService);
-
-            SearchOrderCommand = new SearchOrderCommand(this);
-
-            UpdateOrdersCollection();
+            SetOnPropertyChangedListener();
         }
 
-        public void UpdateOrdersCollection()
+        private void SetOnPropertyChangedListener()
         {
-            _orders.Clear();
-            
-            var orders = _orderManagerService.GetUserOrders(_customer.User.Id);
-
-            foreach(var order in orders)
+            _orders.ToList<OrderViewModel>().ForEach(order =>
             {
-                if(String.IsNullOrEmpty(Query)) _orders.Add(new UserOrderViewModel(order, _orderManagerService));
-                else
-                {
-                    if(("Order_" + order.Id).ToUpper() == Query.ToUpper()) _orders.Add(new UserOrderViewModel(order, _orderManagerService));
-                }
+                order.PropertyChanged += OnViewModelPropertyChanged;
+            });
+        }
+
+        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(OrderViewModel.Status)) UpdateOrderStatus(sender);
+        }
+
+        private void UpdateOrderStatus(object? sender)
+        {
+            var order = sender as OrderViewModel;
 
 
-            }
+            _orderManagerService.UpdateStatus(order.Order.Id, order.Status);
         }
     }
 }

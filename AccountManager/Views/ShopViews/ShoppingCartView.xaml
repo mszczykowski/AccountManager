@@ -32,7 +32,7 @@
         <ListView Grid.Row="1" ItemsSource="{Binding ShoppingCartEntries}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Product name" Width="270">
+                    <GridViewColumn Header="Product name" Width="265">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Name}"/>
@@ -40,7 +40,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Price (PLN)" Width="120">
+                    <GridViewColumn Header="Price (PLN)" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Price}"/>
@@ -48,11 +48,11 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Quantity" Width="90">
+                    <GridViewColumn Header="Quantity" Width="110">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBox Text="{Binding ActualQuantity}" Width="20"/>
+                                    <TextBox Text="{Binding ActualQuantity, UpdateSourceTrigger=PropertyChanged}" Width="40" Padding="0"/>
                                     <TextBlock Text="\"/>
                                     <TextBlock Text="{Binding MaximumQuantity}" FontWeight="Bold"/>
                                 </StackPanel>
@@ -60,7 +60,7 @@
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
 
-                    <GridViewColumn Header="Category" Width="190">
+                    <GridViewColumn Header="Category" Width="150">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock Text="{Binding Category}"/>
@@ -91,9 +91,9 @@
                 <TextBlock Text="{Binding FullPrice}" FontSize="20" FontWeight="Bold"/>
                 <TextBlock Text=" PLN" FontSize="20" FontWeight="Bold"/>
             </StackPanel>
-            
 
-            <Button Grid.Column="2" Content="Place order" Margin="20 10 10 10"/>
+
+            <Button Grid.Column="2" Content="Place order" Margin="20 10 10 10" Command="{Binding PlaceOrderCommand}"/>
         </Grid>
         
         

@@ -7,25 +7,8 @@ using System.Threading.Tasks;
 
 namespace AccountManager.Stores
 {
-    internal class LoggedUserStore
+    internal class LoggedUserStore : UserStore
     {
-        private UserModel _loggedUser;
-
-        public UserModel LoggedUser
-        {
-            get => _loggedUser;
-            set
-            {
-                _loggedUser = value;
-                OnCurrentUserChanged();
-            }
-        }
-
-        public event EventHandler? CurrentUserChanged;
-
-        private void OnCurrentUserChanged()
-        {
-            CurrentUserChanged?.Invoke(this, EventArgs.Empty);
-        }
+        
     }
 }

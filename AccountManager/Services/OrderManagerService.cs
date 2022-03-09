@@ -11,11 +11,20 @@ namespace AccountManager.Services
 {
     internal class OrderManagerService : IOrderManagerService
     {
-        DataContext _dataContext;
+        private DataContext _dataContext;
+        private Random random;
 
         public OrderManagerService(DataContext dataContext)
         {
             _dataContext = dataContext;
+
+            random = new Random();
+        }
+
+        public void AddOrder(OrderModel order)
+        {
+            order.Id = GenerateId();
+            _dataContext.Orders.Add(order);
         }
 
         public OrderModel GetOrder(int id)
@@ -45,6 +54,26 @@ namespace AccountManager.Services
             var order = GetOrder(orderId);
 
             order.Status = orderStatus;
+        }
+        
+
+        private int GenerateId()
+        {
+            int id;
+
+            bool isIdValid = true;
+            do
+            {
+                id = random.Next();
+
+                _dataContext.Products.ForEach(p =>
+                {
+                    if (p.Id == id) isIdValid = false;
+                });
+            }
+            while (!isIdValid);
+
+            return id;
         }
     }
 }

@@ -54,7 +54,7 @@ namespace AccountManager.Commands
 
             else
             {
-                _loggedUserStore.LoggedUser = user;
+                _loggedUserStore.User = user;
 
                 if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
 

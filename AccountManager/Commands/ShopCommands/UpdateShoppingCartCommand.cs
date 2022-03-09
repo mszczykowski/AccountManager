@@ -41,7 +41,7 @@ namespace AccountManager.Commands.ShopCommands
         {
             var product = parameter as ProductViewModel;
 
-            var shoppingCartEntry = new ShoppingCartEntryModel(product.Product.Id);
+            var shoppingCartEntry = new ShoppingCartEntryModel(product.Product);
 
             if(_shoppingCart.Contains(shoppingCartEntry)) _shoppingCart.Remove(shoppingCartEntry);
             else _shoppingCart.Add(shoppingCartEntry);

@@ -95,7 +95,7 @@ namespace AccountManager.ViewModels.ShopViewModels
 
             _loggedUserStore.User.ShoppingCart.ToList().ForEach(entry =>
             {
-                _shoppingCartEntries.Add(new ShoppingCartEntryViewModel(_productsManagerService.GetProduct(entry.ProductId), entry));
+                _shoppingCartEntries.Add(new ShoppingCartEntryViewModel(_productsManagerService.GetProduct(entry.Product.Id), entry));
             });
 
             OnPropertyChanged(nameof(ShoppingCartEntries));

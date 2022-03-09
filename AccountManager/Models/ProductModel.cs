@@ -40,5 +40,11 @@ namespace AccountManager.Models
             Quantity = product.Quantity;
             Category = product.Category;
         }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ProductModel model &&
+                   Id == model.Id;
+        }
     }
 }

@@ -8,26 +8,27 @@ namespace AccountManager.Models
 {
     internal class ShoppingCartEntryModel
     {
-        
+        private ProductModel _product;
 
-        public int ProductId { get; set; }
+        public ProductModel Product { get => _product; set => _product = value; }
+
         public int Quantity { get; set; }
 
-        public ShoppingCartEntryModel(int productId)
+        public ShoppingCartEntryModel(ProductModel product)
         {
-            ProductId = productId;
+            _product = product;
             Quantity = 1;
         }
 
         public override bool Equals(object? obj)
         {
             return obj is ShoppingCartEntryModel model &&
-                   ProductId == model.ProductId;
+                   Product == model.Product;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ProductId);
+            return HashCode.Combine(Product);
         }
     }
 }

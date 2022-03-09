@@ -38,7 +38,7 @@ namespace AccountManager.ViewModels.ShopViewModels
         {
             foreach(var product in _products)
             {
-                if (_loggedUserStore.User.ShoppingCart.Contains(new ShoppingCartEntryModel(product.Product.Id))) product.IsChecked = true;
+                if (_loggedUserStore.User.ShoppingCart.Contains(new ShoppingCartEntryModel(product.Product))) product.IsChecked = true;
             }
         }
     }

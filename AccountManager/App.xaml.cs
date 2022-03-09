@@ -14,6 +14,7 @@ using AccountManager.ViewModels.ManageProductsViewModels;
 using AccountManager.ViewModels.ManageOrdersViewModels;
 using AccountManager.ViewModels.ShopViewModels;
 using AccountManager.ViewModels.UserViews;
+using AccountManager.Discounts;
 
 namespace AccountManager
 {
@@ -28,6 +29,8 @@ namespace AccountManager
         private readonly ProductStore _productStore;
         private readonly LoggedUserStore _loggedUserStore;
 
+        private readonly DiscountManager _discountManager;
+
         public App()
         {
             _navigationStore = new NavigationStore();
@@ -39,8 +42,23 @@ namespace AccountManager
             _productStore = new ProductStore();
 
             _loggedUserStore = new LoggedUserStore();
+
+            _discountManager = DiscountManager.GetInstance();
+
+            InitialiseDiscounts();
         }
-        
+
+        private void InitialiseDiscounts()
+        {
+            var productsManager = new ProductsManagerService(_dataContext);
+
+            _discountManager.AddDiscount(new TenEveryHundredDiscount());
+
+            _discountManager.AddDiscount(new FiftyPercentOffOnCategorySecondProduct(Enums.Categories.Smartphones));
+
+            _discountManager.AddDiscount(new ThirtyPercentOffProdcut(productsManager.GetProduct(1)));
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             _navigationStore.CurrentViewModel = CreateMainMenuViewModel();

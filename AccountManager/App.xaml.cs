@@ -152,7 +152,7 @@ namespace AccountManager
 
         private UserOrdersViewModel CreateUserOrdersViewModel()
         {
-            return new UserOrdersViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
+            return new UserOrdersViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
                 new OrderManagerService(_dataContext), _loggedUserStore);
         }
     }

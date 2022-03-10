@@ -34,7 +34,7 @@ namespace AccountManager.Discounts
 
         public override string ToString()
         {
-            return "Fifty percent off on second product from " + _discountedCategory.ToString();
+            return "50% off on second product from " + _discountedCategory.ToString();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace AccountManager.Discounts
 
         public override string ToString()
         {
-            return "10 every 100 spent";
+            return "-10 every 100 spent";
         }
     }
 }

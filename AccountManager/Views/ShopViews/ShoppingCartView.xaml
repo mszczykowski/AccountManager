@@ -79,7 +79,7 @@
             </ListView.View>
         </ListView>
 
-        <Grid Grid.Row="2" VerticalAlignment="Center">
+        <Grid Grid.Row="2" VerticalAlignment="Center" Grid.IsSharedSizeScope="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
@@ -93,22 +93,51 @@
             </Grid.RowDefinitions>
 
 
+            <Grid Grid.Column="1" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="money"/>
+                </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Price after discounts: "/>
-                <TextBlock Text="{Binding FullPrice}" FontWeight="Bold"/>
-                <TextBlock Text=" PLN" FontWeight="Bold"/>
-            </StackPanel>
-            
-            <ListBox Grid.Column="1" Grid.Row="1">
+                <TextBlock Grid.Column="0" Text="Price before discounts: "/>
 
-            </ListBox>
+                <TextBlock Grid.Column="2" Text="{Binding FullPrice}" FontWeight="Bold" TextAlignment="Right"/>
+            </Grid>
 
-            <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center">
-                <TextBlock Text="Price after discounts: " FontSize="20"/>
-                <TextBlock Text="{Binding FullPrice}" FontSize="20" FontWeight="Bold"/>
-                <TextBlock Text=" PLN" FontSize="20" FontWeight="Bold"/>
-            </StackPanel>
+            <ItemsControl Grid.Column="1" Grid.Row="1" ItemsSource="{Binding DiscountsViewModels}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto" SharedSizeGroup="money"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding DiscountDescription}" Grid.Column="0" Margin="0 0 10 0"/>
+                            <TextBlock Text="{Binding DiscountValue}" Grid.Column="2" TextAlignment="Right"/>
+
+                        </Grid>
+                        
+                        
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto" SharedSizeGroup="money"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Price after discounts: " FontSize="20" Grid.Column="0"/>
+
+                <TextBlock Text="{Binding FullPriceWithDiscounts}" Grid.Column="2" FontSize="20" FontWeight="Bold" TextAlignment="Right"/>
+            </Grid>
 
 
             <Button Grid.Column="2"  Grid.Row="2" Content="Place order" Margin="20 10 10 10" Command="{Binding PlaceOrderCommand}"/>

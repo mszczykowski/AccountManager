@@ -9,12 +9,14 @@
         xmlns:viewsOrders ="clr-namespace:AccountManager.Views.ManageOrdersViews"
         xmlns:viewsShop ="clr-namespace:AccountManager.Views.ShopViews"
         xmlns:viewsUser ="clr-namespace:AccountManager.Views.UserViews"
+        xmlns:viewsDiscounts ="clr-namespace:AccountManager.Views.DiscountManagerViews"
         xmlns:viewmodels ="clr-namespace:AccountManager.ViewModels"
         xmlns:viewmodelsManageProducts ="clr-namespace:AccountManager.ViewModels.ManageProductsViewModels"
         xmlns:viewmodelsProducts ="clr-namespace:AccountManager.ViewModels.ProductsViewModels"
         xmlns:viewmodelsOrders ="clr-namespace:AccountManager.ViewModels.ManageOrdersViewModels"
         xmlns:viewmodelsShop ="clr-namespace:AccountManager.ViewModels.ShopViewModels"
         xmlns:viewmodelsUser ="clr-namespace:AccountManager.ViewModels.UserViews"
+        xmlns:viewmodelsDiscounts ="clr-namespace:AccountManager.ViewModels.DiscountManagerViewModels"
         
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
@@ -78,7 +80,13 @@
                 <viewsUser:UserOrdersView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodelsDiscounts:DiscountManagerViewModel}">
+                <viewsDiscounts:DiscountManagerView/>
+            </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodelsDiscounts:AddDiscountViewModel}">
+                <viewsDiscounts:AddDiscountView/>
+            </DataTemplate>
 
         </Grid.Resources>
 

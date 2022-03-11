@@ -14,18 +14,22 @@ namespace AccountManager.ViewModels
         public ICommand ManageUsersCommand { get; }
 
         public ICommand ManageProductsCommand { get; }
-        
+
+        public ICommand ManageDiscountsCommand { get; }
+
         public ICommand ExitCommand { get; }
 
         public ICommand LogOutCommand { get; }
 
         public AdminMenuViewModel(NavigationService manageUsersViewNavigationService,
             NavigationService manageProductsViewNavigationService, 
-            NavigationService logInViewNavigationService)
+            NavigationService logInViewNavigationService, NavigationService manageDiscountsViewNavigationService)
         {
             ManageUsersCommand = new NavigateCommand(manageUsersViewNavigationService);
 
             LogOutCommand = new NavigateCommand(logInViewNavigationService);
+
+            ManageDiscountsCommand = new NavigateCommand(manageDiscountsViewNavigationService);
 
             ExitCommand = new ExitCommand();
 

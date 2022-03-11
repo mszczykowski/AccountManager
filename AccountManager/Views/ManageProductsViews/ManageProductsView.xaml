@@ -6,7 +6,9 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:AccountManager.Views"
              xmlns:utils="clr-namespace:AccountManager.Utils"
-             xmlns:categories="clr-namespace:AccountManager.Enums" xmlns:viewmodels="clr-namespace:AccountManager.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:ProductViewModel}"
+             xmlns:categories="clr-namespace:AccountManager.Enums" 
+             xmlns:viewmodels="clr-namespace:AccountManager.ViewModels" 
+             d:DataContext="{d:DesignInstance Type=viewmodels:ProductViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>

@@ -9,11 +9,14 @@ namespace AccountManager.Discounts
 {
     internal class DiscountManager
     {
-        private static DiscountManager _insance;
+        private static DiscountManager _instance;
 
         private ICollection<DiscountBase> _discounts;
 
-        public ICollection<DiscountBase> Discounts { get => _discounts; }
+        public IReadOnlyCollection<DiscountBase> Discounts 
+        { 
+            get => (IReadOnlyCollection<DiscountBase>)_discounts; 
+        }
 
         private DiscountManager()
         {
@@ -22,8 +25,8 @@ namespace AccountManager.Discounts
 
         public static DiscountManager GetInstance()
         {
-            if( _insance == null ) _insance = new DiscountManager();
-            return _insance;
+            if( _instance == null ) _instance = new DiscountManager();
+            return _instance;
         }
 
         public void AddDiscount(DiscountBase discount)

@@ -46,5 +46,10 @@ namespace AccountManager.Models
             return obj is ProductModel model &&
                    Id == model.Id;
         }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
     }
 }

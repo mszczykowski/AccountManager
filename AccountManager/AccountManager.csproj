@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DiscountManager\" />
+    <Folder Include="ViewModels\DiscountManagerViewModels\" />
   </ItemGroup>
 
 </Project>

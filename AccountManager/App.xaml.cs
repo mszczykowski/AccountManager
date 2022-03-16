@@ -48,8 +48,6 @@ namespace AccountManager
 
             _discountManager = DiscountManager.GetInstance();
 
-            InitialiseDiscounts();
-
             _databaseConnection = new DatabaseConnection();
             SqlTest();
         }

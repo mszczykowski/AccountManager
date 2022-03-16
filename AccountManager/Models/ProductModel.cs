@@ -15,6 +15,7 @@ namespace AccountManager.Models
         public double Price { get; set; }
         public int Quantity { get; set; }
         public Categories Category { get; set; }
+        public bool IsDeleted { get; set; }
 
         public ProductModel(string name, double price, int quantity, Categories category)
         {

@@ -61,7 +61,7 @@ namespace AccountManager.Commands.ShopCommands
                 {
                     _productsManagerService.ReduceProductQantity(entry.ProductModel.Id, entry.ActualQuantity);
 
-                    order.AddProduct(new OrderProductModel(entry.ProductModel.Id, entry.ProductModel.Name, entry.ProductModel.Price, entry.ActualQuantity));
+                    order.AddProduct(new OrderProductModel(entry.ProductModel.Id, entry.ProductModel.Price, entry.ActualQuantity));
                 });
 
                 _orderManagerService.AddOrder(order);

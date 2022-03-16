@@ -31,6 +31,8 @@ namespace AccountManager
 
         private readonly DiscountManager _discountManager;
 
+        private readonly DatabaseConnection _databaseConnection;
+
         public App()
         {
             _navigationStore = new NavigationStore();
@@ -46,6 +48,16 @@ namespace AccountManager
             _discountManager = DiscountManager.GetInstance();
 
             InitialiseDiscounts();
+
+            _databaseConnection = new DatabaseConnection();
+            SqlTest();
+        }
+
+        private void SqlTest()
+        {
+            IUsersManagerService users = new UsersManagerDatabaseService(_databaseConnection);
+
+            users.AddUser(new StandardUserModel("name", "password"));
         }
 
         private void InitialiseDiscounts()

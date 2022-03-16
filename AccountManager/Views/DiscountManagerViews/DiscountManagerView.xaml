@@ -10,12 +10,10 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -25,47 +23,23 @@
             <TextBlock Text="Manage discounts" Style="{StaticResource Header}" Grid.Column="0"/>
 
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="3">
-                <Button Content="Add discount" Command="{Binding AddProductCommand}" Margin="5 0"/>
+                <Button Content="Add discount" Command="{Binding AddDicountCommand}" Margin="5 0"/>
                 <Rectangle VerticalAlignment="Stretch" Fill="DarkGray" Grid.Column="3" Grid.Row="1" Width="1" Margin="5 0"/>
                 <Button Content="Back" Command="{Binding BackCommand}" Margin="5 0"/>
             </StackPanel>
         </Grid>
 
-        <ListView Grid.Row="3" ItemsSource="{Binding Products}" Name="ProductListView">
+        <ListView Grid.Row="1" ItemsSource="{Binding DiscountsViewModels}" Name="ProductListView">
 
 
 
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Product name" Width="270">
+                    <GridViewColumn Header="Description" Width="500">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Name}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Price (PLN)" Width="120">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Price}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Quantity" Width="90">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Quantity}"/>
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
-
-                    <GridViewColumn Header="Category" Width="200">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Category}"/>
+                                <TextBlock Text="{Binding DiscountDescription}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -73,7 +47,7 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsChecked="{Binding Path=IsChecked, Mode=TwoWay}"/>
+                                <Button Content="Delete" Command="{Binding DeleteDiscountCommand}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

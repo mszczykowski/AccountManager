@@ -33,5 +33,10 @@ namespace AccountManager.Discounts
         {
             _discounts.Add( discount );
         }
+
+        public void DeleteDiscount(DiscountBase discount)
+        {
+            _discounts.Remove(discount);
+        }
     }
 }

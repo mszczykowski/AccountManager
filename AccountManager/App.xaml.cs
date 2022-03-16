@@ -15,6 +15,7 @@ using AccountManager.ViewModels.ManageOrdersViewModels;
 using AccountManager.ViewModels.ShopViewModels;
 using AccountManager.ViewModels.UserViews;
 using AccountManager.Discounts;
+using AccountManager.ViewModels.DiscountManagerViewModels;
 
 namespace AccountManager
 {
@@ -60,17 +61,6 @@ namespace AccountManager
             users.AddUser(new StandardUserModel("name", "password"));
         }
 
-        private void InitialiseDiscounts()
-        {
-            var productsManager = new ProductsManagerService(_dataContext);
-
-            _discountManager.AddDiscount(new TenEveryHundredDiscount());
-
-            _discountManager.AddDiscount(new FiftyPercentOffOnCategorySecondProduct(Enums.Categories.Smartphones));
-
-            _discountManager.AddDiscount(new ThirtyPercentOffProdcut(productsManager.GetProduct(1)));
-        }
-
         protected override void OnStartup(StartupEventArgs e)
         {
             _navigationStore.CurrentViewModel = CreateMainMenuViewModel();
@@ -101,7 +91,8 @@ namespace AccountManager
         {
             return new AdminMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
                 new NavigationService(_navigationStore, CreateManageProductsViewModel),
-                new NavigationService(_navigationStore, CreateLogInViewModel));
+                new NavigationService(_navigationStore, CreateLogInViewModel),
+                new NavigationService(_navigationStore, CreateDiscountManagerViewModel));
         }
 
         private ManageUsersViewModel CreateManageUsersViewModel()
@@ -184,6 +175,19 @@ namespace AccountManager
         {
             return new UserOrdersViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
                 new OrderManagerService(_dataContext), _loggedUserStore);
+        }
+
+        private DiscountManagerViewModel CreateDiscountManagerViewModel()
+        {
+            return new DiscountManagerViewModel(_discountManager,
+                new NavigationService(_navigationStore, CreateAdminMenuViewModel),
+                new NavigationService(_navigationStore, CreateAddDiscountViewModel));
+        }
+
+        private AddDiscountViewModel CreateAddDiscountViewModel()
+        {
+            return new AddDiscountViewModel(new ProductsManagerService(_dataContext), _discountManager,
+                new NavigationService(_navigationStore, CreateDiscountManagerViewModel));
         }
     }
 }

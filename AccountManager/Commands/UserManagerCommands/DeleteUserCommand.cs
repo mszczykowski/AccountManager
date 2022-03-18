@@ -44,7 +44,7 @@ namespace AccountManager.Commands
             if (_userStore.User.HasAdminPermissions()) MessageBox.Show("Can't delete admin account!");
             else if (MessageBox.Show("Delete user \"" + _userStore.User.Name + "\" ?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                _usersManagerService.DeleteUser(_userStore.User.Name);
+                _usersManagerService.DeleteUser(_userStore.User.Id);
                 
                 _manageUsersViewModelNavigationSercvice.Navigate();
             }

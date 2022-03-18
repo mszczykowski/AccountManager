@@ -9,8 +9,7 @@ namespace AccountManager.Context
 {
     internal class DatabaseConnection
     {
-        private static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog = ShopDB; Integrated Security = True; Connect Timeout = 30; Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
+        private static string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ShopDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         public int ExecuteDML(string queryString)
         {
             int result = 0;
@@ -32,9 +31,11 @@ namespace AccountManager.Context
             return result;
         }
 
-        public SqlDataReader ExecuteDQL(string queryString)
+        public List<object[]> ExecuteDQL(string queryString)
         {
-            SqlDataReader reader;
+            List<object[]> values = new List<object[]>();
+
+
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -43,16 +44,23 @@ namespace AccountManager.Context
                 {
                     connection.Open();
 
-                    reader = command.ExecuteReader();
+                    SqlDataReader reader = command.ExecuteReader();
 
-                    return reader;
+                    while(reader.Read())
+                    {
+                        Object[] row = new Object[reader.FieldCount];
+                        
+                        reader.GetValues(row);
+
+                        values.Add(row);
+                    }
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
-            return null;
+            return values;
         }
     }
 }

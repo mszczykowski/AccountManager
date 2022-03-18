@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AccountManager.Context;
+using System.Data.SqlClient;
 
 namespace AccountManager.Services
 {
@@ -20,34 +21,83 @@ namespace AccountManager.Services
         public void AddUser(UserModel user)
         {
             string query = "insert into [User] (Name, Password, Role)"
-                + "values ('" + user.Name + "', '" + user.Password + "', '0');";
+                + "values ('" + user.Name + "', '" + user.Password + "', '2');";
 
             _databaseConnection.ExecuteDML(query);
         }
 
-        public void DeleteUser(string name)
+        public void DeleteUser(int id)
         {
-            throw new NotImplementedException();
+            string query = "delete from [User] "
+                + "where id = '" + id + "'";
+
+            _databaseConnection.ExecuteDML(query);
         }
 
-        public void EditUser(string name, UserModel user)
+        public void EditUser(int id, UserModel user)
         {
-            throw new NotImplementedException();
+            string query = "update [User] "
+                         + "set name = '" + user.Name + "', password = '" + user.Password + "' "
+                         + "where id = '" + id + "'";
+
+            _databaseConnection.ExecuteDML(query);
         }
 
         public ICollection<UserModel> GetAllUsers()
         {
-            throw new NotImplementedException();
+            string query = "select * "
+                          + "from [User];";
+
+            List<UserModel> users = new List<UserModel>();
+
+            List<object[]> dbResult = _databaseConnection.ExecuteDQL(query);
+
+            dbResult.ForEach(result =>
+            {
+                users.Add(CreateUserModel(result));
+            });
+
+            return users;
         }
 
         public UserModel GetUser(int userId)
         {
-            throw new NotImplementedException();
+            string query = "select * "
+                          + "from [User] u "
+                          + "where u.id = '" + userId + "'";
+
+            List<object[]> dbResult = _databaseConnection.ExecuteDQL(query);
+
+            return (CreateUserModel(dbResult[0]));
         }
 
         public UserModel GetUser(string? username)
         {
-            throw new NotImplementedException();
+            string query = "select * "
+                          + "from [User] u "
+                          + "where upper(u.name) = '" + username + "'";
+
+            List<object[]> dbResult = _databaseConnection.ExecuteDQL(query);
+
+            if (dbResult.Count <= 0) return null;
+
+            return (CreateUserModel(dbResult[0]));
+        }
+
+        private UserModel CreateUserModel(object[] row)
+        {
+            if (Convert.ToInt32(row[row.Length - 1]) == 2)
+            {
+                return new AdminModel(Convert.ToInt32(row[0]),
+                    row[1].ToString(), row[2].ToString());
+            }
+            else
+            {
+                return new StandardUserModel(Convert.ToInt32(row[0]),
+                    row[1].ToString(), row[2].ToString());
+            }
+
+            return null;
         }
     }
 }

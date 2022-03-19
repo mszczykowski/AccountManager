@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AccountManager.Commands;
 using AccountManager.Models;
-
+using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels.ShopViewModels
 {

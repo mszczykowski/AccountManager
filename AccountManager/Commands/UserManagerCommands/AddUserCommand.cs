@@ -9,7 +9,7 @@ using System.Windows;
 using AccountManager.Services;
 using System.ComponentModel;
 
-namespace AccountManager.Commands
+namespace AccountManager.Commands.UserManagerCommands
 {
     internal class AddUserCommand : CommandBase
     {

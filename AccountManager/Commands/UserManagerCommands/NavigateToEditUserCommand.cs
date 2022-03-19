@@ -11,7 +11,7 @@ using AccountManager.Services;
 using AccountManager.Stores;
 
 
-namespace AccountManager.Commands
+namespace AccountManager.Commands.UserManagerCommands
 {
     internal class NavigateToEditUserCommand : CommandBase
     {

@@ -7,7 +7,7 @@ using AccountManager.Services;
 using AccountManager.Stores;
 using AccountManager.ViewModels;
 
-namespace AccountManager.Commands
+namespace AccountManager.Commands.MisicCommands
 {
     internal class NavigateCommand : CommandBase
     {

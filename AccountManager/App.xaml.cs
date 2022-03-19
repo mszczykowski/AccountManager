@@ -16,6 +16,7 @@ using AccountManager.ViewModels.ShopViewModels;
 using AccountManager.ViewModels.UserViews;
 using AccountManager.Discounts;
 using AccountManager.ViewModels.DiscountManagerViewModels;
+using Microsoft.Extensions.Hosting;
 
 namespace AccountManager
 {
@@ -36,6 +37,12 @@ namespace AccountManager
 
         public App()
         {
+            Host.CreateDefaultBuilder().ConfigureServices(services =>
+            {
+                services.AddSingleton
+            })
+            
+            
             _navigationStore = new NavigationStore();
 
             _dataContext = new DataContext();

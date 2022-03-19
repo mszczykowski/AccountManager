@@ -12,6 +12,7 @@ using AccountManager.Commands.UserManagerCommands;
 using System.Collections.ObjectModel;
 using AccountManager.Commands.ProductManagerCommands;
 using AccountManager.Enums;
+using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels.ProductsViewModels
 {

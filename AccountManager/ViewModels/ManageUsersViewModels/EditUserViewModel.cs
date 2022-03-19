@@ -10,6 +10,8 @@ using AccountManager.Services;
 using System.ComponentModel;
 using AccountManager.Models;
 using AccountManager.Stores;
+using AccountManager.Commands.MisicCommands;
+using AccountManager.Commands.UserManagerCommands;
 
 namespace AccountManager.ViewModels
 {

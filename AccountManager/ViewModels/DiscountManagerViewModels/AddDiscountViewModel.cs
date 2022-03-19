@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AccountManager.Commands;
 using AccountManager.Commands.DiscountCommands;
+using AccountManager.Commands.MisicCommands;
 using AccountManager.Discounts;
 using AccountManager.Enums;
 using AccountManager.Models;

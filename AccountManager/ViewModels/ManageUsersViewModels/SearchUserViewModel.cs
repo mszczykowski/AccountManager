@@ -8,6 +8,8 @@ using System.Windows.Input;
 using AccountManager.Commands;
 using AccountManager.Stores;
 using System.ComponentModel;
+using AccountManager.Commands.MisicCommands;
+using AccountManager.Commands.UserManagerCommands;
 
 namespace AccountManager.ViewModels
 {

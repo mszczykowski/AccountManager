@@ -7,6 +7,7 @@ using System.Windows.Input;
 using AccountManager.Commands;
 using AccountManager.Stores;
 using AccountManager.Services;
+using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels
 {

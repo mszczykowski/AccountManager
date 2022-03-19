@@ -9,6 +9,7 @@ using AccountManager.Commands;
 using AccountManager.Enums;
 using AccountManager.Commands.ProductManagerCommands;
 using AccountManager.Stores;
+using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels.ManageProductsViewModels
 {

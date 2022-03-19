@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace AccountManager.Commands
+namespace AccountManager.Commands.MisicCommands
 {
     internal class ExitCommand : CommandBase
     {

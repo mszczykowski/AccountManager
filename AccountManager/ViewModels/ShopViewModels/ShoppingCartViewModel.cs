@@ -12,6 +12,7 @@ using AccountManager.Commands.ShopCommands.ShoppingCartCommands;
 using System.ComponentModel;
 using AccountManager.Commands.ShopCommands;
 using AccountManager.Discounts;
+using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels.ShopViewModels
 {

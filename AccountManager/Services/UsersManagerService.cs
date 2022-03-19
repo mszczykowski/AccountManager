@@ -27,14 +27,14 @@ namespace AccountManager.Services
             _context.Users.Add(user);
         }
 
-        public void DeleteUser(string name)
+        public void DeleteUser(int id)
         {
-            _context.Users.Remove(GetUser(name));
+            _context.Users.Remove(GetUser(id));
         }
 
-        public void EditUser(string name, UserModel user)
+        public void EditUser(int id, UserModel user)
         {
-            var editedUser = GetUser(name);
+            var editedUser = GetUser(id);
             editedUser.Name = user.Name;
             editedUser.Password = user.Password;
         }

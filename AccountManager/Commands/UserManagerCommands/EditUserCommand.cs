@@ -51,7 +51,7 @@ namespace AccountManager.Commands.UserManagerCommands
 
             else
             {
-                _usersManagerService.EditUser(_userStore.User.Name, new StandardUserModel(_editUserViewModel.Username, _editUserViewModel.Password));
+                _usersManagerService.EditUser(_userStore.User.Id, new StandardUserModel(_editUserViewModel.Username, _editUserViewModel.Password));
 
                 MessageBox.Show("User edited");
                 _searchUserViewModelNavigationSercvice.Navigate();

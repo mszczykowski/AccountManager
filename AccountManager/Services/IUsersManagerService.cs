@@ -10,8 +10,8 @@ namespace AccountManager.Services
     internal interface IUsersManagerService
     {
         public void AddUser(UserModel user);
-        public void DeleteUser(string name);
-        public void EditUser(string name, UserModel user);
+        public void DeleteUser(int id);
+        public void EditUser(int id, UserModel user);
         public UserModel GetUser(int userId);
         public UserModel GetUser(string? username);
         public ICollection<UserModel> GetAllUsers();

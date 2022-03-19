@@ -56,14 +56,6 @@ namespace AccountManager
             _discountManager = DiscountManager.GetInstance();
 
             _databaseConnection = new DatabaseConnection();
-            SqlTest();
-        }
-
-        private void SqlTest()
-        {
-            IUsersManagerService users = new UsersManagerDatabaseService(_databaseConnection);
-
-            users.AddUser(new StandardUserModel("name", "password"));
         }
 
         protected override void OnStartup(StartupEventArgs e)
@@ -89,7 +81,7 @@ namespace AccountManager
             return new LogInViewModel(new NavigationService(_navigationStore, CreateMainMenuViewModel), 
                 new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateUserMenuViewModel), 
-                new UsersManagerService(_dataContext), _loggedUserStore);
+                new UsersManagerDatabaseService(_databaseConnection), _loggedUserStore);
         }
 
         private AdminMenuViewModel CreateAdminMenuViewModel()
@@ -106,19 +98,19 @@ namespace AccountManager
                 new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateSearchUserViewModel),
                 new NavigationService(_navigationStore, CreateManageUserOrdersViewModel),
-                new UsersManagerService(_dataContext), _userStore);
+                new UsersManagerDatabaseService(_databaseConnection), _userStore);
         }
 
         private AddUserViewModel CreateAddUserViewModel()
         {
             return new AddUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
-                new UsersManagerService(_dataContext));
+                new UsersManagerDatabaseService(_databaseConnection));
         }
 
         private EditUserViewModel CreateEditUserViewModel()
         {
             return new EditUserViewModel(new NavigationService(_navigationStore, CreateSearchUserViewModel),
-                new UsersManagerService(_dataContext),
+                new UsersManagerDatabaseService(_databaseConnection),
                 _userStore);
         }
 
@@ -126,7 +118,7 @@ namespace AccountManager
         {
             return new SearchUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
                 new NavigationService(_navigationStore, CreateEditUserViewModel),
-                new UsersManagerService(_dataContext),
+                new UsersManagerDatabaseService(_databaseConnection),
                 _userStore);
         }
 
@@ -135,19 +127,19 @@ namespace AccountManager
             return new ManageProductsViewModel(new NavigationService(_navigationStore, CreateAdminMenuViewModel),
                 new NavigationService(_navigationStore, CreateAddProductViewModel),
                 new NavigationService(_navigationStore, CreateEditProductViewModel),
-                new ProductsManagerService(_dataContext), _productStore);
+                new ProductManagerDatabaseService(_databaseConnection), _productStore);
         }
 
         private AddProductViewModel CreateAddProductViewModel()
         {
             return new AddProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
-                new ProductsManagerService(_dataContext));
+                new ProductManagerDatabaseService(_databaseConnection));
         }
 
         private EditProductViewModel CreateEditProductViewModel()
         {
             return new EditProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
-                new ProductsManagerService(_dataContext), _productStore);
+                new ProductManagerDatabaseService(_databaseConnection), _productStore);
         }
 
         private UserMenuViewModel CreateUserMenuViewModel()
@@ -167,13 +159,13 @@ namespace AccountManager
         {
             return new ProductsShopViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
                 new NavigationService(_navigationStore, CreateShoppingCartViewModel),
-                new ProductsManagerService(_dataContext), _loggedUserStore);
+                new ProductManagerDatabaseService(_databaseConnection), _loggedUserStore);
         }
 
         private ShoppingCartViewModel CreateShoppingCartViewModel()
         {
-            return new ShoppingCartViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), _loggedUserStore, 
-                new ProductsManagerService(_dataContext), new OrderManagerService(_dataContext));
+            return new ShoppingCartViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), _loggedUserStore,
+                new ProductManagerDatabaseService(_databaseConnection), new OrderManagerService(_dataContext));
         }
 
         private UserOrdersViewModel CreateUserOrdersViewModel()

@@ -25,35 +25,20 @@ namespace AccountManager.ViewModels.ManageOrdersViewModels
 
 
         public ManageUserOrdersViewModel(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService, 
-            IOrderManagerService orderManagerService, UserStore customer)
+            IOrderManagerService orderManagerService, UserStore customer, OrderStore orderStore,
+            NavigationService<ManageUserOrderDetailsViewModel> manageUserOrderDetailsViewNavigationService)
             : base(orderManagerService)
         {
             _customer = customer.User;
 
-            SetOnPropertyChangedListener();
+            //SetOnPropertyChangedListener();
 
             BackCommand = new NavigateCommand<ManageUsersViewModel>(manageUsersViewNavigationService);
             UpdateOrdersCollection();
+
+            OrderOnClickCommand = new NavigateToOrderDetailsCommand(orderStore, manageUserOrderDetailsViewNavigationService);
         }
 
-        private void SetOnPropertyChangedListener()
-        {
-            _orders.ToList<OrderViewModel>().ForEach(order =>
-            {
-                order.PropertyChanged += OnViewModelPropertyChanged;
-            });
-        }
-
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(OrderViewModel.Status)) UpdateOrderStatus(sender);
-        }
-
-        private void UpdateOrderStatus(object? sender)
-        {
-            var order = sender as OrderViewModel;
-
-            _orderManagerService.UpdateStatus(order.Order.Id, order.Status);
-        }
+        
     }
 }

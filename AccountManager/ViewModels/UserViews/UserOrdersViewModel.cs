@@ -14,6 +14,8 @@ namespace AccountManager.ViewModels.UserViews
 {
     internal class UserOrdersViewModel : OrdersListViewModel
     {
+        
+        
         public UserOrdersViewModel(IOrderManagerService orderManagerService, LoggedUserStore loggedUser, 
             NavigationService<UserMenuViewModel> userMenuViewNavigationService, OrderStore orderStore,
             NavigationService<UserOrderDetailsViewModel> userOrderDetailsViewNavigationService) 

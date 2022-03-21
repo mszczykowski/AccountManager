@@ -33,12 +33,12 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
         public ICommand CancelCommand { get; }
 
         public AddDiscountViewModel(IProductsManagerService productsManagerService, DiscountManager discountManager, 
-            NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService)
+            NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService, IDiscountsDatabaseService discountsDatabaseService)
         {
 
             _productsManagerService = productsManagerService;
 
-            AddDiscountCommand = new AddDiscountCommand(this, discountManager, discountManagerViewNavigationService);
+            AddDiscountCommand = new AddDiscountCommand(this, discountManager, discountManagerViewNavigationService, discountsDatabaseService);
 
             CancelCommand = new NavigateCommand<DiscountManagerViewModel>(discountManagerViewNavigationService);
 

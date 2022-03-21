@@ -15,7 +15,16 @@ namespace AccountManager.Commands.OrderManagerCommands
     {
         private OrderStore _orderStore;
 
+        private readonly NavigationService<ManageUserOrderDetailsViewModel> _manageOrderDetailsViewNavigationService;
+
         private readonly NavigationService<UserOrderDetailsViewModel> _orderDetailsViewNavigationService;
+
+        public NavigateToOrderDetailsCommand(OrderStore orderStore,
+            NavigationService<ManageUserOrderDetailsViewModel> manageOrderDetailsViewNavigationService)
+        {
+            _orderStore = orderStore;
+            _manageOrderDetailsViewNavigationService = manageOrderDetailsViewNavigationService;
+        }
 
         public NavigateToOrderDetailsCommand(OrderStore orderStore,
             NavigationService<UserOrderDetailsViewModel> orderDetailsViewNavigationService)
@@ -32,7 +41,8 @@ namespace AccountManager.Commands.OrderManagerCommands
 
             _orderStore.Order = orderViewModel.Order;
 
-            _orderDetailsViewNavigationService.Navigate();
+            if (_orderDetailsViewNavigationService != null) _orderDetailsViewNavigationService.Navigate();
+            else _manageOrderDetailsViewNavigationService.Navigate();
         }
     }
 }

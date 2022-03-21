@@ -23,5 +23,7 @@ namespace AccountManager.Services
         public ICollection<ProductModel> GetFilteredProducts(string? query, Categories? category);
 
         public void ReduceProductQantity(int productId, int reduceBy);
+
+        public ProductModel GetProductIncludingDeleted(int id);
     }
 }

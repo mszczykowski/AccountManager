@@ -24,14 +24,15 @@ namespace AccountManager.ViewModels.ShopViewModels
 
         public ProductsShopViewModel(NavigationService<UserMenuViewModel> userMenuViewModelNavigationService, 
             NavigationService<ShoppingCartViewModel> shoppingCartViewModelNavigationService,
-            IProductsManagerService productManagerService, LoggedUserStore loggedUserStore)
+            IProductsManagerService productManagerService, LoggedUserStore loggedUserStore,
+            IShoppingCartDatabaseService shoppingCartDatabaseService)
             : base(productManagerService)
         {
             _loggedUserStore = loggedUserStore;
 
             LoadShoppingCartState();
 
-            UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, _loggedUserStore.User.ShoppingCart);
+            UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, _loggedUserStore.User, shoppingCartDatabaseService);
 
             NavigateToCartCommand = new NavigateCommand<ShoppingCartViewModel>(shoppingCartViewModelNavigationService);
 
@@ -42,7 +43,8 @@ namespace AccountManager.ViewModels.ShopViewModels
         {
             foreach(var product in _products)
             {
-                if (_loggedUserStore.User.ShoppingCart.Contains(new ShoppingCartEntryModel(product.Product))) product.IsChecked = true;
+                if (_loggedUserStore.User.ShoppingCart.Contains(new ShoppingCartEntryModel(product.Product)))
+                    product.IsChecked = true;
             }
         }
     }

@@ -15,12 +15,16 @@ namespace AccountManager.Commands.DiscountCommands
         private readonly AddDiscountViewModel _addDiscountViewModel;
         private readonly DiscountManager _discountManager;
         private readonly NavigationService<DiscountManagerViewModel> _discountManagerViewNavigationService;
+        private readonly IDiscountsDatabaseService _discountDatabaseService;
 
-        public AddDiscountCommand(AddDiscountViewModel addDiscountViewModel, DiscountManager discountManager, NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService)
+        public AddDiscountCommand(AddDiscountViewModel addDiscountViewModel, DiscountManager discountManager,
+            NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService,
+            IDiscountsDatabaseService discountDatabaseService)
         {
             _addDiscountViewModel = addDiscountViewModel;
             _discountManager = discountManager;
             _discountManagerViewNavigationService = discountManagerViewNavigationService;
+            _discountDatabaseService = discountDatabaseService;
         }
 
         public override void Execute(object? parameter)
@@ -43,17 +47,20 @@ namespace AccountManager.Commands.DiscountCommands
 
         public void AddCategoryDiscount()
         {
-            _discountManager.AddDiscount(new FiftyPercentOffOnCategorySecondProduct(_addDiscountViewModel.Category));
+            var id = _discountDatabaseService.AddCategoryDiscount((int)DiscountTypes.Category_discount, _addDiscountViewModel.Category);
+            _discountManager.AddDiscount(new FiftyPercentOffOnCategorySecondProduct(id, _addDiscountViewModel.Category));
         }
 
         public void AddProductDiscount()
         {
-            _discountManager.AddDiscount(new ThirtyPercentOffProdcut(_addDiscountViewModel.Product));
+            var id = _discountDatabaseService.AddProductDiscount((int)DiscountTypes.Product_discount, _addDiscountViewModel.Product);
+            _discountManager.AddDiscount(new ThirtyPercentOffProdcut(id, _addDiscountViewModel.Product));
         }
 
         public void AddTotalPriceDiscount()
         {
-            _discountManager.AddDiscount(new TenEveryHundredDiscount());
+            var id = _discountDatabaseService.AddOtherDiscount((int)DiscountTypes.Total_price_discount);
+            _discountManager.AddDiscount(new TenEveryHundredDiscount(id));
         }
     }
 }

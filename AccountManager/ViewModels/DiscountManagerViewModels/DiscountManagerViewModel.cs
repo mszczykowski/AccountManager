@@ -23,9 +23,12 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
 
         private readonly DiscountManager _discountManager;
 
+        private readonly IDiscountsDatabaseService _discountsDatabaseService;
+
         public DiscountManagerViewModel(DiscountManager discountManager, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService, 
-            NavigationService<AddDiscountViewModel> addDiscountViewNavigationService)
+            NavigationService<AddDiscountViewModel> addDiscountViewNavigationService,
+            IDiscountsDatabaseService discountsDatabaseService)
         {
             _discountManager = discountManager;
 
@@ -34,6 +37,8 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
             AddDicountCommand = new NavigateCommand<AddDiscountViewModel>(addDiscountViewNavigationService);
 
             _discounts = new ObservableCollection<DiscountViewModel>();
+
+            _discountsDatabaseService = discountsDatabaseService;
 
             UpdateDiscountsList();
         }
@@ -44,7 +49,7 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
 
             _discountManager.Discounts.ToList().ForEach(discount =>
             {
-                _discounts.Add(new DiscountViewModel(this, discount, _discountManager));
+                _discounts.Add(new DiscountViewModel(this, discount, _discountManager, _discountsDatabaseService));
             });
         }
     }

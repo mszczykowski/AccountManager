@@ -77,6 +77,11 @@ namespace AccountManager.Services
             return _context.Products.Find(x => x.Id == id);
         }
 
+        public ProductModel GetProductIncludingDeleted(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public void ReduceProductQantity(int productId, int reduceBy)
         {
             var product = GetProduct(productId);

@@ -9,6 +9,10 @@ namespace AccountManager.Discounts
 {
     internal class TenEveryHundredDiscount : TotalPriceDiscount
     {
+        public TenEveryHundredDiscount(int id) : base(id)
+        {
+        }
+
         public override double GetDiscountValue(ICollection<ShoppingCartEntryModel> shoppingCart)
         {
             double total = 0;

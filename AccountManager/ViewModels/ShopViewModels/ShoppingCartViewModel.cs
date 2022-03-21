@@ -13,6 +13,7 @@ using System.ComponentModel;
 using AccountManager.Commands.ShopCommands;
 using AccountManager.Discounts;
 using AccountManager.Commands.MisicCommands;
+using AccountManager.Models;
 
 namespace AccountManager.ViewModels.ShopViewModels
 {
@@ -25,6 +26,7 @@ namespace AccountManager.ViewModels.ShopViewModels
         private ObservableCollection<ShoppingCartEntryViewModel> _shoppingCartEntries;
 
         private readonly DiscountManager _discountManager;
+        private readonly IShoppingCartDatabaseService _shoppingCartDatabaseService;
 
         public IEnumerable<ShoppingCartEntryViewModel> ShoppingCartEntries => _shoppingCartEntries;
 
@@ -64,7 +66,7 @@ namespace AccountManager.ViewModels.ShopViewModels
 
         public ShoppingCartViewModel(NavigationService<ProductsShopViewModel> productShopViewNavigationService, 
             LoggedUserStore loggedUserStore, IProductsManagerService productsManagerService, IOrderManagerService orderManagerService,
-            DiscountManager discountManager)
+            DiscountManager discountManager, IShoppingCartDatabaseService shoppingCartDatabaseService)
         {
             _loggedUserStore = loggedUserStore;
 
@@ -74,15 +76,15 @@ namespace AccountManager.ViewModels.ShopViewModels
 
             _discountsViewModels = new ObservableCollection<DiscountViewModel>();
 
-            ClearCartCommand = new ClearCartCommand(this, _loggedUserStore.User.ShoppingCart);
+            ClearCartCommand = new ClearCartCommand(this, shoppingCartDatabaseService, _loggedUserStore);
 
             BackCommand = new NavigateCommand<ProductsShopViewModel>(productShopViewNavigationService);
 
             PlaceOrderCommand = new PlaceOrderCommand(this, _loggedUserStore, productsManagerService, orderManagerService, 
-                productShopViewNavigationService, discountManager);
+                productShopViewNavigationService, discountManager, shoppingCartDatabaseService);
 
             _discountManager = discountManager;
-
+            _shoppingCartDatabaseService = shoppingCartDatabaseService;
             UpdateShoppingCartEnetries();
 
             UpdateView();
@@ -104,10 +106,17 @@ namespace AccountManager.ViewModels.ShopViewModels
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(ShoppingCartEntryViewModel.ActualQuantity)) UpdateView();
+            if (e.PropertyName == nameof(ShoppingCartEntryViewModel.ActualQuantity))
+            {
+                UpdateView();
+
+                var updatedEntry = sender as ShoppingCartEntryViewModel;
+
+                _shoppingCartDatabaseService.UpdateProductQuantity(_loggedUserStore.User.Id, updatedEntry.ProductModel.Id, updatedEntry.ActualQuantity);
+            }
         }
 
-        private void UpdateView()
+        public void UpdateView()
         {
             CalculateFullPrice();
             UpdateDiscountValues();
@@ -164,5 +173,7 @@ namespace AccountManager.ViewModels.ShopViewModels
 
             FullPriceWithDiscounts = fullPrice.ToString("N2");
         }
+
+        
     }
 }

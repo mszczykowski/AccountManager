@@ -27,7 +27,6 @@ namespace AccountManager.ViewModels
         }
 
         private string _password;
-        private readonly IUsersManagerService _usersManagerModel;
 
         public string Password
         {
@@ -45,18 +44,17 @@ namespace AccountManager.ViewModels
         public LogInViewModel(NavigationService<MainMenuViewModel> mainMenuViewNavigationService, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
             NavigationService<UserMenuViewModel> userMenuViewNavigationService, 
-            IUsersManagerService usersManagerModel, 
-            LoggedUserStore loggedUserStore)
+            IUsersManagerService usersManagerService, 
+            LoggedUserStore loggedUserStore,
+            IShoppingCartDatabaseService shoppingCartDatabaseService,
+            IProductsManagerService productsManagerService)
         {
             CancelCommand = new NavigateCommand<MainMenuViewModel>(mainMenuViewNavigationService);
 
-            
-            _usersManagerModel = usersManagerModel;
 
-            LogInCommand = new LogInCommand(this, _usersManagerModel, adminMenuViewNavigationService, userMenuViewNavigationService, loggedUserStore);
+            LogInCommand = new LogInCommand(this, usersManagerService, adminMenuViewNavigationService, userMenuViewNavigationService, loggedUserStore,
+                shoppingCartDatabaseService, productsManagerService);
 
-            Username = "admin";
-            Password = "admin";
         }
 
     }

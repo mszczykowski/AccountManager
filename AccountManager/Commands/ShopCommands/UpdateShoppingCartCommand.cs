@@ -8,6 +8,7 @@ using AccountManager.Models;
 using System.ComponentModel;
 using AccountManager.ViewModels.ManageProductsViewModels;
 using AccountManager.ViewModels;
+using AccountManager.Services;
 
 namespace AccountManager.Commands.ShopCommands
 {
@@ -15,12 +16,19 @@ namespace AccountManager.Commands.ShopCommands
     {
         private ProductsListViewModel _productsListViewModel;
         private ICollection<ShoppingCartEntryModel> _shoppingCart;
+        private UserModel _loggedUser;
+        private readonly IShoppingCartDatabaseService _shoppingCartDatabaseService;
 
-        public UpdateShoppingCartCommand(ProductsListViewModel productsListViewModel, ICollection<ShoppingCartEntryModel> shoppingCart)
+        public UpdateShoppingCartCommand(ProductsListViewModel productsListViewModel, UserModel loggedUser,
+            IShoppingCartDatabaseService shoppingCartDatabaseService)
         {
-            _productsListViewModel = productsListViewModel;
-            _shoppingCart = shoppingCart;
+            _loggedUser = loggedUser;
 
+            _productsListViewModel = productsListViewModel;
+            _shoppingCart = _loggedUser.ShoppingCart;
+
+            
+            _shoppingCartDatabaseService = shoppingCartDatabaseService;
             SetPropertyChangeEventListeners();
         }
 
@@ -43,8 +51,21 @@ namespace AccountManager.Commands.ShopCommands
 
             var shoppingCartEntry = new ShoppingCartEntryModel(product.Product);
 
-            if(_shoppingCart.Contains(shoppingCartEntry)) _shoppingCart.Remove(shoppingCartEntry);
-            else _shoppingCart.Add(shoppingCartEntry);
+            if(_shoppingCart.Contains(shoppingCartEntry))
+            {
+                _shoppingCart.Remove(shoppingCartEntry);
+                _shoppingCartDatabaseService.DeleteProductFromCart(_loggedUser.Id, shoppingCartEntry.Product);
+            }
+            
+            else
+            {
+                if(product.Quantity > 0)
+                {
+                    _shoppingCart.Add(shoppingCartEntry);
+                    _shoppingCartDatabaseService.AddProductToCart(_loggedUser.Id, shoppingCartEntry.Product);
+                }
+            }
+            
         }
     }
 }

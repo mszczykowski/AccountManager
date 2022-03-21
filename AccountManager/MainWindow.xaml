@@ -92,6 +92,12 @@
                 <viewsUser:UserOrderDetailsView/>
             </DataTemplate>
 
+            <DataTemplate DataType="{x:Type viewmodelsOrders:ManageUserOrderDetailsViewModel}">
+                <viewsOrders:ManageUserOrderDetailsView/>
+            </DataTemplate>
+
+            
+
         </Grid.Resources>
 
         <ContentControl Content="{Binding CurrentViewModel}"/>

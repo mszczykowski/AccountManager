@@ -27,9 +27,11 @@ namespace AccountManager.Commands.ShopCommands
 
         private DiscountManager _discountManager;
 
+        private IShoppingCartDatabaseService _shoppingCartDatabaseService;
+
         public PlaceOrderCommand(ShoppingCartViewModel shopCartViewModel, LoggedUserStore loggedUserStore, IProductsManagerService productsManagerService,
             IOrderManagerService orderManagerService, NavigationService<ProductsShopViewModel> productsShopViewNavigationService,
-            DiscountManager discountManager)
+            DiscountManager discountManager, IShoppingCartDatabaseService shoppingCartDatabaseService)
         {
             _shopCartViewModel = shopCartViewModel;
 
@@ -44,6 +46,8 @@ namespace AccountManager.Commands.ShopCommands
             _shopCartViewModel.PropertyChanged += OnViewModelPropertyChanged;
 
             _discountManager = discountManager;
+
+            _shoppingCartDatabaseService = shoppingCartDatabaseService;
         }
 
 
@@ -86,6 +90,8 @@ namespace AccountManager.Commands.ShopCommands
                 _orderManagerService.AddOrder(order);
 
                 _loggedUserStore.User.ShoppingCart.Clear();
+
+                _shoppingCartDatabaseService.ClearCart(_loggedUserStore.User.Id);
 
                 _productsShopViewNavigationService.Navigate();
 

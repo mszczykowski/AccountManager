@@ -56,6 +56,13 @@
 
         <ListView Grid.Row="2" ItemsSource="{Binding Orders}" Name="OrderListView">
 
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction 
+                                Command="{Binding OrderOnClickCommand}"
+                                CommandParameter="{Binding ElementName=OrderListView, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
 
             <ListView.View>
                 <GridView>
@@ -86,7 +93,7 @@
                     <GridViewColumn Header="Status" Width="180">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox ItemsSource="{Binding Source={utils:EnumBindingSource enums:OrderStatuses}}" SelectedItem="{Binding Status, UpdateSourceTrigger=PropertyChanged}" Width="160"/>
+                                <TextBlock Text="{Binding Status}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

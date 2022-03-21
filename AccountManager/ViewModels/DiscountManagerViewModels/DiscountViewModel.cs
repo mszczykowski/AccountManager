@@ -1,5 +1,6 @@
 ﻿using AccountManager.Commands.DiscountCommands;
 using AccountManager.Discounts;
+using AccountManager.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,13 +18,14 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
 
         public ICommand DeleteDiscountCommand { get; }
 
-        public DiscountViewModel(DiscountManagerViewModel discountManagerViewModel, DiscountBase discount, DiscountManager discountManager)
+        public DiscountViewModel(DiscountManagerViewModel discountManagerViewModel, DiscountBase discount, DiscountManager discountManager,
+            IDiscountsDatabaseService discountsDatabaseService)
         {
             _discount = discount;
 
             DiscountDescription = _discount.ToString();
 
-            DeleteDiscountCommand = new DeleteDiscountCommand(discountManagerViewModel, discountManager, discount);
+            DeleteDiscountCommand = new DeleteDiscountCommand(discountManagerViewModel, discountManager, discount, discountsDatabaseService);
         }
     }
 }

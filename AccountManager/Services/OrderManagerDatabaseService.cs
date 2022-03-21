@@ -23,8 +23,8 @@ namespace AccountManager.Services
             string query;
             query = "insert into [Order] (CustomerId, OrderDate, Status, TotalPrice, DiscountValue) "
                 + "values ('" + order.CustomerId + "', '" + order.OrderDate.ToString("yyyy-MM-dd HH:mm:ss.fff")
-                + "', '" + (int)OrderStatuses.New + "', '" + order.TotalPrice 
-                + "', '" + order.DiscountValue + "');";
+                + "', '" + (int)(OrderStatuses.New + 1) + "', '" + order.TotalPrice.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)
+                + "', '" + order.DiscountValue.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "');";
 
             int orderId = _databaseConnection.ExecuteDML(query);
 
@@ -68,7 +68,7 @@ namespace AccountManager.Services
         private OrderModel CreateOrderModel(object[] row)
         {
             return new OrderModel(Convert.ToInt32(row[0]), Convert.ToInt32(row[1]),
-                Convert.ToDateTime(row[2]), (OrderStatuses)Convert.ToInt32(row[3]),
+                Convert.ToDateTime(row[2]), (OrderStatuses)(Convert.ToInt32(row[3]) - 1),
                 Convert.ToDouble(row[4]), Convert.ToDouble(row[5]));
         }
 

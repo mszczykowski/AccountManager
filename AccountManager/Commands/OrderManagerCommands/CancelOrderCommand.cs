@@ -16,8 +16,8 @@ namespace AccountManager.Commands.OrderManagerCommands
         private readonly IProductsManagerService _productManager;
         private readonly IOrderManagerService _orderManager;
         private readonly NavigationService<UserOrdersViewModel> _userOrdersViewNavigationService;
-        private OrderDetailsViewModel _orderDetailsViewModel;
-        public CancelOrderCommand(OrderDetailsViewModel orderDetailsViewModel,
+        private UserOrderDetailsViewModel _orderDetailsViewModel;
+        public CancelOrderCommand(UserOrderDetailsViewModel orderDetailsViewModel,
             IProductsManagerService productManager, IOrderManagerService orderManager,
             NavigationService<UserOrdersViewModel> userOrdersViewNavigationService)
         {

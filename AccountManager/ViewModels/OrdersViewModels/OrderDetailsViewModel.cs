@@ -18,7 +18,7 @@ namespace AccountManager.ViewModels.OrdersViewModels
 {
     internal abstract class OrderDetailsViewModel : ViewModelBase
     {
-        private readonly OrderModel _order;
+        protected readonly OrderModel _order;
 
         public OrderModel Order => _order;
 
@@ -30,13 +30,8 @@ namespace AccountManager.ViewModels.OrdersViewModels
 
         public IEnumerable<ProductViewModel> Products => _products;
 
-        public ICommand BackCommand { get; set; }
+        public ICommand BackCommand { get; protected set; }
 
-        public ICommand CancelOrderCommand { get; set; }
-
-        public string OrderStatus => _order.Status.ToString();
-
-        public OrderStatuses OrderStausEnum => _order.Status;
         
         public string TotalPrice
         {
@@ -54,9 +49,8 @@ namespace AccountManager.ViewModels.OrdersViewModels
             }
         }
 
-        public OrderDetailsViewModel(IProductsManagerService productManagerService,
-            NavigationService<UserOrdersViewModel> userOrdersViewNavigationService,
-            OrderStore orderStrore, IOrderManagerService orderManagerService)
+        public OrderDetailsViewModel(IProductsManagerService productManagerService, OrderStore orderStrore, 
+            IOrderManagerService orderManagerService)
         {
             _order = orderStrore.Order;
 
@@ -64,10 +58,9 @@ namespace AccountManager.ViewModels.OrdersViewModels
 
             InitialiseProductsList();
 
-            BackCommand = new NavigateCommand<UserOrdersViewModel>(userOrdersViewNavigationService);
+            
 
-            CancelOrderCommand = new CancelOrderCommand(this, productManagerService, orderManagerService,
-                userOrdersViewNavigationService);
+            
         }
 
         private void InitialiseProductsList()
@@ -76,7 +69,7 @@ namespace AccountManager.ViewModels.OrdersViewModels
 
             _order.Products.ToList().ForEach(p =>
             {
-                var product = _productManagerService.GetProduct(p.ProductId);
+                var product = _productManagerService.GetProductIncludingDeleted(p.ProductId);
                 var totalPrice = p.Price * p.Quantity;
                 _products.Add(new ProductViewModel(new ProductModel(product.Name,
                     totalPrice, p.Quantity, product.Category)));

@@ -45,8 +45,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Margin="0 10 5 10" Grid.Column="0" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"
-                     PreviewTextInput="PriceTextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown"/>
+            <TextBox Margin="0 10 5 10" Grid.Column="0" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged,StringFormat=N2}"/>
             <TextBlock Text="PLN" Grid.Column="1" Margin="0 10 20 10" VerticalAlignment="Center"/>
         </Grid>
 

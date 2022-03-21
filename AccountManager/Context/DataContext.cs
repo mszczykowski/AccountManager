@@ -34,7 +34,7 @@ namespace AccountManager.Context
 
             Products = new List<ProductModel>
             {
-                new ProductModel(1, "Lenovo y700", 2399.99, 200, Categories.Notebooks),
+                /*new ProductModel(1, "Lenovo y700", 2399.99, 200, Categories.Notebooks),
                 new ProductModel(2, "Dell Inspiron 420", 3099.99, 150, Categories.Notebooks),
                 new ProductModel(3, "Lenovo Thinkpad 900", 2099.99, 120, Categories.Notebooks),
                 new ProductModel(4, "HP Pavilion 1200", 2799.99, 80, Categories.Notebooks),
@@ -51,7 +51,7 @@ namespace AccountManager.Context
 
                 new ProductModel(12, "Logitech G120 Ligthsync", 120.10, 80, Categories.Accesories),
 
-                new ProductModel(13, "Sony Vaio", 699.99, 80, Categories.Notebooks),
+                new ProductModel(13, "Sony Vaio", 699.99, 80, Categories.Notebooks),*/
             };
 
             Orders = new List<OrderModel>();

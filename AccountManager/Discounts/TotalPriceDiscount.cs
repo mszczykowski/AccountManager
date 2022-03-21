@@ -9,6 +9,10 @@ namespace AccountManager.Discounts
 {
     internal abstract class TotalPriceDiscount : DiscountBase
     {
+        protected TotalPriceDiscount(int id) : base(id)
+        {
+        }
+
         public abstract override double GetDiscountValue(ICollection<ShoppingCartEntryModel> shoppingCart);
     }
 }

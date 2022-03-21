@@ -12,7 +12,7 @@ namespace AccountManager.Discounts
     {
         protected Categories _discountedCategory;
 
-        public CategoryDiscount(Categories category)
+        public CategoryDiscount(int id, Categories category) : base(id)
         {
             _discountedCategory = category;
         }

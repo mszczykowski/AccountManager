@@ -10,7 +10,7 @@ namespace AccountManager.Discounts
 {
     internal class FiftyPercentOffOnCategorySecondProduct : CategoryDiscount
     {
-        public FiftyPercentOffOnCategorySecondProduct(Categories category) : base(category)
+        public FiftyPercentOffOnCategorySecondProduct(int id, Categories category) : base(id, category)
         {
 
         }

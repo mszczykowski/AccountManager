@@ -16,13 +16,16 @@ namespace AccountManager.Commands.MisicCommands
     {
         private readonly LogInViewModel _logInViewModel;
         private readonly LoggedUserStore _loggedUserStore;
+        private readonly IShoppingCartDatabaseService _shoppingCartDatabaseService;
+        private readonly IProductsManagerService _productsManagerService;
         private readonly IUsersManagerService _usersManagerService;
         private readonly NavigationService<AdminMenuViewModel> _adminMenuViewNavigationService;
         private readonly NavigationService<UserMenuViewModel> _userMenuViewNavigationService;
 
         public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
-            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore)
+            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore, 
+            IShoppingCartDatabaseService shoppingCartDatabaseService, IProductsManagerService productsManagerService)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;
@@ -30,7 +33,8 @@ namespace AccountManager.Commands.MisicCommands
             _userMenuViewNavigationService = userMenuViewNavigationService;
 
             _loggedUserStore = loggedUserStore;
-
+            _shoppingCartDatabaseService = shoppingCartDatabaseService;
+            _productsManagerService = productsManagerService;
             _logInViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -56,6 +60,8 @@ namespace AccountManager.Commands.MisicCommands
             else
             {
                 _loggedUserStore.User = user;
+
+                _loggedUserStore.User.ShoppingCart = _shoppingCartDatabaseService.LoadCart(user.Id, _productsManagerService);
 
                 if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
 

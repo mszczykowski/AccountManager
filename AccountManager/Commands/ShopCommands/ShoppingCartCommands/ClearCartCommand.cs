@@ -6,24 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using AccountManager.ViewModels.ShopViewModels;
 using AccountManager.Models;
+using AccountManager.Services;
+using AccountManager.Stores;
 
 namespace AccountManager.Commands.ShopCommands.ShoppingCartCommands
 {
     internal class ClearCartCommand : CommandBase
     {
         private ShoppingCartViewModel _shoppingCartViewModel;
-        private ICollection<ShoppingCartEntryModel> _shoppingCartsEntries;
+        private IShoppingCartDatabaseService _shoppingCartDatabaseService;
+        private readonly LoggedUserStore _loggedUserStore;
 
-        public ClearCartCommand(ShoppingCartViewModel shoppingCartViewModel, ICollection<ShoppingCartEntryModel> shoppingCartsEntries)
+        public ClearCartCommand(ShoppingCartViewModel shoppingCartViewModel,
+            IShoppingCartDatabaseService shoppingCartDatabaseService, LoggedUserStore loggedUserStore)
         {
             _shoppingCartViewModel = shoppingCartViewModel;
-            _shoppingCartsEntries = shoppingCartsEntries;
+
+            _shoppingCartDatabaseService = shoppingCartDatabaseService;
+            _loggedUserStore = loggedUserStore;
         }
 
         public override void Execute(object? parameter)
         {
-            _shoppingCartsEntries.Clear();
+            _loggedUserStore.User.ShoppingCart.Clear();
+            _shoppingCartDatabaseService.ClearCart(_loggedUserStore.User.Id);
             _shoppingCartViewModel.UpdateShoppingCartEnetries();
+            _shoppingCartViewModel.UpdateView();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AccountManager.Discounts
     {
         protected ProductModel _discountedProduct;
 
-        public ProductDiscount(ProductModel discountedProduct)
+        public ProductDiscount(int id, ProductModel discountedProduct) : base(id)
         {
             _discountedProduct = discountedProduct;
         }

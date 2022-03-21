@@ -9,7 +9,7 @@ namespace AccountManager.Discounts
 {
     internal class ThirtyPercentOffProdcut : ProductDiscount
     {
-        public ThirtyPercentOffProdcut(ProductModel discountedProduct) : base(discountedProduct)
+        public ThirtyPercentOffProdcut(int id, ProductModel discountedProduct) : base(id, discountedProduct)
         {
 
         }

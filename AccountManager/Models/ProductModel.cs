@@ -25,12 +25,13 @@ namespace AccountManager.Models
             Category = category;
         }
 
-        public ProductModel(int id, string name, double price, int quantity, Categories category)
+        public ProductModel(int id, string name, double price, int quantity, bool isDeleted, Categories category)
         {
             Id = id;
             Name = name;
             Price = price;
             Quantity = quantity;
+            IsDeleted = isDeleted;
             Category = category;
         }
 

@@ -20,10 +20,16 @@ namespace AccountManager.Models
             Quantity = 1;
         }
 
+        public ShoppingCartEntryModel(ProductModel product, int quantity)
+        {
+            _product = product;
+            Quantity = quantity;
+        }
+
         public override bool Equals(object? obj)
         {
             return obj is ShoppingCartEntryModel model &&
-                   Product == model.Product;
+                   Product.Id == model.Product.Id;
         }
 
         public override int GetHashCode()

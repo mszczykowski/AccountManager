@@ -33,10 +33,11 @@ namespace AccountManager
             _host = Host.CreateDefaultBuilder().ConfigureServices(services => 
             {
                 services.AddSingleton<DatabaseConnection>();
-                services.AddSingleton<DataContext>();
                 services.AddSingleton<IUsersManagerService, UsersManagerDatabaseService>();
                 services.AddSingleton<IProductsManagerService, ProductManagerDatabaseService>();
                 services.AddSingleton<IOrderManagerService, OrderManagerDatabaseService>();
+                services.AddSingleton<IDiscountsDatabaseService, DiscountDatabaseService>();
+                services.AddSingleton<IShoppingCartDatabaseService, ShoppingCartDatabaseService>();
 
                 services.AddSingleton<UserStore>();
                 services.AddSingleton<ProductStore>();
@@ -118,6 +119,10 @@ namespace AccountManager
                 services.AddSingleton<Func<UserOrderDetailsViewModel>>((s) => () => s.GetRequiredService<UserOrderDetailsViewModel>());
                 services.AddSingleton<NavigationService<UserOrderDetailsViewModel>>();
 
+                services.AddTransient<ManageUserOrderDetailsViewModel>();
+                services.AddSingleton<Func<ManageUserOrderDetailsViewModel>>((s) => () => s.GetRequiredService<ManageUserOrderDetailsViewModel>());
+                services.AddSingleton<NavigationService<ManageUserOrderDetailsViewModel>>();
+
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton(s => new MainWindow()
                 {
@@ -138,6 +143,13 @@ namespace AccountManager
             
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
+
+            IDiscountsDatabaseService discountsDatabaseService = _host.Services.GetRequiredService<IDiscountsDatabaseService>();
+            IProductsManagerService productManagerDatabaseService = _host.Services.GetRequiredService<IProductsManagerService>();
+            DiscountManager discountManager = _host.Services.GetRequiredService<DiscountManager>();
+
+            discountsDatabaseService.LoadDiscounts(discountManager, productManagerDatabaseService);
+
 
             base.OnStartup(e);
         }

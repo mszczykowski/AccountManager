@@ -21,17 +21,19 @@ namespace AccountManager.Services
 
         public void AddProduct(ProductModel product)
         {
-            string query = "insert into [Product] (Name, Price, Quantity, IsDeleted, Category)"
-                + "values ('" + product.Name + "', '" + product.Price + "', '" + product.Quantity + "', '0', '" +
-                (int)product.Category + "');";
+            string query = "insert into [Product] (Name, Price, Quantity, IsDeleted, Category) "
+                + "values ('" + product.Name + "', '" + product.Price.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)
+                + "', '" + product.Quantity + "', '0', '" +
+                ((int)product.Category + 1) + "');";
 
             _databaseConnection.ExecuteDML(query);
         }
 
         public void DeleteProduct(int id)
         {
-            string query = "delete from [Product] "
-                + "where id = '" + id + "';";
+            string query = "update [Product] "
+                         + "set IsDeleted = 'true' "
+                         + "where id = '" + id + "'";
 
             _databaseConnection.ExecuteDML(query);
         }
@@ -40,7 +42,7 @@ namespace AccountManager.Services
         {
             string query = "update [Product] "
                          + "set name = '" + product.Name + "', price = '" + product.Price + "', quantity = '" + product.Quantity +
-                            "', category = '" + (int)product.Category + "' "
+                            "', category = '" + (int)(product.Category + 1) + "' "
                          + "where id = '" + id + "';";
 
             _databaseConnection.ExecuteDML(query);
@@ -49,7 +51,8 @@ namespace AccountManager.Services
         public ICollection<ProductModel> GetAllProducts()
         {
             string query = "select * "
-                          + "from [Product];";
+                          + "from [Product] " +
+                          "where isDeleted = 'false';";
 
             return GetProductsList(query);
         }
@@ -60,6 +63,15 @@ namespace AccountManager.Services
         }
 
         public ProductModel GetProduct(int id)
+        {
+            string query = "select * "
+                          + "from [Product] "
+                          + "where id = '" + id + "' and isDeleted = 'false';";
+
+            return GetProductsList(query)[0];
+        }
+
+        public ProductModel GetProductIncludingDeleted(int id)
         {
             string query = "select * "
                           + "from [Product] "
@@ -81,7 +93,7 @@ namespace AccountManager.Services
         {
             string query = "select * "
                           + "from [Product]"
-                          + "where upper(name) = '" + keyWord.ToUpper() + "';";
+                          + "where upper(name) = '" + keyWord.ToUpper() + "' and isDeleted = 'false';";
 
             return GetProductsList(query);
         }
@@ -90,7 +102,7 @@ namespace AccountManager.Services
         private ProductModel CreateProductModel(object[] row)
         {
             return new ProductModel(Convert.ToInt32(row[0]), row[1].ToString(), Convert.ToDouble(row[2]),
-                Convert.ToInt32(row[3]), (Categories)Convert.ToInt32(row[5]) );
+                Convert.ToInt32(row[3]), Convert.ToBoolean(row[4]),((Categories)Convert.ToInt32(row[5]) - 1) );
         }
 
         private List<ProductModel> GetProductsList(string query)
@@ -110,9 +122,10 @@ namespace AccountManager.Services
         private string QueryBuilder(string? keyWord, Categories? category)
         {
             string query = "select * "
-                          + "from [Product] ";
+                          + "from [Product] " +
+                          "where isDeleted = 'false' ";
             
-            if (!string.IsNullOrEmpty(keyWord) || category != null) query += "where ";
+            if (!string.IsNullOrEmpty(keyWord) || category != null) query += "and ";
 
             if (!string.IsNullOrEmpty(keyWord)) query += "upper(name) like " + "'%" + keyWord.ToUpper() + "%' ";
 

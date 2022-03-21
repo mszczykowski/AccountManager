@@ -8,8 +8,7 @@ using AccountManager.Discounts;
 namespace AccountManager.Discounts
 {
     internal class DiscountManager
-    {
-        private static DiscountManager _instance;
+    { 
 
         private ICollection<DiscountBase> _discounts;
 
@@ -18,15 +17,9 @@ namespace AccountManager.Discounts
             get => (IReadOnlyCollection<DiscountBase>)_discounts; 
         }
 
-        private DiscountManager()
+        public DiscountManager()
         {
             _discounts = new List<DiscountBase>();
-        }
-
-        public static DiscountManager GetInstance()
-        {
-            if( _instance == null ) _instance = new DiscountManager();
-            return _instance;
         }
 
         public void AddDiscount(DiscountBase discount)

@@ -15,11 +15,12 @@ namespace AccountManager.Commands.ProductManagerCommands
     internal class EditProductCommand : CommandBase
     {
         private readonly EditProductViewModel _editProductViewModel;
-        private readonly NavigationService _manageProductsViewModelNavigationService;
+        private readonly NavigationService<ManageProductsViewModel> _manageProductsViewModelNavigationService;
         private readonly IProductsManagerService _productsManagerService;
         private readonly ProductStore _productStore;
 
-        public EditProductCommand(EditProductViewModel editProductViewModel, NavigationService manageProductsViewModelNavigationService,
+        public EditProductCommand(EditProductViewModel editProductViewModel, 
+            NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService,
             IProductsManagerService productsManagerService, ProductStore productStore)
         {
             _editProductViewModel = editProductViewModel;

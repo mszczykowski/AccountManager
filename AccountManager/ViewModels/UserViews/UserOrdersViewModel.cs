@@ -1,4 +1,7 @@
-﻿using AccountManager.Services;
+﻿using AccountManager.Commands.MisicCommands;
+using AccountManager.Commands.OrderManagerCommands;
+using AccountManager.Commands.UserManagerCommands;
+using AccountManager.Services;
 using AccountManager.Stores;
 using AccountManager.ViewModels.OrdersViewModels;
 using System;
@@ -11,9 +14,19 @@ namespace AccountManager.ViewModels.UserViews
 {
     internal class UserOrdersViewModel : OrdersListViewModel
     {
-        public UserOrdersViewModel(NavigationService ManageUsersViewNavigationService, IOrderManagerService orderManagerService, UserStore customer) 
-            : base(ManageUsersViewNavigationService, orderManagerService, customer)
+        public UserOrdersViewModel(IOrderManagerService orderManagerService, LoggedUserStore loggedUser, 
+            NavigationService<UserMenuViewModel> userMenuViewNavigationService, OrderStore orderStore,
+            NavigationService<UserOrderDetailsViewModel> userOrderDetailsViewNavigationService) 
+            : base(orderManagerService)
         {
+            _customer = loggedUser.User;
+
+            BackCommand = new NavigateCommand<UserMenuViewModel>(userMenuViewNavigationService);
+
+            UpdateOrdersCollection();
+
+            OrderOnClickCommand = new NavigateToOrderDetailsCommand(orderStore, 
+                userOrderDetailsViewNavigationService);
         }
     }
 }

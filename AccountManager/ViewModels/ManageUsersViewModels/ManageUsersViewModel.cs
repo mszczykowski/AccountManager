@@ -11,6 +11,7 @@ using AccountManager.Stores;
 using AccountManager.Services;
 using AccountManager.Commands.UserManagerCommands;
 using AccountManager.Commands.MisicCommands;
+using AccountManager.ViewModels.ManageOrdersViewModels;
 
 namespace AccountManager.ViewModels
 {
@@ -27,15 +28,17 @@ namespace AccountManager.ViewModels
 
         public IEnumerable<UserViewModel> Users => _users;
 
-        public ManageUsersViewModel(NavigationService addUserViewNavigationService, NavigationService adminMenuViewNavigationService,
-            NavigationService searchViewNavigationService, NavigationService manageUserOrdersViewNavigationService,
+        public ManageUsersViewModel(NavigationService<AddUserViewModel> addUserViewNavigationService, 
+            NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
+            NavigationService<SearchUserViewModel> searchViewNavigationService, 
+            NavigationService<ManageUserOrdersViewModel> manageUserOrdersViewNavigationService,
             IUsersManagerService usersManagerService, UserStore userStore)
         {
-            AddUserCommand = new NavigateCommand(addUserViewNavigationService);
+            AddUserCommand = new NavigateCommand<AddUserViewModel>(addUserViewNavigationService);
 
-            BackCommand = new NavigateCommand(adminMenuViewNavigationService);
+            BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewNavigationService);
 
-            SearchCommand = new NavigateCommand(searchViewNavigationService);
+            SearchCommand = new NavigateCommand<SearchUserViewModel>(searchViewNavigationService);
 
             NavigateToUserOrdersCommand = new NavigateToUserOrdersCommand(userStore, manageUserOrdersViewNavigationService);
 

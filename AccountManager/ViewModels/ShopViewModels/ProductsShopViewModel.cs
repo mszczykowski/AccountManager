@@ -22,8 +22,10 @@ namespace AccountManager.ViewModels.ShopViewModels
 
         public ICommand NavigateToCartCommand { get; }
 
-        public ProductsShopViewModel(NavigationService adminMenuViewModelNavigationService, NavigationService shoppingCartViewModelNavigationService,
-            IProductsManagerService productManagerService, LoggedUserStore loggedUserStore) : base(adminMenuViewModelNavigationService, productManagerService)
+        public ProductsShopViewModel(NavigationService<UserMenuViewModel> userMenuViewModelNavigationService, 
+            NavigationService<ShoppingCartViewModel> shoppingCartViewModelNavigationService,
+            IProductsManagerService productManagerService, LoggedUserStore loggedUserStore)
+            : base(productManagerService)
         {
             _loggedUserStore = loggedUserStore;
 
@@ -31,7 +33,9 @@ namespace AccountManager.ViewModels.ShopViewModels
 
             UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, _loggedUserStore.User.ShoppingCart);
 
-            NavigateToCartCommand = new NavigateCommand(shoppingCartViewModelNavigationService);
+            NavigateToCartCommand = new NavigateCommand<ShoppingCartViewModel>(shoppingCartViewModelNavigationService);
+
+            BackCommand = new NavigateCommand<UserMenuViewModel>(userMenuViewModelNavigationService);
         }
 
         private void LoadShoppingCartState()

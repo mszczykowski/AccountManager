@@ -15,12 +15,12 @@ namespace AccountManager.Commands.UserManagerCommands
 {
     internal class NavigateToEditUserCommand : CommandBase
     {
-        private readonly NavigationService _editUserViewModelNavigationSercvice;
+        private readonly NavigationService<EditUserViewModel> _editUserViewModelNavigationSercvice;
         private readonly UserStore _userStore;
         private readonly IUsersManagerService _usersManagerService;
 
-        public NavigateToEditUserCommand(NavigationService editUserViewModelNavigationSercvice, UserStore userStore,
-            IUsersManagerService usersManagerService)
+        public NavigateToEditUserCommand(NavigationService<EditUserViewModel> editUserViewModelNavigationSercvice, 
+            UserStore userStore, IUsersManagerService usersManagerService)
         {
             _editUserViewModelNavigationSercvice = editUserViewModelNavigationSercvice;
             _userStore = userStore;

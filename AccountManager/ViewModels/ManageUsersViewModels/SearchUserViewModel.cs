@@ -45,7 +45,8 @@ namespace AccountManager.ViewModels
         public ICommand DeleteUserCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public SearchUserViewModel(NavigationService userManagerViewNavigationService, NavigationService editUserViewModelNavigationService, 
+        public SearchUserViewModel(NavigationService<ManageUsersViewModel> userManagerViewNavigationService, 
+            NavigationService<EditUserViewModel> editUserViewModelNavigationService, 
             IUsersManagerService usersManagerService, UserStore userStore)
         {
             _usersManagerModel = usersManagerService;
@@ -57,7 +58,7 @@ namespace AccountManager.ViewModels
 
             EditUserCommand = new NavigateToEditUserCommand(editUserViewModelNavigationService, _userStore, _usersManagerModel);
 
-            CancelCommand = new NavigateCommand(userManagerViewNavigationService);
+            CancelCommand = new NavigateCommand<ManageUsersViewModel>(userManagerViewNavigationService);
 
             SearchUserCommand = new SearchUserCommand(this, usersManagerService, _userStore);
 

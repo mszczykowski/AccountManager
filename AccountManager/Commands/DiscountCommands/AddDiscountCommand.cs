@@ -14,9 +14,9 @@ namespace AccountManager.Commands.DiscountCommands
     {
         private readonly AddDiscountViewModel _addDiscountViewModel;
         private readonly DiscountManager _discountManager;
-        private readonly NavigationService _discountManagerViewNavigationService;
+        private readonly NavigationService<DiscountManagerViewModel> _discountManagerViewNavigationService;
 
-        public AddDiscountCommand(AddDiscountViewModel addDiscountViewModel, DiscountManager discountManager, NavigationService discountManagerViewNavigationService)
+        public AddDiscountCommand(AddDiscountViewModel addDiscountViewModel, DiscountManager discountManager, NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService)
         {
             _addDiscountViewModel = addDiscountViewModel;
             _discountManager = discountManager;

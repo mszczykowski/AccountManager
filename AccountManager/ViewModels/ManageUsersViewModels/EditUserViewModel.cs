@@ -45,14 +45,15 @@ namespace AccountManager.ViewModels
         public ICommand EditUserCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public EditUserViewModel(NavigationService searchUserViewNavigationService, IUsersManagerService usersManagerService, UserStore userStore)
+        public EditUserViewModel(NavigationService<SearchUserViewModel> searchUserViewNavigationService, 
+            IUsersManagerService usersManagerService, UserStore userStore)
         {
             _userStore = userStore;
 
             _userName = userStore.User.Name;
             _password = userStore.User.Password;
 
-            CancelCommand = new NavigateCommand(searchUserViewNavigationService);
+            CancelCommand = new NavigateCommand<SearchUserViewModel>(searchUserViewNavigationService);
 
             EditUserCommand = new EditUserCommand(this, searchUserViewNavigationService, 
                 usersManagerService, userStore);

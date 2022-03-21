@@ -18,10 +18,11 @@ namespace AccountManager.Services
             _databaseConnection = databaseConnection;
         }
 
-        public void AddUser(UserModel user)
+        public void AddStandardUser(UserModel user)
         {
+            
             string query = "insert into [User] (Name, Password, Role)"
-                + "values ('" + user.Name + "', '" + user.Password + "', '2');";
+                + "values ('" + user.Name + "', '" + user.Password + "', '1');";
 
             _databaseConnection.ExecuteDML(query);
         }

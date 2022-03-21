@@ -17,11 +17,12 @@ namespace AccountManager.Commands.MisicCommands
         private readonly LogInViewModel _logInViewModel;
         private readonly LoggedUserStore _loggedUserStore;
         private readonly IUsersManagerService _usersManagerService;
-        private readonly NavigationService _adminMenuViewNavigationService;
-        private readonly NavigationService _userMenuViewNavigationService;
+        private readonly NavigationService<AdminMenuViewModel> _adminMenuViewNavigationService;
+        private readonly NavigationService<UserMenuViewModel> _userMenuViewNavigationService;
 
-        public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, NavigationService adminMenuViewNavigationService,
-            NavigationService userMenuViewNavigationService, LoggedUserStore loggedUserStore)
+        public LogInCommand(LogInViewModel logInViewModel, IUsersManagerService usersManagerService, 
+            NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
+            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;

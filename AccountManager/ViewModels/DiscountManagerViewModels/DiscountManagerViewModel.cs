@@ -23,14 +23,15 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
 
         private readonly DiscountManager _discountManager;
 
-        public DiscountManagerViewModel(DiscountManager discountManager, NavigationService adminMenuViewNavigationService, 
-            NavigationService addDiscountViewNavigationService)
+        public DiscountManagerViewModel(DiscountManager discountManager, 
+            NavigationService<AdminMenuViewModel> adminMenuViewNavigationService, 
+            NavigationService<AddDiscountViewModel> addDiscountViewNavigationService)
         {
             _discountManager = discountManager;
 
-            BackCommand = new NavigateCommand(adminMenuViewNavigationService);
+            BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewNavigationService);
 
-            AddDicountCommand = new NavigateCommand(addDiscountViewNavigationService);
+            AddDicountCommand = new NavigateCommand<AddDiscountViewModel>(addDiscountViewNavigationService);
 
             _discounts = new ObservableCollection<DiscountViewModel>();
 

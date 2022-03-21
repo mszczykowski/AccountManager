@@ -1,6 +1,8 @@
 ﻿using AccountManager.Commands;
 using AccountManager.Commands.MisicCommands;
 using AccountManager.Services;
+using AccountManager.ViewModels.ShopViewModels;
+using AccountManager.ViewModels.UserViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,15 +22,15 @@ namespace AccountManager.ViewModels
 
         public ICommand LogOutCommand { get; }
 
-        public UserMenuViewModel(NavigationService productsViewNavigationService,
-            NavigationService orderHistoryViewNavigationService,
-            NavigationService logInViewNavigationService)
+        public UserMenuViewModel(NavigationService<ProductsShopViewModel> productsViewNavigationService,
+            NavigationService<UserOrdersViewModel> orderHistoryViewNavigationService,
+            NavigationService<LogInViewModel> logInViewNavigationService)
         {
-            ProductsNavigateCommand = new NavigateCommand(productsViewNavigationService);
+            ProductsNavigateCommand = new NavigateCommand<ProductsShopViewModel>(productsViewNavigationService);
 
-            OrderHistoryNavigateCommand = new NavigateCommand(orderHistoryViewNavigationService);
+            OrderHistoryNavigateCommand = new NavigateCommand<UserOrdersViewModel>(orderHistoryViewNavigationService);
 
-            LogOutCommand = new NavigateCommand(logInViewNavigationService);
+            LogOutCommand = new NavigateCommand<LogInViewModel>(logInViewNavigationService);
 
             ExitCommand = new ExitCommand();
         }

@@ -9,6 +9,7 @@ using AccountManager.ViewModels.ShopViewModels;
 using AccountManager.Services;
 using System.Windows;
 using AccountManager.Models;
+using AccountManager.Discounts;
 
 namespace AccountManager.Commands.ShopCommands
 {
@@ -22,10 +23,13 @@ namespace AccountManager.Commands.ShopCommands
 
         private IOrderManagerService _orderManagerService;
 
-        private NavigationService _manageProductsShopViewNavigationService;
+        private NavigationService<ProductsShopViewModel> _productsShopViewNavigationService;
+
+        private DiscountManager _discountManager;
 
         public PlaceOrderCommand(ShoppingCartViewModel shopCartViewModel, LoggedUserStore loggedUserStore, IProductsManagerService productsManagerService,
-            IOrderManagerService orderManagerService, NavigationService manageProductsShopViewNavigationService)
+            IOrderManagerService orderManagerService, NavigationService<ProductsShopViewModel> productsShopViewNavigationService,
+            DiscountManager discountManager)
         {
             _shopCartViewModel = shopCartViewModel;
 
@@ -33,11 +37,13 @@ namespace AccountManager.Commands.ShopCommands
 
             _productsManagerService = productsManagerService;
 
-            _manageProductsShopViewNavigationService = manageProductsShopViewNavigationService;
+            _productsShopViewNavigationService = productsShopViewNavigationService;
 
             _orderManagerService = orderManagerService;
 
             _shopCartViewModel.PropertyChanged += OnViewModelPropertyChanged;
+
+            _discountManager = discountManager;
         }
 
 
@@ -55,7 +61,20 @@ namespace AccountManager.Commands.ShopCommands
         {
             if (MessageBox.Show("Place order?", "Order", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
-                OrderModel order = new OrderModel(_loggedUserStore.User.Id);
+                double fullPrice = 0;
+                double discountValue = 0;
+
+                _shopCartViewModel.ShoppingCartEntries.ToList<ShoppingCartEntryViewModel>().ForEach(entry =>
+                {
+                    fullPrice += entry.ProductModel.Price * entry.ActualQuantity;
+                });
+
+                _discountManager.Discounts.ToList().ForEach(discount =>
+                {
+                    discountValue += discount.GetDiscountValue(_loggedUserStore.User.ShoppingCart);
+                });
+
+                OrderModel order = new OrderModel(_loggedUserStore.User.Id, fullPrice, discountValue);
 
                 _shopCartViewModel.ShoppingCartEntries.ToList<ShoppingCartEntryViewModel>().ForEach(entry =>
                 {
@@ -68,7 +87,7 @@ namespace AccountManager.Commands.ShopCommands
 
                 _loggedUserStore.User.ShoppingCart.Clear();
 
-                _manageProductsShopViewNavigationService.Navigate();
+                _productsShopViewNavigationService.Navigate();
 
                 MessageBox.Show("Order placed");
             }

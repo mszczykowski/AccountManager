@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AccountManager.Services;
 using AccountManager.Commands.MisicCommands;
+using AccountManager.ViewModels.ManageProductsViewModels;
+using AccountManager.ViewModels.DiscountManagerViewModels;
 
 namespace AccountManager.ViewModels
 {
@@ -22,19 +24,20 @@ namespace AccountManager.ViewModels
 
         public ICommand LogOutCommand { get; }
 
-        public AdminMenuViewModel(NavigationService manageUsersViewNavigationService,
-            NavigationService manageProductsViewNavigationService, 
-            NavigationService logInViewNavigationService, NavigationService manageDiscountsViewNavigationService)
+        public AdminMenuViewModel(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService,
+            NavigationService<ManageProductsViewModel> manageProductsViewNavigationService, 
+            NavigationService<LogInViewModel> logInViewNavigationService, 
+            NavigationService<DiscountManagerViewModel> manageDiscountsViewNavigationService)
         {
-            ManageUsersCommand = new NavigateCommand(manageUsersViewNavigationService);
+            ManageUsersCommand = new NavigateCommand<ManageUsersViewModel>(manageUsersViewNavigationService);
 
-            LogOutCommand = new NavigateCommand(logInViewNavigationService);
+            LogOutCommand = new NavigateCommand<LogInViewModel>(logInViewNavigationService);
 
-            ManageDiscountsCommand = new NavigateCommand(manageDiscountsViewNavigationService);
+            ManageDiscountsCommand = new NavigateCommand<DiscountManagerViewModel>(manageDiscountsViewNavigationService);
 
             ExitCommand = new ExitCommand();
 
-            ManageProductsCommand = new NavigateCommand(manageProductsViewNavigationService);
+            ManageProductsCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewNavigationService);
         }
     }
 }

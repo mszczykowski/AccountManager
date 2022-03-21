@@ -40,11 +40,11 @@ namespace AccountManager.ViewModels
         public ICommand AddUserCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public AddUserViewModel(NavigationService userManagerViewNavigationService, IUsersManagerService usersManagerService)
+        public AddUserViewModel(NavigationService<ManageUsersViewModel> userManagerViewNavigationService, IUsersManagerService usersManagerService)
         {
-            CancelCommand = new NavigateCommand(userManagerViewNavigationService);
+            CancelCommand = new NavigateCommand<ManageUsersViewModel>(userManagerViewNavigationService);
 
-            AddUserCommand = new AddUserCommand(this, usersManagerService);
+            AddUserCommand = new AddUserCommand(userManagerViewNavigationService, this, usersManagerService);
 
         }
 

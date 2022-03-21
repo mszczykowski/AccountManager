@@ -13,20 +13,27 @@ using AccountManager.Stores;
 using System.Collections.ObjectModel;
 using AccountManager.ViewModels.OrdersViewModels;
 using System.ComponentModel;
+using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels.ManageOrdersViewModels
 {
     internal class ManageUserOrdersViewModel : OrdersListViewModel
     {
 
-        public string CustomerName => _customer.User.Name;
+        public string CustomerName => _customer.Name;
 
 
 
-        public ManageUserOrdersViewModel(NavigationService ManageUsersViewNavigationService, IOrderManagerService orderManagerService, UserStore customer)
-            : base(ManageUsersViewNavigationService, orderManagerService, customer)
+        public ManageUserOrdersViewModel(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService, 
+            IOrderManagerService orderManagerService, UserStore customer)
+            : base(orderManagerService)
         {
+            _customer = customer.User;
+
             SetOnPropertyChangedListener();
+
+            BackCommand = new NavigateCommand<ManageUsersViewModel>(manageUsersViewNavigationService);
+            UpdateOrdersCollection();
         }
 
         private void SetOnPropertyChangedListener()
@@ -45,7 +52,6 @@ namespace AccountManager.ViewModels.ManageOrdersViewModels
         private void UpdateOrderStatus(object? sender)
         {
             var order = sender as OrderViewModel;
-
 
             _orderManagerService.UpdateStatus(order.Order.Id, order.Status);
         }

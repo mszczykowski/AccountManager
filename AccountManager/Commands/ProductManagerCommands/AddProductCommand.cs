@@ -8,16 +8,19 @@ using AccountManager.Services;
 using AccountManager.ViewModels.ManageProductsViewModels;
 using AccountManager.Models;
 using System.Windows;
+using AccountManager.ViewModels;
 
 namespace AccountManager.Commands.ProductManagerCommands
 {
     internal class AddProductCommand : CommandBase
     {
         private readonly AddProductViewModel _addProductViewModel;
-        private readonly NavigationService _manageProductsViewModelNavigationService;
+        private readonly NavigationService<ManageProductsViewModel> _manageProductsViewModelNavigationService;
         private readonly IProductsManagerService _productsManagerService;
 
-        public AddProductCommand(AddProductViewModel addProductViewModel, NavigationService manageProductsViewModelNavigationService, IProductsManagerService productsManagerService)
+        public AddProductCommand(AddProductViewModel addProductViewModel, 
+            NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
+            IProductsManagerService productsManagerService)
         {
             _addProductViewModel = addProductViewModel;
             _manageProductsViewModelNavigationService = manageProductsViewModelNavigationService;

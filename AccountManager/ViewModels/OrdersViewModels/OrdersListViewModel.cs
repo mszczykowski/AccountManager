@@ -16,15 +16,17 @@ using AccountManager.Commands.MisicCommands;
 
 namespace AccountManager.ViewModels.OrdersViewModels
 {
-    internal class OrdersListViewModel : ViewModelBase
+    internal abstract class OrdersListViewModel : ViewModelBase
     {
         protected readonly IOrderManagerService _orderManagerService;
 
-        protected readonly UserStore _customer;
+        protected UserModel _customer;
 
-        public ICommand BackCommand { get; }
+        public ICommand BackCommand { get; protected set; }
 
         public ICommand SearchOrderCommand { get; }
+
+        public ICommand OrderOnClickCommand { get; protected set; }
 
 
         protected ObservableCollection<OrderViewModel> _orders;
@@ -45,26 +47,21 @@ namespace AccountManager.ViewModels.OrdersViewModels
             }
         }
 
-        public OrdersListViewModel(NavigationService ManageUsersViewNavigationService, IOrderManagerService orderManagerService, UserStore customer)
+        public OrdersListViewModel(IOrderManagerService orderManagerService)
         {
-            _customer = customer;
-
             _orderManagerService = orderManagerService;
 
             _orders = new ObservableCollection<OrderViewModel>();
 
-            BackCommand = new NavigateCommand(ManageUsersViewNavigationService);
 
             SearchOrderCommand = new SearchOrderCommand(this);
-
-            UpdateOrdersCollection();
         }
 
         public void UpdateOrdersCollection()
         {
             _orders.Clear();
 
-            var orders = _orderManagerService.GetUserOrders(_customer.User.Id);
+            var orders = _orderManagerService.GetUserOrders(_customer.Id);
 
             foreach (var order in orders)
             {

@@ -62,8 +62,9 @@ namespace AccountManager.ViewModels.ShopViewModels
             }
         }
 
-        public ShoppingCartViewModel(NavigationService productShopViewNavigationService, 
-            LoggedUserStore loggedUserStore, IProductsManagerService productsManagerService, IOrderManagerService orderManagerService)
+        public ShoppingCartViewModel(NavigationService<ProductsShopViewModel> productShopViewNavigationService, 
+            LoggedUserStore loggedUserStore, IProductsManagerService productsManagerService, IOrderManagerService orderManagerService,
+            DiscountManager discountManager)
         {
             _loggedUserStore = loggedUserStore;
 
@@ -75,11 +76,12 @@ namespace AccountManager.ViewModels.ShopViewModels
 
             ClearCartCommand = new ClearCartCommand(this, _loggedUserStore.User.ShoppingCart);
 
-            BackCommand = new NavigateCommand(productShopViewNavigationService);
+            BackCommand = new NavigateCommand<ProductsShopViewModel>(productShopViewNavigationService);
 
-            PlaceOrderCommand = new PlaceOrderCommand(this, _loggedUserStore, productsManagerService, orderManagerService, productShopViewNavigationService);
+            PlaceOrderCommand = new PlaceOrderCommand(this, _loggedUserStore, productsManagerService, orderManagerService, 
+                productShopViewNavigationService, discountManager);
 
-            _discountManager = DiscountManager.GetInstance();
+            _discountManager = discountManager;
 
             UpdateShoppingCartEnetries();
 

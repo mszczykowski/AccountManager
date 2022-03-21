@@ -61,9 +61,10 @@ namespace AccountManager.ViewModels.ManageProductsViewModels
         public ICommand AddProductCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public AddProductViewModel(NavigationService manageProductsViewModelNavigationService, IProductsManagerService productsManagerService)
+        public AddProductViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
+            IProductsManagerService productsManagerService)
         {
-            CancelCommand = new NavigateCommand(manageProductsViewModelNavigationService);
+            CancelCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewModelNavigationService);
 
             AddProductCommand = new AddProductCommand(this, manageProductsViewModelNavigationService, productsManagerService);
 

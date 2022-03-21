@@ -9,7 +9,7 @@ using System.Windows.Input;
 using AccountManager.Commands;
 using AccountManager.Services;
 
-namespace AccountManager.ViewModels
+namespace AccountManager.ViewModels.ProductsViewModels
 {
     internal class ProductViewModel : ViewModelBase
     {

@@ -19,7 +19,7 @@ namespace AccountManager.ViewModels.ProductsViewModels
     internal class ProductsListViewModel : ViewModelBase
     {
         protected readonly IProductsManagerService _productManagerService;
-        public ICommand BackCommand { get; }
+        public ICommand BackCommand { get; set; }
 
         public ICommand FilterProductsCommand { get; }
 
@@ -57,10 +57,8 @@ namespace AccountManager.ViewModels.ProductsViewModels
 
         public List<CategoryModel> CategoriesList { get => _categoriesList; }
 
-        public ProductsListViewModel(NavigationService adminMenuViewModelNavigationService,
-            IProductsManagerService productManagerService)
+        public ProductsListViewModel(IProductsManagerService productManagerService)
         {
-            BackCommand = new NavigateCommand(adminMenuViewModelNavigationService);
 
             FilterProductsCommand = new FilterProductsCommand(this);
 

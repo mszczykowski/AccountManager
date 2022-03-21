@@ -17,6 +17,7 @@ using AccountManager.ViewModels.UserViews;
 using AccountManager.Discounts;
 using AccountManager.ViewModels.DiscountManagerViewModels;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AccountManager
 {
@@ -25,166 +26,127 @@ namespace AccountManager
     /// </summary>
     public partial class App : Application
     {
-        private readonly NavigationStore _navigationStore;
-        private readonly DataContext _dataContext;
-        private readonly UserStore _userStore;
-        private readonly ProductStore _productStore;
-        private readonly LoggedUserStore _loggedUserStore;
-
-        private readonly DiscountManager _discountManager;
-
-        private readonly DatabaseConnection _databaseConnection;
+        private readonly IHost _host;
 
         public App()
         {
-            Host.CreateDefaultBuilder().ConfigureServices(services =>
+            _host = Host.CreateDefaultBuilder().ConfigureServices(services => 
             {
-                services.AddSingleton
-            })
-            
-            
-            _navigationStore = new NavigationStore();
+                services.AddSingleton<DatabaseConnection>();
+                services.AddSingleton<DataContext>();
+                services.AddSingleton<IUsersManagerService, UsersManagerDatabaseService>();
+                services.AddSingleton<IProductsManagerService, ProductManagerDatabaseService>();
+                services.AddSingleton<IOrderManagerService, OrderManagerDatabaseService>();
 
-            _dataContext = new DataContext();
+                services.AddSingleton<UserStore>();
+                services.AddSingleton<ProductStore>();
+                services.AddSingleton<OrderStore>();
+                services.AddSingleton<NavigationStore>();
+                services.AddSingleton<LoggedUserStore>();
+                services.AddSingleton<DiscountManager>();
 
-            _userStore = new UserStore();
+                services.AddTransient<MainMenuViewModel>();
+                services.AddSingleton<Func<MainMenuViewModel>>((s) => () => s.GetRequiredService<MainMenuViewModel>());
+                services.AddSingleton<NavigationService<MainMenuViewModel>>();
 
-            _productStore = new ProductStore();
+                services.AddTransient<LogInViewModel>();
+                services.AddSingleton<Func<LogInViewModel>>((s) => () => s.GetRequiredService<LogInViewModel>());
+                services.AddSingleton<NavigationService<LogInViewModel>>();
 
-            _loggedUserStore = new LoggedUserStore();
+                services.AddTransient<AdminMenuViewModel>();
+                services.AddSingleton<Func<AdminMenuViewModel>>((s) => () => s.GetRequiredService<AdminMenuViewModel>());
+                services.AddSingleton<NavigationService<AdminMenuViewModel>>();
 
-            _discountManager = DiscountManager.GetInstance();
+                services.AddTransient<ManageUsersViewModel>();
+                services.AddSingleton<Func<ManageUsersViewModel>>((s) => () => s.GetRequiredService<ManageUsersViewModel>());
+                services.AddSingleton<NavigationService<ManageUsersViewModel>>();
 
-            _databaseConnection = new DatabaseConnection();
+                services.AddTransient<AddUserViewModel>();
+                services.AddSingleton<Func<AddUserViewModel>>((s) => () => s.GetRequiredService<AddUserViewModel>());
+                services.AddSingleton<NavigationService<AddUserViewModel>>();
+
+                services.AddTransient<EditUserViewModel>();
+                services.AddSingleton<Func<EditUserViewModel>>((s) => () => s.GetRequiredService<EditUserViewModel>());
+                services.AddSingleton<NavigationService<EditUserViewModel>>();
+
+                services.AddTransient<SearchUserViewModel>();
+                services.AddSingleton<Func<SearchUserViewModel>>((s) => () => s.GetRequiredService<SearchUserViewModel>());
+                services.AddSingleton<NavigationService<SearchUserViewModel>>();
+
+                services.AddTransient<ManageProductsViewModel>();
+                services.AddSingleton<Func<ManageProductsViewModel>>((s) => () => s.GetRequiredService<ManageProductsViewModel>());
+                services.AddSingleton<NavigationService<ManageProductsViewModel>>();
+
+
+                services.AddTransient<AddProductViewModel>();
+                services.AddSingleton<Func<AddProductViewModel>>((s) => () => s.GetRequiredService<AddProductViewModel>());
+                services.AddSingleton<NavigationService<AddProductViewModel>>();
+
+                services.AddTransient<EditProductViewModel>();
+                services.AddSingleton<Func<EditProductViewModel>>((s) => () => s.GetRequiredService<EditProductViewModel>());
+                services.AddSingleton<NavigationService<EditProductViewModel>>();
+
+                services.AddTransient<UserMenuViewModel>();
+                services.AddSingleton<Func<UserMenuViewModel>>((s) => () => s.GetRequiredService<UserMenuViewModel>());
+                services.AddSingleton<NavigationService<UserMenuViewModel>>();
+
+                services.AddTransient<ManageUserOrdersViewModel>();
+                services.AddSingleton<Func<ManageUserOrdersViewModel>>((s) => () => s.GetRequiredService<ManageUserOrdersViewModel>());
+                services.AddSingleton<NavigationService<ManageUserOrdersViewModel>>();
+
+                services.AddTransient<ProductsShopViewModel>();
+                services.AddSingleton<Func<ProductsShopViewModel>>((s) => () => s.GetRequiredService<ProductsShopViewModel>());
+                services.AddSingleton<NavigationService<ProductsShopViewModel>>();
+
+                services.AddTransient<ShoppingCartViewModel>();
+                services.AddSingleton<Func<ShoppingCartViewModel>>((s) => () => s.GetRequiredService<ShoppingCartViewModel>());
+                services.AddSingleton<NavigationService<ShoppingCartViewModel>>();
+
+                services.AddTransient<UserOrdersViewModel>();
+                services.AddSingleton<Func<UserOrdersViewModel>>((s) => () => s.GetRequiredService<UserOrdersViewModel>());
+                services.AddSingleton<NavigationService<UserOrdersViewModel>>();
+
+                services.AddTransient<DiscountManagerViewModel>();
+                services.AddSingleton<Func<DiscountManagerViewModel>>((s) => () => s.GetRequiredService<DiscountManagerViewModel>());
+                services.AddSingleton<NavigationService<DiscountManagerViewModel>>();
+
+                services.AddTransient<AddDiscountViewModel>();
+                services.AddSingleton<Func<AddDiscountViewModel>>((s) => () => s.GetRequiredService<AddDiscountViewModel>());
+                services.AddSingleton<NavigationService<AddDiscountViewModel>>();
+
+                services.AddTransient<UserOrderDetailsViewModel>();
+                services.AddSingleton<Func<UserOrderDetailsViewModel>>((s) => () => s.GetRequiredService<UserOrderDetailsViewModel>());
+                services.AddSingleton<NavigationService<UserOrderDetailsViewModel>>();
+
+                services.AddSingleton<MainViewModel>();
+                services.AddSingleton(s => new MainWindow()
+                {
+                    DataContext = s.GetRequiredService<MainViewModel>()
+                });
+
+            }).Build();
         }
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _navigationStore.CurrentViewModel = CreateMainMenuViewModel();
+            _host.Start();
+
+            NavigationService<MainMenuViewModel> navigationService 
+                = _host.Services.GetRequiredService<NavigationService<MainMenuViewModel>>();
+
+            navigationService.Navigate();
             
-            MainWindow = new MainWindow()
-            {
-                DataContext = new MainViewModel(_navigationStore)
-            };
+            MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
 
             base.OnStartup(e);
         }
 
-        private MainMenuViewModel CreateMainMenuViewModel()
+        protected override void OnExit(ExitEventArgs e)
         {
-            return new MainMenuViewModel(new NavigationService(_navigationStore, CreateLogInViewModel));
-        }
+            _host.Dispose();
 
-        private LogInViewModel CreateLogInViewModel()
-        {
-            return new LogInViewModel(new NavigationService(_navigationStore, CreateMainMenuViewModel), 
-                new NavigationService(_navigationStore, CreateAdminMenuViewModel),
-                new NavigationService(_navigationStore, CreateUserMenuViewModel), 
-                new UsersManagerDatabaseService(_databaseConnection), _loggedUserStore);
-        }
-
-        private AdminMenuViewModel CreateAdminMenuViewModel()
-        {
-            return new AdminMenuViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
-                new NavigationService(_navigationStore, CreateManageProductsViewModel),
-                new NavigationService(_navigationStore, CreateLogInViewModel),
-                new NavigationService(_navigationStore, CreateDiscountManagerViewModel));
-        }
-
-        private ManageUsersViewModel CreateManageUsersViewModel()
-        {
-            return new ManageUsersViewModel(new NavigationService(_navigationStore, CreateAddUserViewModel), 
-                new NavigationService(_navigationStore, CreateAdminMenuViewModel),
-                new NavigationService(_navigationStore, CreateSearchUserViewModel),
-                new NavigationService(_navigationStore, CreateManageUserOrdersViewModel),
-                new UsersManagerDatabaseService(_databaseConnection), _userStore);
-        }
-
-        private AddUserViewModel CreateAddUserViewModel()
-        {
-            return new AddUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
-                new UsersManagerDatabaseService(_databaseConnection));
-        }
-
-        private EditUserViewModel CreateEditUserViewModel()
-        {
-            return new EditUserViewModel(new NavigationService(_navigationStore, CreateSearchUserViewModel),
-                new UsersManagerDatabaseService(_databaseConnection),
-                _userStore);
-        }
-
-        private SearchUserViewModel CreateSearchUserViewModel()
-        {
-            return new SearchUserViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
-                new NavigationService(_navigationStore, CreateEditUserViewModel),
-                new UsersManagerDatabaseService(_databaseConnection),
-                _userStore);
-        }
-
-        private ManageProductsViewModel CreateManageProductsViewModel()
-        {
-            return new ManageProductsViewModel(new NavigationService(_navigationStore, CreateAdminMenuViewModel),
-                new NavigationService(_navigationStore, CreateAddProductViewModel),
-                new NavigationService(_navigationStore, CreateEditProductViewModel),
-                new ProductManagerDatabaseService(_databaseConnection), _productStore);
-        }
-
-        private AddProductViewModel CreateAddProductViewModel()
-        {
-            return new AddProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
-                new ProductManagerDatabaseService(_databaseConnection));
-        }
-
-        private EditProductViewModel CreateEditProductViewModel()
-        {
-            return new EditProductViewModel(new NavigationService(_navigationStore, CreateManageProductsViewModel),
-                new ProductManagerDatabaseService(_databaseConnection), _productStore);
-        }
-
-        private UserMenuViewModel CreateUserMenuViewModel()
-        {
-            return new UserMenuViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), 
-                new NavigationService(_navigationStore, CreateUserOrdersViewModel), 
-                new NavigationService(_navigationStore, CreateLogInViewModel));
-        }
-
-        private ManageUserOrdersViewModel CreateManageUserOrdersViewModel()
-        {
-            return new ManageUserOrdersViewModel(new NavigationService(_navigationStore, CreateManageUsersViewModel),
-                new OrderManagerService(_dataContext), _userStore);
-        }
-
-        private ProductsShopViewModel CreateProductsShopViewModel()
-        {
-            return new ProductsShopViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
-                new NavigationService(_navigationStore, CreateShoppingCartViewModel),
-                new ProductManagerDatabaseService(_databaseConnection), _loggedUserStore);
-        }
-
-        private ShoppingCartViewModel CreateShoppingCartViewModel()
-        {
-            return new ShoppingCartViewModel(new NavigationService(_navigationStore, CreateProductsShopViewModel), _loggedUserStore,
-                new ProductManagerDatabaseService(_databaseConnection), new OrderManagerService(_dataContext));
-        }
-
-        private UserOrdersViewModel CreateUserOrdersViewModel()
-        {
-            return new UserOrdersViewModel(new NavigationService(_navigationStore, CreateUserMenuViewModel),
-                new OrderManagerService(_dataContext), _loggedUserStore);
-        }
-
-        private DiscountManagerViewModel CreateDiscountManagerViewModel()
-        {
-            return new DiscountManagerViewModel(_discountManager,
-                new NavigationService(_navigationStore, CreateAdminMenuViewModel),
-                new NavigationService(_navigationStore, CreateAddDiscountViewModel));
-        }
-
-        private AddDiscountViewModel CreateAddDiscountViewModel()
-        {
-            return new AddDiscountViewModel(new ProductsManagerService(_dataContext), _discountManager,
-                new NavigationService(_navigationStore, CreateDiscountManagerViewModel));
+            base.OnExit(e);
         }
     }
 }

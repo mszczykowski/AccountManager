@@ -7,6 +7,7 @@ using AccountManager.Stores;
 using AccountManager.Services;
 using AccountManager.Models;
 using AccountManager.ViewModels;
+using AccountManager.ViewModels.ManageOrdersViewModels;
 
 namespace AccountManager.Commands.UserManagerCommands
 {
@@ -14,9 +15,10 @@ namespace AccountManager.Commands.UserManagerCommands
     {
         private UserStore _userStore;
 
-        private readonly NavigationService _userOrdersViewNavigationService;
+        private readonly NavigationService<ManageUserOrdersViewModel> _userOrdersViewNavigationService;
 
-        public NavigateToUserOrdersCommand(UserStore userStore, NavigationService userOrdersViewNavigationService)
+        public NavigateToUserOrdersCommand(UserStore userStore, 
+            NavigationService<ManageUserOrdersViewModel> userOrdersViewNavigationService)
         {
             _userStore = userStore;
             _userOrdersViewNavigationService = userOrdersViewNavigationService;

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using AccountManager.Stores;
 using AccountManager.Services;
 using AccountManager.Models;
-using AccountManager.ViewModels;
+using AccountManager.ViewModels.ManageProductsViewModels;
+using AccountManager.ViewModels.ProductsViewModels;
 
 namespace AccountManager.Commands.ProductManagerCommands
 {
@@ -14,9 +15,9 @@ namespace AccountManager.Commands.ProductManagerCommands
     {
         private ProductStore _productStore;
         
-        private readonly NavigationService _editProductViewModelNavigationService;
+        private readonly NavigationService<EditProductViewModel> _editProductViewModelNavigationService;
 
-        public NavigateToEditProductCommand(ProductStore productStore, NavigationService editProductViewModelNavigationService)
+        public NavigateToEditProductCommand(ProductStore productStore, NavigationService<EditProductViewModel> editProductViewModelNavigationService)
         {
             _productStore = productStore;
             _editProductViewModelNavigationService = editProductViewModelNavigationService;

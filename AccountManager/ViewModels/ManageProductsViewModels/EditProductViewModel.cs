@@ -64,7 +64,8 @@ namespace AccountManager.ViewModels.ManageProductsViewModels
         public ICommand EditProductCommand { get; }
         public ICommand CancelCommand { get; }
 
-        public EditProductViewModel(NavigationService manageProductsViewModelNavigationService, IProductsManagerService productsManagerService, 
+        public EditProductViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
+            IProductsManagerService productsManagerService, 
             ProductStore productStore)
         {
             _productStore = productStore;
@@ -74,7 +75,7 @@ namespace AccountManager.ViewModels.ManageProductsViewModels
             _category = _productStore.Product.Category;
             _quantity = _productStore.Product.Quantity;
             
-            CancelCommand = new NavigateCommand(manageProductsViewModelNavigationService);
+            CancelCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewModelNavigationService);
 
             EditProductCommand = new EditProductCommand(this, manageProductsViewModelNavigationService, productsManagerService, productStore);
 

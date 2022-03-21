@@ -14,11 +14,11 @@ namespace AccountManager.Commands.UserManagerCommands
 {
     internal class DeleteUserCommand : CommandBase
     {
-        private readonly NavigationService _manageUsersViewModelNavigationSercvice;
+        private readonly NavigationService<ManageUsersViewModel> _manageUsersViewModelNavigationSercvice;
         private readonly UserStore _userStore;
         private readonly IUsersManagerService _usersManagerService;
 
-        public DeleteUserCommand(SearchUserViewModel searchUserViewModel, NavigationService manageUsersViewModelNavigationSercvice, UserStore userStore,
+        public DeleteUserCommand(SearchUserViewModel searchUserViewModel, NavigationService<ManageUsersViewModel> manageUsersViewModelNavigationSercvice, UserStore userStore,
             IUsersManagerService usersManagerService)
         {
             _manageUsersViewModelNavigationSercvice = manageUsersViewModelNavigationSercvice;

@@ -14,7 +14,7 @@ using AccountManager.Stores;
 using AccountManager.ViewModels.ProductsViewModels;
 using AccountManager.Commands.MisicCommands;
 
-namespace AccountManager.ViewModels
+namespace AccountManager.ViewModels.ManageProductsViewModels
 {
     internal class ManageProductsViewModel : ProductsListViewModel
     {
@@ -24,11 +24,16 @@ namespace AccountManager.ViewModels
 
         public ICommand DeleteSelectedCommand { get; private set; }
 
-        public ManageProductsViewModel(NavigationService adminMenuViewModelNavigationService, NavigationService addProductViewModelNavigationService,
-            NavigationService editProductViewModelNavigationService, IProductsManagerService productManagerService, 
-            ProductStore productStore) : base(adminMenuViewModelNavigationService, productManagerService)
+        public ManageProductsViewModel(NavigationService<AdminMenuViewModel> adminMenuViewModelNavigationService, 
+            NavigationService<AddProductViewModel> addProductViewModelNavigationService,
+            NavigationService<EditProductViewModel> editProductViewModelNavigationService, 
+            IProductsManagerService productManagerService, 
+            ProductStore productStore) 
+            : base(productManagerService)
         {
-            AddProductCommand = new NavigateCommand(addProductViewModelNavigationService);
+            BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewModelNavigationService);
+
+            AddProductCommand = new NavigateCommand<AddProductViewModel>(addProductViewModelNavigationService);
 
             EditProductCommand = new NavigateToEditProductCommand(productStore, editProductViewModelNavigationService);
 

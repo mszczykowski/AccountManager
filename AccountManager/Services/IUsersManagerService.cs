@@ -9,7 +9,7 @@ namespace AccountManager.Services
 {
     internal interface IUsersManagerService
     {
-        public void AddUser(UserModel user);
+        public void AddStandardUser(UserModel user);
         public void DeleteUser(int id);
         public void EditUser(int id, UserModel user);
         public UserModel GetUser(int userId);

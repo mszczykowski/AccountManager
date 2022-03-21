@@ -48,7 +48,7 @@
                 <views:EditUserView/>
             </DataTemplate>
 
-            <DataTemplate DataType="{x:Type viewmodels:ManageProductsViewModel}">
+            <DataTemplate DataType="{x:Type viewmodelsManageProducts:ManageProductsViewModel}">
                 <views:ManageProductsView/>
             </DataTemplate>
 
@@ -86,6 +86,10 @@
 
             <DataTemplate DataType="{x:Type viewmodelsDiscounts:AddDiscountViewModel}">
                 <viewsDiscounts:AddDiscountView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelsUser:UserOrderDetailsViewModel}">
+                <viewsUser:UserOrderDetailsView/>
             </DataTemplate>
 
         </Grid.Resources>

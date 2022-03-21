@@ -20,7 +20,7 @@ namespace AccountManager.Services
             random = new Random();
         }
 
-        public void AddUser(UserModel user)
+        public void AddStandardUser(UserModel user)
         {
             user.Id = GenerateId();
             

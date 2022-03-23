@@ -131,7 +131,7 @@ namespace AccountManager.Services
 
             if (!string.IsNullOrEmpty(keyWord) && category != null) query += "and ";
 
-            if (category != null) query += "category = " + (int)category;
+            if (category != null) query += "category = " + ((int)category + 1);
 
             query += ";";
 

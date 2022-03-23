@@ -32,7 +32,8 @@ namespace AccountManager.Services
             order.Products.ToList().ForEach(p =>
             {
                 string query = "insert into [OrderProduct] (ProductId, OrderId, Price, Quantity) "
-                + "values ('" + p.ProductId + "','" + orderId + "', '" + p.Price + "', '" + p.Quantity + "');";
+                + "values ('" + p.ProductId + "','" + orderId + "', '" + 
+                p.Price.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) + "', '" + p.Quantity + "');";
 
                 _databaseConnection.ExecuteDML(query);
             });

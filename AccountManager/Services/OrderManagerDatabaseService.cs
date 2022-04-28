@@ -60,7 +60,7 @@ namespace AccountManager.Services
         public void UpdateStatus(int orderId, OrderStatuses orderStatus)
         {
             string query = "update [Order] "
-                         + "set status = '" + (int)orderStatus + "' "
+                         + "set status = '" + (int)orderStatus + 1 + "' "
                          + "where id = '" + orderId + "';";
 
             _databaseConnection.ExecuteDML(query);

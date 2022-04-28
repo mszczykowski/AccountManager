@@ -36,7 +36,7 @@ namespace AccountManager
                 services.AddSingleton<IUsersManagerService, UsersManagerDatabaseService>();
                 services.AddSingleton<IProductsManagerService, ProductManagerDatabaseService>();
                 services.AddSingleton<IOrderManagerService, OrderManagerDatabaseService>();
-                services.AddSingleton<IDiscountsDatabaseService, DiscountDatabaseService>();
+                services.AddSingleton<IDiscountsManagerService, DiscountDatabaseService>();
                 services.AddSingleton<IShoppingCartDatabaseService, ShoppingCartDatabaseService>();
 
                 services.AddSingleton<UserStore>();
@@ -144,7 +144,7 @@ namespace AccountManager
             MainWindow = _host.Services.GetRequiredService<MainWindow>();
             MainWindow.Show();
 
-            IDiscountsDatabaseService discountsDatabaseService = _host.Services.GetRequiredService<IDiscountsDatabaseService>();
+            IDiscountsManagerService discountsDatabaseService = _host.Services.GetRequiredService<IDiscountsManagerService>();
             IProductsManagerService productManagerDatabaseService = _host.Services.GetRequiredService<IProductsManagerService>();
             DiscountManager discountManager = _host.Services.GetRequiredService<DiscountManager>();
 

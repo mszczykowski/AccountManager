@@ -23,12 +23,12 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
 
         private readonly DiscountManager _discountManager;
 
-        private readonly IDiscountsDatabaseService _discountsDatabaseService;
+        private readonly IDiscountsManagerService _discountsDatabaseService;
 
         public DiscountManagerViewModel(DiscountManager discountManager, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService, 
             NavigationService<AddDiscountViewModel> addDiscountViewNavigationService,
-            IDiscountsDatabaseService discountsDatabaseService)
+            IDiscountsManagerService discountsDatabaseService)
         {
             _discountManager = discountManager;
 

@@ -19,7 +19,7 @@ namespace AccountManager.ViewModels.DiscountManagerViewModels
         public ICommand DeleteDiscountCommand { get; }
 
         public DiscountViewModel(DiscountManagerViewModel discountManagerViewModel, DiscountBase discount, DiscountManager discountManager,
-            IDiscountsDatabaseService discountsDatabaseService)
+            IDiscountsManagerService discountsDatabaseService)
         {
             _discount = discount;
 

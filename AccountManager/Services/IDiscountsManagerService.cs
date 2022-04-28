@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AccountManager.Services
 {
-    internal interface IDiscountsDatabaseService
+    internal interface IDiscountsManagerService
     {
         public int AddCategoryDiscount(int discountType, Categories category);
         public int AddProductDiscount(int discountType, ProductModel product);

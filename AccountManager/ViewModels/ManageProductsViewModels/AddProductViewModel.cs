@@ -9,11 +9,14 @@ using AccountManager.Commands;
 using AccountManager.Enums;
 using AccountManager.Commands.ProductManagerCommands;
 using AccountManager.Commands.MisicCommands;
+using System.ComponentModel;
+using System.Collections;
 
 namespace AccountManager.ViewModels.ManageProductsViewModels
 {
     internal class AddProductViewModel : ViewModelBase
     {
+        private readonly ErrorsViewModel _errorsViewModel;
         private string _productName;
         public string ProductName 
         {
@@ -43,6 +46,7 @@ namespace AccountManager.ViewModels.ManageProductsViewModels
             set 
             { 
                 _price = value; 
+                ValidatePrice();
                 OnPropertyChanged(nameof(Price)); 
             } 
         }
@@ -68,6 +72,31 @@ namespace AccountManager.ViewModels.ManageProductsViewModels
 
             AddProductCommand = new AddProductCommand(this, manageProductsViewModelNavigationService, productsManagerService);
 
+
+            _errorsViewModel = new ErrorsViewModel();
+
+            _errorsViewModel.ErrorsChanged += ErrorsViewModel_ErrorsChanged;
+        }
+
+        public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
+
+        public bool HasErrors => _errorsViewModel.HasErrors;
+
+        public IEnumerable GetErrors(string propertyName)
+        {
+            return _errorsViewModel.GetErrors(propertyName);
+        }
+
+        private void ErrorsViewModel_ErrorsChanged(object sender, DataErrorsChangedEventArgs e)
+        {
+            ErrorsChanged?.Invoke(this, e);
+        }
+
+        public void ValidatePrice()
+        {
+            _errorsViewModel.ClearErrors(nameof(Price));
+
+            if (_price > 10) _errorsViewModel.AddError(nameof(Price), "Klucz nie może być pusty");
         }
     }
 }

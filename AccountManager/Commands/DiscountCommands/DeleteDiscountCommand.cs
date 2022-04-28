@@ -15,10 +15,10 @@ namespace AccountManager.Commands.DiscountCommands
         private readonly DiscountManagerViewModel _discountManagerViewModel;
         private readonly DiscountManager _discountManager;
         private readonly DiscountBase _discount;
-        private readonly IDiscountsDatabaseService _discountsDatabaseService;
+        private readonly IDiscountsManagerService _discountsDatabaseService;
 
         public DeleteDiscountCommand(DiscountManagerViewModel discountManagerViewModel, DiscountManager discountManager, DiscountBase discount,
-            IDiscountsDatabaseService discountsDatabaseService)
+            IDiscountsManagerService discountsDatabaseService)
         {
             _discountManagerViewModel = discountManagerViewModel;
             _discountManager = discountManager;

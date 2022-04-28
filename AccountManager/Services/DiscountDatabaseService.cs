@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AccountManager.Services
 {
-    internal class DiscountDatabaseService : IDiscountsDatabaseService
+    internal class DiscountDatabaseService : IDiscountsManagerService
     {
         private DatabaseConnection _databaseConnection;
 

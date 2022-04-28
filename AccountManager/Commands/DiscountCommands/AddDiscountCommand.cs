@@ -15,11 +15,11 @@ namespace AccountManager.Commands.DiscountCommands
         private readonly AddDiscountViewModel _addDiscountViewModel;
         private readonly DiscountManager _discountManager;
         private readonly NavigationService<DiscountManagerViewModel> _discountManagerViewNavigationService;
-        private readonly IDiscountsDatabaseService _discountDatabaseService;
+        private readonly IDiscountsManagerService _discountDatabaseService;
 
         public AddDiscountCommand(AddDiscountViewModel addDiscountViewModel, DiscountManager discountManager,
             NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService,
-            IDiscountsDatabaseService discountDatabaseService)
+            IDiscountsManagerService discountDatabaseService)
         {
             _addDiscountViewModel = addDiscountViewModel;
             _discountManager = discountManager;

@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="ShopWPF.Views.DiscountManagerViews.DiscountManagerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ShopWPF.Views.DiscountManagerViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Manage discounts" Style="{StaticResource Header}" Grid.Column="0"/>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="3">
+                <Button Content="Add discount" Command="{Binding AddDicountCommand}" Margin="5 0"/>
+                <Rectangle VerticalAlignment="Stretch" Fill="DarkGray" Grid.Column="3" Grid.Row="1" Width="1" Margin="5 0"/>
+                <Button Content="Back" Command="{Binding BackCommand}" Margin="5 0"/>
+            </StackPanel>
+        </Grid>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding DiscountsViewModels}" Name="ProductListView">
+
+
+
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Description" Width="500">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding DiscountDescription}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Delete" Command="{Binding DeleteDiscountCommand}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
+
+
+                </GridView>
+
+
+            </ListView.View>
+        </ListView>
+    </Grid>
+</UserControl>

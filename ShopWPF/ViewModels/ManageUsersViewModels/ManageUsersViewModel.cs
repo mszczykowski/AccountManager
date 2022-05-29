@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShopWPF.Models;
 using System.Windows.Input;
-using ShopWPF.Commands;
 using ShopWPF.Stores;
 using ShopWPF.Services;
-using ShopWPF.Commands.UserManagerCommands;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels
 {
@@ -48,9 +42,11 @@ namespace ShopWPF.ViewModels
             UpdateUsersCollection();
         }
 
-        private void UpdateUsersCollection()
+        private async void UpdateUsersCollection()
         {
-            foreach (var u in _usersManagerService.GetAllUsers())
+            var users = await _usersManagerService.GetAllUsers();
+
+            foreach (var u in users)
             {
                 _users.Add(new UserViewModel(u));
             }

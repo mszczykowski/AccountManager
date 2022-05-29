@@ -2,13 +2,9 @@
 using ShopWPF.Commands.OrderManagerCommands;
 using ShopWPF.Commands.UserManagerCommands;
 using ShopWPF.Services;
+using ShopWPF.Services.Interfaces;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.OrdersViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopWPF.ViewModels.UserViews
 {

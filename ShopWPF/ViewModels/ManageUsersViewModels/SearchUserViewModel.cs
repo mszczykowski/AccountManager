@@ -10,6 +10,7 @@ using ShopWPF.Stores;
 using System.ComponentModel;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Commands.UserManagerCommands;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels
 {

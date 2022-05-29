@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using ShopWPF.ViewModels.OrdersViewModels;
 using System.ComponentModel;
 using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ManageOrdersViewModels
 {
@@ -30,8 +31,6 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
             : base(orderManagerService)
         {
             _customer = customer.User;
-
-            //SetOnPropertyChangedListener();
 
             BackCommand = new NavigateCommand<ManageUsersViewModel>(manageUsersViewNavigationService);
             UpdateOrdersCollection();

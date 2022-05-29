@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopWPF.Services
+namespace ShopWPF.Services.Interfaces
 {
     internal interface IShoppingCartService
     {

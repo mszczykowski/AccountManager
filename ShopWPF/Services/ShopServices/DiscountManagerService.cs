@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopWPF.Data;
-using ShopWPF.Discounts;
 using ShopWPF.Models;
 using ShopWPF.Models.Discounts;
-using System;
+using ShopWPF.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShopWPF.Services.ShopServices
@@ -34,7 +31,7 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task AddDiscount()
         {
-            await _context.DiscountBases.AddAsync(new TenEveryHundredDiscount);
+            await _context.DiscountBases.AddAsync(new TenEveryHundredDiscount());
             await _context.SaveChangesAsync();
         }
 

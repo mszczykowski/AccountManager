@@ -1,19 +1,15 @@
-﻿using ShopWPF.Commands;
-using ShopWPF.Services;
+﻿using ShopWPF.Services;
 using ShopWPF.Stores;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using ShopWPF.Commands.ShopCommands.ShoppingCartCommands;
 using System.ComponentModel;
 using ShopWPF.Commands.ShopCommands;
-using ShopWPF.Discounts;
 using ShopWPF.Commands.MisicCommands;
-using ShopWPF.Models;
+using ShopWPF.Services.Interfaces;
+using ShopWPF.Models.Discounts;
 
 namespace ShopWPF.ViewModels.ShopViewModels
 {
@@ -21,12 +17,13 @@ namespace ShopWPF.ViewModels.ShopViewModels
     {
         private LoggedUserStore _loggedUserStore;
 
-        private IProductsManagerService _productsManagerService;
+        private readonly IProductManagerService _productsManagerService;
 
         private ObservableCollection<ShoppingCartEntryViewModel> _shoppingCartEntries;
 
-        private readonly DiscountManager _discountManager;
         private readonly IShoppingCartService _shoppingCartDatabaseService;
+
+        private readonly IDiscountManagerService _discountManagerService;
 
         public IEnumerable<ShoppingCartEntryViewModel> ShoppingCartEntries => _shoppingCartEntries;
 
@@ -64,9 +61,14 @@ namespace ShopWPF.ViewModels.ShopViewModels
             }
         }
 
+        private ICollection<DiscountBaseModel> discountsCache;
+
         public ShoppingCartViewModel(NavigationService<ProductsShopViewModel> productShopViewNavigationService, 
-            LoggedUserStore loggedUserStore, IProductsManagerService productsManagerService, IOrderManagerService orderManagerService,
-            DiscountManager discountManager, IShoppingCartService shoppingCartDatabaseService)
+            LoggedUserStore loggedUserStore, IProductManagerService productsManagerService, 
+            IOrderManagerService orderManagerService,
+            IShoppingCartService shoppingCartDatabaseService,
+            IShopService shopService,
+            IDiscountManagerService discountManagerService)
         {
             _loggedUserStore = loggedUserStore;
 
@@ -80,12 +82,14 @@ namespace ShopWPF.ViewModels.ShopViewModels
 
             BackCommand = new NavigateCommand<ProductsShopViewModel>(productShopViewNavigationService);
 
-            PlaceOrderCommand = new PlaceOrderCommand(this, _loggedUserStore, productsManagerService, orderManagerService, 
-                productShopViewNavigationService, discountManager, shoppingCartDatabaseService);
+            PlaceOrderCommand = new PlaceOrderCommand(_loggedUserStore, 
+                productShopViewNavigationService, shopService, this);
 
-            _discountManager = discountManager;
             _shoppingCartDatabaseService = shoppingCartDatabaseService;
-            UpdateShoppingCartEnetries();
+
+            _discountManagerService = discountManagerService;
+
+            UpdateShoppingCartEntries();
 
             UpdateView();
 
@@ -135,13 +139,16 @@ namespace ShopWPF.ViewModels.ShopViewModels
             FullPrice = fullPrice.ToString("N2");
         }
 
-        public void UpdateShoppingCartEnetries()
+        public async void UpdateShoppingCartEntries()
         {
+            if(discountsCache == null) discountsCache = await _discountManagerService.GetDiscounts();
+
             _shoppingCartEntries.Clear();
 
-            _loggedUserStore.User.ShoppingCart.ToList().ForEach(entry =>
+            _loggedUserStore.User.ShoppingCart.ToList().ForEach(async entry =>
             {
-                _shoppingCartEntries.Add(new ShoppingCartEntryViewModel(_productsManagerService.GetProduct(entry.Product.ProductId), entry));
+                _shoppingCartEntries.Add(new ShoppingCartEntryViewModel(await _productsManagerService
+                    .GetProduct(entry.Product.ProductId), entry));
             });
 
             OnPropertyChanged(nameof(ShoppingCartEntries));
@@ -151,7 +158,7 @@ namespace ShopWPF.ViewModels.ShopViewModels
         {
             _discountsViewModels.Clear();
 
-            _discountManager.Discounts.ToList().ForEach(discount =>
+            discountsCache.ToList().ForEach(discount =>
             {
                 _discountsViewModels.Add(new DiscountViewModel(discount.ToString(), discount.GetDiscountValue(_loggedUserStore.User.ShoppingCart).ToString("N2")));
             });
@@ -166,7 +173,7 @@ namespace ShopWPF.ViewModels.ShopViewModels
                 fullPrice += entry.ProductModel.Price * entry.ActualQuantity;
             });
 
-            _discountManager.Discounts.ToList().ForEach(discount =>
+            discountsCache.ToList().ForEach(discount =>
             {
                 fullPrice -= discount.GetDiscountValue(_loggedUserStore.User.ShoppingCart);
             });

@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using ShopWPF.ViewModels;
-using ShopWPF.Models;
 using System.Windows;
 using ShopWPF.Services;
 using ShopWPF.Stores;
-
+using ShopWPF.Models.UserModels;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.UserManagerCommands
 {

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using ShopWPF.Services;
 using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.Models;
 using System.Windows;
-using ShopWPF.ViewModels;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.ProductManagerCommands
 {
@@ -16,11 +11,11 @@ namespace ShopWPF.Commands.ProductManagerCommands
     {
         private readonly AddProductViewModel _addProductViewModel;
         private readonly NavigationService<ManageProductsViewModel> _manageProductsViewModelNavigationService;
-        private readonly IProductsManagerService _productsManagerService;
+        private readonly IProductManagerService _productsManagerService;
 
         public AddProductCommand(AddProductViewModel addProductViewModel, 
             NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
-            IProductsManagerService productsManagerService)
+            IProductManagerService productsManagerService)
         {
             _addProductViewModel = addProductViewModel;
             _manageProductsViewModelNavigationService = manageProductsViewModelNavigationService;
@@ -43,7 +38,7 @@ namespace ShopWPF.Commands.ProductManagerCommands
         public override void Execute(object? parameter)
         {
             _productsManagerService.AddProduct(new ProductModel(_addProductViewModel.ProductName, _addProductViewModel.Price,
-                _addProductViewModel.Quantity, _addProductViewModel.Category));
+                _addProductViewModel.Quantity, _addProductViewModel.Category.CategoryId));
 
             MessageBox.Show("Product created!");
 

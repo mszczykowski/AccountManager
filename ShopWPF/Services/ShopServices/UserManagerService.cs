@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopWPF.Data;
-using ShopWPF.Models;
-using System;
+using ShopWPF.Models.UserModels;
+using ShopWPF.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

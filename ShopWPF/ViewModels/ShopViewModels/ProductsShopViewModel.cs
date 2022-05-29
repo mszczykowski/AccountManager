@@ -3,14 +3,11 @@ using ShopWPF.Services;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ProductsViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using ShopWPF.Commands;
 using ShopWPF.Models;
 using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ShopViewModels
 {
@@ -24,15 +21,16 @@ namespace ShopWPF.ViewModels.ShopViewModels
 
         public ProductsShopViewModel(NavigationService<UserMenuViewModel> userMenuViewModelNavigationService, 
             NavigationService<ShoppingCartViewModel> shoppingCartViewModelNavigationService,
-            IProductsManagerService productManagerService, LoggedUserStore loggedUserStore,
-            IShoppingCartService shoppingCartDatabaseService)
-            : base(productManagerService)
+            IProductManagerService productManagerService, LoggedUserStore loggedUserStore,
+            IShoppingCartService shoppingCartDatabaseService, ICategoryManagerService categoryManagerService)
+            : base(productManagerService, categoryManagerService)
         {
             _loggedUserStore = loggedUserStore;
 
             LoadShoppingCartState();
 
-            UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, _loggedUserStore.User, shoppingCartDatabaseService);
+            UpdateShoppingCartCommand = new UpdateShoppingCartCommand(this, _loggedUserStore.User, 
+                shoppingCartDatabaseService);
 
             NavigateToCartCommand = new NavigateCommand<ShoppingCartViewModel>(shoppingCartViewModelNavigationService);
 

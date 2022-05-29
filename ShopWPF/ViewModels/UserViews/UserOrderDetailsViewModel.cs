@@ -2,6 +2,7 @@
 using ShopWPF.Commands.OrderManagerCommands;
 using ShopWPF.Enums;
 using ShopWPF.Services;
+using ShopWPF.Services.Interfaces;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.OrdersViewModels;
 using System;
@@ -21,16 +22,17 @@ namespace ShopWPF.ViewModels.UserViews
 
         public string OrderStatus => _order.Status.ToString();
 
-        public OrderStatuses OrderStausEnum => _order.Status;
+        public OrderStatuses OrderStausEnum => (OrderStatuses)_order.StatusId;
 
-        public UserOrderDetailsViewModel(IProductsManagerService productManagerService, 
+        public UserOrderDetailsViewModel(IProductManagerService productManagerService, 
             NavigationService<UserOrdersViewModel> userOrdersViewNavigationService,
-            OrderStore orderStore, IOrderManagerService orderManagerService) : base(productManagerService, orderStore, orderManagerService)
+            OrderStore orderStore, IOrderManagerService orderManagerService,
+            IShopService shopService) : base(productManagerService, orderStore, orderManagerService)
         {
             
             BackCommand = new NavigateCommand<UserOrdersViewModel>(userOrdersViewNavigationService);
             
-            CancelOrderCommand = new CancelOrderCommand(this, productManagerService, orderManagerService,
+            CancelOrderCommand = new CancelOrderCommand(this, shopService,
                 userOrdersViewNavigationService);
 
             

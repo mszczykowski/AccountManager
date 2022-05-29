@@ -12,7 +12,7 @@ namespace ShopWPF.Models
         [Key]
         public int OrderProductId { get; set; }
 
-        public int? ProductId { get; set; }
+        public int ProductId { get; set; }
 
         private ProductModel _product;
         public ProductModel Product 

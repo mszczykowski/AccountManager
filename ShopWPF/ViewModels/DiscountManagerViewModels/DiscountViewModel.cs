@@ -1,11 +1,6 @@
 ﻿using ShopWPF.Commands.DiscountCommands;
-using ShopWPF.Discounts;
-using ShopWPF.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ShopWPF.Models.Discounts;
+using ShopWPF.Services.Interfaces;
 using System.Windows.Input;
 
 namespace ShopWPF.ViewModels.DiscountManagerViewModels
@@ -18,14 +13,15 @@ namespace ShopWPF.ViewModels.DiscountManagerViewModels
 
         public ICommand DeleteDiscountCommand { get; }
 
-        public DiscountViewModel(DiscountManagerViewModel discountManagerViewModel, DiscountBaseModel discount, DiscountManager discountManager,
+        public DiscountViewModel(DiscountManagerViewModel discountManagerViewModel, DiscountBaseModel discount,
             IDiscountManagerService discountsDatabaseService)
         {
             _discount = discount;
 
             DiscountDescription = _discount.ToString();
 
-            DeleteDiscountCommand = new DeleteDiscountCommand(discountManagerViewModel, discountManager, discount, discountsDatabaseService);
+            DeleteDiscountCommand = new DeleteDiscountCommand(discountManagerViewModel, discount, 
+                discountsDatabaseService);
         }
     }
 }

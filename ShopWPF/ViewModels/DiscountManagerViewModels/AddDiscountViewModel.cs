@@ -8,17 +8,21 @@ using System.Windows.Input;
 using ShopWPF.Commands;
 using ShopWPF.Commands.DiscountCommands;
 using ShopWPF.Commands.MisicCommands;
-using ShopWPF.Discounts;
 using ShopWPF.Enums;
 using ShopWPF.Models;
 using ShopWPF.Services;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.DiscountManagerViewModels
 {
     internal class AddDiscountViewModel : ViewModelBase
     {
         public DiscountTypes DiscountType { get; set; }
-        public Categories Category { get; set; }
+        public CategoryModel Category { get; set; }
+
+        private ICollection<CategoryModel> _categories;
+
+        public ICollection<CategoryModel> Categories { get => _categories; }
 
         public ProductModel Product {  get; set; }
 
@@ -26,29 +30,34 @@ namespace ShopWPF.ViewModels.DiscountManagerViewModels
         
         public ICollection<ProductModel> ProductsCollection { get => _productsCollection; }
 
-        private readonly IProductsManagerService _productsManagerService;
+        private readonly IProductManagerService _productsManagerService;
+
+        private readonly ICategoryManagerService _categoryManagerService;
 
         public ICommand AddDiscountCommand { get; }
 
         public ICommand CancelCommand { get; }
 
-        public AddDiscountViewModel(IProductsManagerService productsManagerService, DiscountManager discountManager, 
-            NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService, IDiscountManagerService discountsDatabaseService)
+        public AddDiscountViewModel(IProductManagerService productsManagerService, 
+            NavigationService<DiscountManagerViewModel> discountManagerViewNavigationService, 
+            IDiscountManagerService discountsDatabaseService,
+            ICategoryManagerService categoryManagerService)
         {
 
             _productsManagerService = productsManagerService;
+            _categoryManagerService = categoryManagerService;
 
-            AddDiscountCommand = new AddDiscountCommand(this, discountManager, discountManagerViewNavigationService, discountsDatabaseService);
+            AddDiscountCommand = new AddDiscountCommand(this, discountManagerViewNavigationService, discountsDatabaseService);
 
             CancelCommand = new NavigateCommand<DiscountManagerViewModel>(discountManagerViewNavigationService);
 
-            InitialiseProductsCollection();
+            Initialise();
         }
 
-        private void InitialiseProductsCollection()
+        private async void Initialise()
         {
-
-            _productsCollection = _productsManagerService.GetAllProducts();
+            _productsCollection = await _productsManagerService.GetAllProducts();
+            _categories = await _categoryManagerService.GetAllCategories();
         }
     }
 }

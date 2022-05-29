@@ -6,10 +6,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using ShopWPF.ViewModels.ManageProductsViewModels;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.ProductManagerCommands
 {
@@ -17,9 +16,9 @@ namespace ShopWPF.Commands.ProductManagerCommands
     {
         private readonly ManageProductsViewModel _manageProductsViewModel;
         private readonly IEnumerable<ProductViewModel> _productsViewModel;
-        private readonly IProductsManagerService _productsManagerService;
+        private readonly IProductManagerService _productsManagerService;
 
-        public DeleteSelectedCommand(ManageProductsViewModel manageProductsViewModel, IProductsManagerService productsManagerService)
+        public DeleteSelectedCommand(ManageProductsViewModel manageProductsViewModel, IProductManagerService productsManagerService)
         {
             _manageProductsViewModel = manageProductsViewModel;
 

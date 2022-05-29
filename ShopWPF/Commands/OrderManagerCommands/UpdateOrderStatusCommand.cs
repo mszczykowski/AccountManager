@@ -1,24 +1,20 @@
 ﻿using ShopWPF.Enums;
-using ShopWPF.Services;
+using ShopWPF.Services.Interfaces;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace ShopWPF.Commands.OrderManagerCommands
 {
     internal class UpdateOrderStatusCommand : CommandBase
     {
-        private readonly IProductsManagerService _productManager;
+        private readonly IProductManagerService _productManager;
         private readonly IOrderManagerService _orderManager;
 
         private ManageUserOrderDetailsViewModel _manageUserOrderDetailViewModel;
         public UpdateOrderStatusCommand(ManageUserOrderDetailsViewModel manageUserOrderDetailViewModel,
-            IProductsManagerService productManager, IOrderManagerService orderManager)
+            IProductManagerService productManager, IOrderManagerService orderManager)
         {
             _productManager = productManager;
             _orderManager = orderManager;
@@ -35,8 +31,8 @@ namespace ShopWPF.Commands.OrderManagerCommands
 
         public override bool CanExecute(object? parameter)
         {
-            return _manageUserOrderDetailViewModel.OrderStatus != _manageUserOrderDetailViewModel.Order.Status
-                && _manageUserOrderDetailViewModel.Order.Status != OrderStatuses.Canceled && base.CanExecute(parameter);
+            return (int)_manageUserOrderDetailViewModel.OrderStatus != _manageUserOrderDetailViewModel.Order.StatusId
+                && _manageUserOrderDetailViewModel.Order.StatusId != (int)OrderStatuses.Canceled && base.CanExecute(parameter);
         }
 
         public override void Execute(object? parameter)
@@ -49,7 +45,7 @@ namespace ShopWPF.Commands.OrderManagerCommands
 
                     _manageUserOrderDetailViewModel.Order.Products.ToList().ForEach(p =>
                     {
-                        _productManager.ChangeQantity(p.ProductId, -p.Quantity);
+                        _productManager.ChangeQuantity(p.ProductId, p.Product.Quantity + p.Quantity);
                     });
                 }
             }
@@ -59,7 +55,7 @@ namespace ShopWPF.Commands.OrderManagerCommands
                 _orderManager.UpdateStatus(_manageUserOrderDetailViewModel.Order.OrderId, _manageUserOrderDetailViewModel.OrderStatus);
             }
 
-            _manageUserOrderDetailViewModel.Order.Status = _manageUserOrderDetailViewModel.OrderStatus;
+            _manageUserOrderDetailViewModel.Order.StatusId = (int)_manageUserOrderDetailViewModel.OrderStatus;
 
             OnCanExecuteChanged();
         }

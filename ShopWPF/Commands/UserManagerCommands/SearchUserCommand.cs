@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using ShopWPF.ViewModels;
-using ShopWPF.Models;
 using System.Windows;
-using ShopWPF.Services;
 using ShopWPF.Stores;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.UserManagerCommands
 {
@@ -39,9 +33,9 @@ namespace ShopWPF.Commands.UserManagerCommands
             return !string.IsNullOrEmpty(_searchUserViewModel.Search) && base.CanExecute(parameter);
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
-            var user = _usersManagerService.GetUser(_searchUserViewModel.Search);
+            var user = await _usersManagerService.GetUser(_searchUserViewModel.Search);
             if (user == null)
             {
                 _userStore.User = null;

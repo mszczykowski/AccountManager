@@ -1,15 +1,8 @@
-﻿using ShopWPF.Commands;
-using ShopWPF.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ShopWPF.Stores;
 using System.Windows.Input;
 using ShopWPF.Services;
-using System.ComponentModel;
-using ShopWPF.Models;
 using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels
 {
@@ -47,7 +40,7 @@ namespace ShopWPF.ViewModels
             IUserManagerService usersManagerService, 
             LoggedUserStore loggedUserStore,
             IShoppingCartService shoppingCartDatabaseService,
-            IProductsManagerService productsManagerService)
+            IProductManagerService productsManagerService)
         {
             CancelCommand = new NavigateCommand<MainMenuViewModel>(mainMenuViewNavigationService);
 

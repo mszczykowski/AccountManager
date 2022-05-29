@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using ShopWPF.ViewModels;
-using ShopWPF.Models;
 using System.Windows;
 using ShopWPF.Services;
 using ShopWPF.Stores;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.MisicCommands
 {
@@ -17,7 +12,7 @@ namespace ShopWPF.Commands.MisicCommands
         private readonly LogInViewModel _logInViewModel;
         private readonly LoggedUserStore _loggedUserStore;
         private readonly IShoppingCartService _shoppingCartDatabaseService;
-        private readonly IProductsManagerService _productsManagerService;
+        private readonly IProductManagerService _productsManagerService;
         private readonly IUserManagerService _usersManagerService;
         private readonly NavigationService<AdminMenuViewModel> _adminMenuViewNavigationService;
         private readonly NavigationService<UserMenuViewModel> _userMenuViewNavigationService;
@@ -25,7 +20,7 @@ namespace ShopWPF.Commands.MisicCommands
         public LogInCommand(LogInViewModel logInViewModel, IUserManagerService usersManagerService, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
             NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore, 
-            IShoppingCartService shoppingCartDatabaseService, IProductsManagerService productsManagerService)
+            IShoppingCartService shoppingCartDatabaseService, IProductManagerService productsManagerService)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;
@@ -49,9 +44,9 @@ namespace ShopWPF.Commands.MisicCommands
                 && base.CanExecute(parameter);
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
-            var user = _usersManagerService.GetUser(_logInViewModel.Username);
+            var user = await _usersManagerService.GetUser(_logInViewModel.Username);
 
             if (user == null) MessageBox.Show("User not found");
 
@@ -61,7 +56,7 @@ namespace ShopWPF.Commands.MisicCommands
             {
                 _loggedUserStore.User = user;
 
-                _loggedUserStore.User.ShoppingCart = _shoppingCartDatabaseService.LoadCart(user.Id, _productsManagerService);
+                _loggedUserStore.User.ShoppingCart = await _shoppingCartDatabaseService.LoadCart(user.UserId);
 
                 if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
 

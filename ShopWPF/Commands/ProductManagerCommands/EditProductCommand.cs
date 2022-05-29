@@ -9,6 +9,7 @@ using ShopWPF.Models;
 using ShopWPF.Stores;
 using System.Windows;
 using System.ComponentModel;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.ProductManagerCommands
 {
@@ -16,12 +17,12 @@ namespace ShopWPF.Commands.ProductManagerCommands
     {
         private readonly EditProductViewModel _editProductViewModel;
         private readonly NavigationService<ManageProductsViewModel> _manageProductsViewModelNavigationService;
-        private readonly IProductsManagerService _productsManagerService;
+        private readonly IProductManagerService _productsManagerService;
         private readonly ProductStore _productStore;
 
         public EditProductCommand(EditProductViewModel editProductViewModel, 
             NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService,
-            IProductsManagerService productsManagerService, ProductStore productStore)
+            IProductManagerService productsManagerService, ProductStore productStore)
         {
             _editProductViewModel = editProductViewModel;
             _manageProductsViewModelNavigationService = manageProductsViewModelNavigationService;
@@ -45,7 +46,7 @@ namespace ShopWPF.Commands.ProductManagerCommands
         public override void Execute(object? parameter)
         {
             _productsManagerService.EditProduct(_productStore.Product.ProductId ,new ProductModel(_editProductViewModel.ProductName, _editProductViewModel.Price,
-                _editProductViewModel.Quantity, _editProductViewModel.Category));
+                _editProductViewModel.Quantity, _editProductViewModel.Category.CategoryId));
 
             MessageBox.Show("Product edited!");
 

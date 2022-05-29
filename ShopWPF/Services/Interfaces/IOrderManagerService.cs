@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ShopWPF.Models;
 using ShopWPF.Enums;
 
-namespace ShopWPF.Services
+namespace ShopWPF.Services.Interfaces
 {
     internal interface IOrderManagerService
     {

@@ -22,16 +22,6 @@ namespace ShopWPF.Stores
             }
         }
 
-        public ProductStore()
-        {
-            
-        }
-
-        public ProductStore(string name, double price, int quantity, Categories category)
-        {
-            _product = new ProductModel(name, price, quantity, category);
-        }
-
         public event EventHandler? CurrentUserChanged;
 
         private void OnCurrentUserChanged()

@@ -13,6 +13,7 @@ using ShopWPF.Enums;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ProductsViewModels;
 using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ManageProductsViewModels
 {
@@ -27,9 +28,9 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
         public ManageProductsViewModel(NavigationService<AdminMenuViewModel> adminMenuViewModelNavigationService, 
             NavigationService<AddProductViewModel> addProductViewModelNavigationService,
             NavigationService<EditProductViewModel> editProductViewModelNavigationService, 
-            IProductsManagerService productManagerService, 
-            ProductStore productStore) 
-            : base(productManagerService)
+            IProductManagerService productManagerService, 
+            ProductStore productStore, ICategoryManagerService categoryManagerService) 
+            : base(productManagerService, categoryManagerService)
         {
             BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewModelNavigationService);
 

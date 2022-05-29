@@ -1,6 +1,4 @@
-﻿using ShopWPF.Discounts;
-using ShopWPF.Enums;
-using ShopWPF.Models;
+﻿using ShopWPF.Models;
 using ShopWPF.Models.Discounts;
 using System;
 using System.Collections.Generic;
@@ -8,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopWPF.Services
+namespace ShopWPF.Services.Interfaces
 {
     internal interface IDiscountManagerService
     {

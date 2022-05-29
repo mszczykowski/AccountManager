@@ -1,29 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ShopWPF.Models;
 using System.Windows.Input;
-using ShopWPF.Commands;
-using ShopWPF.Stores;
-using ShopWPF.Services;
-using ShopWPF.Commands.UserManagerCommands;
 using System.Collections.ObjectModel;
 using ShopWPF.Commands.ProductManagerCommands;
-using ShopWPF.Enums;
-using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ProductsViewModels
 {
     internal class ProductsListViewModel : ViewModelBase
     {
-        protected readonly IProductsManagerService _productManagerService;
+        protected readonly IProductManagerService _productManagerService;
+        private readonly ICategoryManagerService _categoryManagerService;
+
         public ICommand BackCommand { get; set; }
 
         public ICommand FilterProductsCommand { get; }
 
         public ICommand ClearAllFiltersCommand { get; }
+
+        private ICollection<ProductModel> productsCache;
 
         protected ObservableCollection<ProductViewModel> _products;
 
@@ -41,15 +38,15 @@ namespace ShopWPF.ViewModels.ProductsViewModels
             }
         }
 
-        private string _search;
+        private string _query;
 
-        public string Search
+        public string Query
         {
-            get => _search;
+            get => _query;
             set
             {
-                _search = value;
-                OnPropertyChanged(nameof(Search));
+                _query = value;
+                OnPropertyChanged(nameof(Query));
             }
         }
 
@@ -57,40 +54,47 @@ namespace ShopWPF.ViewModels.ProductsViewModels
 
         public List<CategoryModel> CategoriesList { get => _categoriesList; }
 
-        public ProductsListViewModel(IProductsManagerService productManagerService)
+        public ProductsListViewModel(IProductManagerService productManagerService,
+            ICategoryManagerService categoryManagerService)
         {
 
             FilterProductsCommand = new FilterProductsCommand(this);
 
-
             ClearAllFiltersCommand = new ClearAllFiltersCommand(this);
-
 
             _productManagerService = productManagerService;
 
-            _products = new ObservableCollection<ProductViewModel>();
+            _categoryManagerService = categoryManagerService;
 
+            _products = new ObservableCollection<ProductViewModel>();
 
             InitialiseCategoriesList();
 
             UpdateProductsCollection();
         }
 
-        public void UpdateProductsCollection()
+        public async void UpdateProductsCollection()
         {
-            IEnumerable<ProductModel> filteredProducts;
+            if (productsCache == null) productsCache = await _productManagerService.GetAllProducts();
 
-            if (_category == null || _category.CategoryId == -1) filteredProducts = _productManagerService.GetFilteredProducts(_search, null);
-            else filteredProducts = _productManagerService.GetFilteredProducts(_search, (Categories)_category.CategoryId);
+            List<ProductModel> productsFiltered = new List<ProductModel>();
+
+            if (!String.IsNullOrEmpty(Query))
+                productsFiltered = productsFiltered
+                    .Where(product => product.Name.ToUpper().Contains(Query.ToUpper())).ToList();
+
+            if (_category == null || _category.CategoryId == -1)
+                productsFiltered = productsFiltered
+                    .Where(product => product.CategoryId == _category.CategoryId).ToList();
 
             _products.Clear();
-            foreach (var product in filteredProducts)
+            foreach (var product in productsFiltered)
             {
                 _products.Add(new ProductViewModel(product));
             }
         }
 
-        public void InitialiseCategoriesList()
+        public async void InitialiseCategoriesList()
         {
             _categoriesList = new List<CategoryModel>
             {
@@ -98,10 +102,7 @@ namespace ShopWPF.ViewModels.ProductsViewModels
 
             };
 
-            foreach (var cat in Enum.GetValues(typeof(Categories)))
-            {
-                _categoriesList.Add(new CategoryModel((int)cat, cat.ToString()));
-            }
+            _categoriesList.AddRange(await _categoryManagerService.GetAllCategories());
         }
     }
 }

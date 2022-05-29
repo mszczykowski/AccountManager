@@ -1,18 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShopWPF.Services;
-using ShopWPF.Commands;
-using ShopWPF.Commands.ProductManagerCommands;
-using ShopWPF.Models;
 using ShopWPF.Commands.OrderManagerCommands;
-using ShopWPF.Stores;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
-using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Models.UserModels;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.OrdersViewModels
 {
@@ -57,18 +50,18 @@ namespace ShopWPF.ViewModels.OrdersViewModels
             SearchOrderCommand = new SearchOrderCommand(this);
         }
 
-        public void UpdateOrdersCollection()
+        public async void UpdateOrdersCollection()
         {
             _orders.Clear();
 
-            var orders = _orderManagerService.GetUserOrders(_customer.UserId);
+            var orders = await _orderManagerService.GetUserOrders(_customer.UserId);
 
             foreach (var order in orders)
             {
                 if (String.IsNullOrEmpty(Query)) _orders.Add(new OrderViewModel(order, _orderManagerService));
                 else
                 {
-                    if (("Order_" + order.Id).ToUpper() == Query.ToUpper()) _orders.Add(new OrderViewModel(order, _orderManagerService));
+                    if ((order.Name).ToUpper() == Query.ToUpper()) _orders.Add(new OrderViewModel(order, _orderManagerService));
                 }
 
 

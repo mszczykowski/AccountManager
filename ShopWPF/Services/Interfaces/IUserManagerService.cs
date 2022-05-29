@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ShopWPF.Models;
+using ShopWPF.Models.UserModels;
 
-namespace ShopWPF.Services
+namespace ShopWPF.Services.Interfaces
 {
     internal interface IUserManagerService
     {

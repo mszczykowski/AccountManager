@@ -2,10 +2,9 @@
 using ShopWPF.Data;
 using ShopWPF.Enums;
 using ShopWPF.Models;
-using System;
+using ShopWPF.Services.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ShopWPF.Services.ShopServices

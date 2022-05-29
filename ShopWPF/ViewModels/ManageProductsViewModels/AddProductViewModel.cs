@@ -11,6 +11,8 @@ using ShopWPF.Commands.ProductManagerCommands;
 using ShopWPF.Commands.MisicCommands;
 using System.ComponentModel;
 using System.Collections;
+using ShopWPF.Models;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ManageProductsViewModels
 {
@@ -28,8 +30,8 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
             } 
         }
 
-        private Categories _category;
-        public Categories Category
+        private CategoryModel _category;
+        public CategoryModel Category
         {
             get => _category;
             set
@@ -66,7 +68,7 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
         public ICommand CancelCommand { get; }
 
         public AddProductViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
-            IProductsManagerService productsManagerService)
+            IProductManagerService productsManagerService)
         {
             CancelCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewModelNavigationService);
 

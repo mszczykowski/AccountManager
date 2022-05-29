@@ -19,7 +19,7 @@ namespace ShopWPF.Commands.ProductManagerCommands
 
         public override void Execute(object? parameter)
         {
-            _productsListViewModel.Search = "";
+            _productsListViewModel.Query = "";
             _productsListViewModel.Category = _productsListViewModel.CategoriesList[0];
             _productsListViewModel.UpdateProductsCollection();
         }

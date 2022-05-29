@@ -2,6 +2,7 @@
 using ShopWPF.Commands.OrderManagerCommands;
 using ShopWPF.Enums;
 using ShopWPF.Services;
+using ShopWPF.Services.Interfaces;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.OrdersViewModels;
 using ShopWPF.ViewModels.UserViews;
@@ -29,11 +30,11 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
 
         public ICommand UpdateStatusCommand { get; }
 
-        public ManageUserOrderDetailsViewModel(IProductsManagerService productManagerService,
+        public ManageUserOrderDetailsViewModel(IProductManagerService productManagerService,
             NavigationService<ManageUserOrdersViewModel> manageUserOrdersViewNavigationService, OrderStore orderStrore, IOrderManagerService orderManagerService) : 
             base(productManagerService, orderStrore, orderManagerService)
         {
-            _orderStatus = orderStrore.Order.Status;
+            _orderStatus = (OrderStatuses)orderStrore.Order.StatusId;
 
             BackCommand = new NavigateCommand<ManageUserOrdersViewModel>(manageUserOrdersViewNavigationService);
 

@@ -1,13 +1,9 @@
-﻿using ShopWPF.Commands;
-using ShopWPF.Commands.MisicCommands;
-using ShopWPF.Discounts;
+﻿using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Services;
-using System;
+using ShopWPF.Services.Interfaces;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ShopWPF.ViewModels.DiscountManagerViewModels
@@ -21,16 +17,13 @@ namespace ShopWPF.ViewModels.DiscountManagerViewModels
 
         public IEnumerable<DiscountViewModel> DiscountsViewModels => _discounts;
 
-        private readonly DiscountManager _discountManager;
 
         private readonly IDiscountManagerService _discountsDatabaseService;
 
-        public DiscountManagerViewModel(DiscountManager discountManager, 
-            NavigationService<AdminMenuViewModel> adminMenuViewNavigationService, 
+        public DiscountManagerViewModel(NavigationService<AdminMenuViewModel> adminMenuViewNavigationService, 
             NavigationService<AddDiscountViewModel> addDiscountViewNavigationService,
             IDiscountManagerService discountsDatabaseService)
         {
-            _discountManager = discountManager;
 
             BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewNavigationService);
 
@@ -43,13 +36,15 @@ namespace ShopWPF.ViewModels.DiscountManagerViewModels
             UpdateDiscountsList();
         }
 
-        public void UpdateDiscountsList()
+        public async void UpdateDiscountsList()
         {
             _discounts.Clear();
 
-            _discountManager.Discounts.ToList().ForEach(discount =>
+            var discounts = await _discountsDatabaseService.GetDiscounts();
+
+            discounts.ToList().ForEach(discount =>
             {
-                _discounts.Add(new DiscountViewModel(this, discount, _discountManager, _discountsDatabaseService));
+                _discounts.Add(new DiscountViewModel(this, discount, _discountsDatabaseService));
             });
         }
     }

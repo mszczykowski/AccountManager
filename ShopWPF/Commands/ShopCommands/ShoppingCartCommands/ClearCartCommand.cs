@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ShopWPF.ViewModels.ShopViewModels;
-using ShopWPF.Models;
-using ShopWPF.Services;
 using ShopWPF.Stores;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.ShopCommands.ShoppingCartCommands
 {
@@ -30,7 +29,7 @@ namespace ShopWPF.Commands.ShopCommands.ShoppingCartCommands
         {
             _loggedUserStore.User.ShoppingCart.Clear();
             _shoppingCartDatabaseService.ClearCart(_loggedUserStore.User.UserId);
-            _shoppingCartViewModel.UpdateShoppingCartEnetries();
+            _shoppingCartViewModel.UpdateShoppingCartEntries();
             _shoppingCartViewModel.UpdateView();
         }
     }

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ShopWPF.Models;
 using ShopWPF.Enums;
-using ShopWPF.Commands.OrderManagerCommands;
 using System.Windows.Input;
-using ShopWPF.Services;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ManageOrdersViewModels
 {
@@ -46,7 +41,7 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
 
             TotalPrice = _order.TotalPrice.ToString("N2");
 
-            _status = _order.Status;
+            _status = (OrderStatuses)_order.StatusId;
         }
 
     }

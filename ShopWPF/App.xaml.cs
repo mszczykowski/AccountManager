@@ -8,12 +8,12 @@ using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
 using ShopWPF.ViewModels.ShopViewModels;
 using ShopWPF.ViewModels.UserViews;
-using ShopWPF.Discounts;
 using ShopWPF.ViewModels.DiscountManagerViewModels;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ShopWPF.Services.ShopServices;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF
 {
@@ -34,13 +34,14 @@ namespace ShopWPF
                 services.AddScoped<IOrderManagerService, OrderManagerService>();
                 services.AddScoped<IDiscountManagerService, DiscountManagerService>();
                 services.AddScoped<IShoppingCartService, ShoppingCartService>();
+                services.AddScoped<IShopService, ShopService>();
+                services.AddScoped<ICategoryManagerService, CategoryManagerService>();
 
                 services.AddSingleton<UserStore>();
                 services.AddSingleton<ProductStore>();
                 services.AddSingleton<OrderStore>();
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<LoggedUserStore>();
-                services.AddSingleton<DiscountManager>();
 
                 services.AddTransient<MainMenuViewModel>();
                 services.AddSingleton<Func<MainMenuViewModel>>((s) => () => s.GetRequiredService<MainMenuViewModel>());

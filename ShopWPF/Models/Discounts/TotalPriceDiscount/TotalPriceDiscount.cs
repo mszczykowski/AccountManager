@@ -3,20 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ShopWPF.Enums;
 using ShopWPF.Models;
 
 namespace ShopWPF.Models.Discounts
 {
-    internal abstract class CategoryDiscount : DiscountBaseModel
+    internal abstract class TotalPriceDiscount : DiscountBaseModel
     {
-        protected CategoryModel _discountedCategory;
-
-        public CategoryDiscount(CategoryModel discountedCategory)
+        public TotalPriceDiscount(int id) : base(id)
         {
-            _discountedCategory = discountedCategory;
-        }
 
+        }
         public abstract override double GetDiscountValue(ICollection<ShoppingCartEntryModel> shoppingCart);
     }
 }

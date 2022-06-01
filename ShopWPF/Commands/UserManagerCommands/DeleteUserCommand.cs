@@ -1,9 +1,9 @@
 ﻿using System;
 using ShopWPF.ViewModels;
 using System.Windows;
-using ShopWPF.Services;
 using ShopWPF.Stores;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.UserManagerCommands
 {
@@ -36,7 +36,7 @@ namespace ShopWPF.Commands.UserManagerCommands
 
         public override void Execute(object? parameter)
         {
-            if (_userStore.User.HasAdminPermissions()) MessageBox.Show("Can't delete admin account!");
+            if (_userStore.User.UserRole == Enums.UserRoles.Admin) MessageBox.Show("Can't delete admin account!");
             else if (MessageBox.Show("Delete user \"" + _userStore.User.Name + "\" ?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 _usersManagerService.DeleteUser(_userStore.User.UserId);

@@ -10,13 +10,14 @@ namespace ShopWPF.Models.Discounts
 {
     internal class FiftyPercentOffOnCategorySecondProduct : CategoryDiscount
     {
-        public FiftyPercentOffOnCategorySecondProduct(CategoryModel discountedCategory) : base(discountedCategory)
+        public FiftyPercentOffOnCategorySecondProduct(int id, CategoryModel discountedCategory) : base(id, discountedCategory)
         {
         }
 
         public override double GetDiscountValue(ICollection<ShoppingCartEntryModel> shoppingCart)
         {
-            var categoryProducts = shoppingCart.Where(entry => entry.Product.CategoryId == _discountedCategory.CategoryId).ToList();
+            var categoryProducts = shoppingCart
+                .Where(entry => entry.Product.CategoryId == DiscountedCategory.CategoryId).ToList();
 
             if (categoryProducts.Count >= 2)
             {
@@ -29,7 +30,7 @@ namespace ShopWPF.Models.Discounts
 
         public override string ToString()
         {
-            return "50% off on second product from " + _discountedCategory.Name;
+            return "50% off on second product from " + DiscountedCategory.Name;
         }
     }
 }

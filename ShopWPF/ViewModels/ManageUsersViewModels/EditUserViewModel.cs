@@ -1,60 +1,26 @@
-﻿using ShopWPF.Commands;
-using ShopWPF.Stores;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ShopWPF.Stores;
 using System.Windows.Input;
-using ShopWPF.Services;
-using System.ComponentModel;
-using ShopWPF.Models;
-using ShopWPF.Stores;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Commands.UserManagerCommands;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
+using ShopWPF.ViewModels.ManageUsersViewModels;
 
 namespace ShopWPF.ViewModels
 {
-    internal class EditUserViewModel : ViewModelBase
+    internal class EditUserViewModel : UserFormViewModel
     {
-        private string _userName;
-        public string Username
-        {
-            get => _userName;
-            set
-            {
-                _userName = value;
-                OnPropertyChanged(nameof(Username));
-            }
-        }
-
-        private string _password;
+        public ICommand EditUserCommand { get; }
 
         private readonly UserStore _userStore;
 
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                _password = value;
-                OnPropertyChanged(nameof(Password));
-            }
-        }
-
-        public ICommand EditUserCommand { get; }
-        public ICommand CancelCommand { get; }
-
         public EditUserViewModel(NavigationService<SearchUserViewModel> searchUserViewNavigationService, 
-            IUserManagerService usersManagerService, UserStore userStore)
+            IUserManagerService usersManagerService, UserStore userStore) : base(searchUserViewNavigationService)
         {
             _userStore = userStore;
 
-            _userName = userStore.User.Name;
-            _password = userStore.User.Password;
-
-            CancelCommand = new NavigateCommand<SearchUserViewModel>(searchUserViewNavigationService);
+            Username = userStore.User.Name;
+            Password = userStore.User.Password;
 
             EditUserCommand = new EditUserCommand(this, searchUserViewNavigationService, 
                 usersManagerService, userStore);

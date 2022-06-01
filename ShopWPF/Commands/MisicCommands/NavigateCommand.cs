@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ShopWPF.Services;
-using ShopWPF.Stores;
+﻿using ShopWPF.Services.Common;
 using ShopWPF.ViewModels;
 
 namespace ShopWPF.Commands.MisicCommands

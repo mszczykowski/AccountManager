@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using ShopWPF.ViewModels;
 using System.Windows;
-using ShopWPF.Services;
 using ShopWPF.Stores;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.MisicCommands
 {
@@ -58,7 +58,7 @@ namespace ShopWPF.Commands.MisicCommands
 
                 _loggedUserStore.User.ShoppingCart = await _shoppingCartDatabaseService.LoadCart(user.UserId);
 
-                if (!user.HasAdminPermissions()) _userMenuViewNavigationService.Navigate();
+                if (user.UserRole == Enums.UserRoles.Standard) _userMenuViewNavigationService.Navigate();
 
                 else _adminMenuViewNavigationService.Navigate();
             }

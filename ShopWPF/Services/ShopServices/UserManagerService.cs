@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopWPF.Data;
-using ShopWPF.Models.UserModels;
+using ShopWPF.Models;
 using ShopWPF.Services.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,7 +18,8 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task AddStandardUser(UserModel user)
         {
-            await _context.Users.AddAsync(new StandardUserModel(user.Name, user.Password));
+            user.UserRole = Enums.UserRoles.Standard;
+            await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
         }
 

@@ -3,7 +3,6 @@ using System.Linq;
 using ShopWPF.ViewModels.ProductsViewModels;
 using ShopWPF.Models;
 using System.ComponentModel;
-using ShopWPF.Models.UserModels;
 using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.Commands.ShopCommands

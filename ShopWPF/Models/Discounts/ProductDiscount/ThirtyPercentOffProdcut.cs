@@ -9,7 +9,7 @@ namespace ShopWPF.Models.Discounts
 {
     internal class ThirtyPercentOffProdcut : ProductDiscount
     {
-        public ThirtyPercentOffProdcut(ProductModel discountedProduct) : base(discountedProduct)
+        public ThirtyPercentOffProdcut(int id, ProductModel discountedProduct) : base(id, discountedProduct)
         {
 
         }
@@ -20,7 +20,7 @@ namespace ShopWPF.Models.Discounts
 
             shoppingCart.ToList().ForEach(shoppingCartItem =>
             {
-                if (shoppingCartItem.Product.Equals(_discountedProduct)) discount += shoppingCartItem.Product.Price * shoppingCartItem.Quantity * 0.3;
+                if (shoppingCartItem.Product.Equals(DiscountedProduct)) discount += shoppingCartItem.Product.Price * shoppingCartItem.Quantity * 0.3;
             });
 
             return discount;
@@ -28,7 +28,7 @@ namespace ShopWPF.Models.Discounts
 
         public override string ToString()
         {
-            return "30% off " + _discountedProduct.Name;
+            return "30% off " + DiscountedProduct.Name;
         }
     }
 }

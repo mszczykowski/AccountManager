@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
-using ShopWPF.Commands;
 using ShopWPF.Commands.DiscountCommands;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Enums;
 using ShopWPF.Models;
-using ShopWPF.Services;
+using ShopWPF.Services.Common;
 using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.DiscountManagerViewModels

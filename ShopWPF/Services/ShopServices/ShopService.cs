@@ -1,6 +1,5 @@
 ﻿using ShopWPF.Enums;
 using ShopWPF.Models;
-using ShopWPF.Models.UserModels;
 using ShopWPF.Services.Interfaces;
 using System.Linq;
 using System.Threading.Tasks;

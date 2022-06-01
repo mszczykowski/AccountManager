@@ -1,4 +1,4 @@
-﻿using ShopWPF.Models.UserModels;
+﻿using ShopWPF.Models;
 
 namespace ShopWPF.ViewModels
 {

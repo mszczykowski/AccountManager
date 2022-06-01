@@ -1,13 +1,8 @@
-﻿using ShopWPF.Services;
+﻿using ShopWPF.Services.Common;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
-using ShopWPF.ViewModels.OrdersViewModels;
 using ShopWPF.ViewModels.UserViews;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShopWPF.Commands.OrderManagerCommands
 {

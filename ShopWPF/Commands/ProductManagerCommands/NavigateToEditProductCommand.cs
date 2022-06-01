@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ShopWPF.Stores;
-using ShopWPF.Services;
-using ShopWPF.Models;
 using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.ViewModels.ProductsViewModels;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.ProductManagerCommands
 {

@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ShopWPF.Services;
-using ShopWPF.Commands;
-using ShopWPF.Commands.ProductManagerCommands;
-using ShopWPF.Models;
-using ShopWPF.Commands.OrderManagerCommands;
+﻿using ShopWPF.Commands.OrderManagerCommands;
 using ShopWPF.Stores;
-using System.Collections.ObjectModel;
 using ShopWPF.ViewModels.OrdersViewModels;
-using System.ComponentModel;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels.ManageOrdersViewModels
 {

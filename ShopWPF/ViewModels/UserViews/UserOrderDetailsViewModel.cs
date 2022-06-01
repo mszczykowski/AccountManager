@@ -1,15 +1,10 @@
 ﻿using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Commands.OrderManagerCommands;
 using ShopWPF.Enums;
-using ShopWPF.Services;
+using ShopWPF.Services.Common;
 using ShopWPF.Services.Interfaces;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.OrdersViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ShopWPF.ViewModels.UserViews

@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopWPF.Models;
 using ShopWPF.Models.Discounts;
-using ShopWPF.Models.UserModels;
 
 namespace ShopWPF.Data
 {
     internal class ShopDBContext : DbContext
     {
-        public DbSet<DiscountBaseModel> DiscountBases { get; set; }
+        public DbSet<DiscountDatabaseModel> Discounts { get; set; }
         public DbSet<UserModel> Users { get; set; }
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<OrderModel> Orders { get; set; }
@@ -25,6 +24,8 @@ namespace ShopWPF.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<ShoppingCartEntryModel>().HasKey(entry => new { entry.ProductId, entry.CustomerId });
+
+            
         }
     }
 }

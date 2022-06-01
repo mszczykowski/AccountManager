@@ -24,5 +24,10 @@ namespace ShopWPF.Views
         {
             InitializeComponent();
         }
+
+        private void Password_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            PassHidden.Text = Password.Password;
+        }
     }
 }

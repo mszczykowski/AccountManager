@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using ShopWPF.Services.ShopServices;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Utils;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF
 {
@@ -28,7 +30,7 @@ namespace ShopWPF
         {
             _host = Host.CreateDefaultBuilder().ConfigureServices(services => 
             {
-                services.AddDbContext<ShopDBContext>(options => options.UseSqlite("Data Source=Scheduler.db"));
+                services.AddDbContext<ShopDBContext>(options => options.UseSqlite("Data Source=Shop.db"));
                 services.AddScoped<IUserManagerService, UserManagerService>();
                 services.AddScoped<IProductManagerService, ProductManagerService>();
                 services.AddScoped<IOrderManagerService, OrderManagerService>();
@@ -132,6 +134,10 @@ namespace ShopWPF
         protected override void OnStartup(StartupEventArgs e)
         {
             _host.Start();
+
+            var context = _host.Services.GetRequiredService<ShopDBContext>();
+            var seeder = new DataSeeder(context);
+            seeder.Seed();
 
             NavigationService<MainMenuViewModel> navigationService 
                 = _host.Services.GetRequiredService<NavigationService<MainMenuViewModel>>();

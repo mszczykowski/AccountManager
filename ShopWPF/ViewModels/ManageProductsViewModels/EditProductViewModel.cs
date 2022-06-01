@@ -1,83 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ShopWPF.Services;
-using ShopWPF.Commands;
-using ShopWPF.Enums;
+﻿using System.Windows.Input;
 using ShopWPF.Commands.ProductManagerCommands;
 using ShopWPF.Stores;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Services.Interfaces;
 using ShopWPF.Models;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels.ManageProductsViewModels
 {
-    internal class EditProductViewModel : ViewModelBase
+    internal class EditProductViewModel : ProductFormViewModel
     {
-        private readonly ProductStore _productStore;
-        
-        private string _productName;
-        public string ProductName
-        {
-            get => _productName;
-            set
-            {
-                _productName = value;
-                OnPropertyChanged(nameof(ProductName));
-            }
-        }
-
-        private CategoryModel _category;
-        public CategoryModel Category
-        {
-            get => _category;
-            set
-            {
-                _category = value;
-                OnPropertyChanged(nameof(ProductName));
-            }
-        }
-
-        private double _price;
-        public double Price
-        {
-            get => _price;
-            set
-            {
-                _price = value;
-                OnPropertyChanged(nameof(Price));
-            }
-        }
-
-        private int _quantity;
-        public int Quantity
-        {
-            get => _quantity;
-            set
-            {
-                _quantity = value;
-                OnPropertyChanged(nameof(Quantity));
-            }
-        }
-
         public ICommand EditProductCommand { get; }
-        public ICommand CancelCommand { get; }
+
+        private ProductStore _productStore;
 
         public EditProductViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
             IProductManagerService productManagerService, 
-            ProductStore productStore)
+            ProductStore productStore) : base (manageProductsViewModelNavigationService)
         {
             _productStore = productStore;
 
-            _productName = _productStore.Product.Name;
-            _price = _productStore.Product.Price;
-            _category = _productStore.Product.Category;
-            _quantity = _productStore.Product.Quantity;
-            
-            CancelCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewModelNavigationService);
+            ProductName = _productStore.Product.Name;
+            Price = _productStore.Product.Price;
+            Category = _productStore.Product.Category;
+            Quantity = _productStore.Product.Quantity;
 
             EditProductCommand = new EditProductCommand(this, manageProductsViewModelNavigationService, productManagerService, productStore);
 

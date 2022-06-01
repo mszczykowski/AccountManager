@@ -2,6 +2,7 @@
 using ShopWPF.ViewModels.DiscountManagerViewModels;
 using ShopWPF.Enums;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.DiscountCommands
 {

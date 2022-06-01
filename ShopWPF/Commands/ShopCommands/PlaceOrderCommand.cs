@@ -2,9 +2,9 @@
 using System.Linq;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ShopViewModels;
-using ShopWPF.Services;
 using System.Windows;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.ShopCommands
 {

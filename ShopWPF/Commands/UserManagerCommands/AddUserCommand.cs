@@ -1,9 +1,9 @@
 ﻿using ShopWPF.ViewModels;
 using System.Windows;
-using ShopWPF.Services;
 using System.ComponentModel;
-using ShopWPF.Models.UserModels;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
+using ShopWPF.Models;
 
 namespace ShopWPF.Commands.UserManagerCommands
 {
@@ -42,7 +42,12 @@ namespace ShopWPF.Commands.UserManagerCommands
 
             else
             {
-                _usersManagerService.AddStandardUser(new StandardUserModel(_addEditViewModel.Username, _addEditViewModel.Password));
+                _usersManagerService.AddStandardUser(new UserModel
+                {
+                    Name = _addEditViewModel.Username,
+                    Password = _addEditViewModel.Password,
+                    UserRole = Enums.UserRoles.Standard
+                });
                 _addEditViewModel.ClearFields();
                 MessageBox.Show("User created");
                 _manageUsersViewNavigationService.Navigate();

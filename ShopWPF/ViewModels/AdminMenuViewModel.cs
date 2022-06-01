@@ -1,14 +1,8 @@
-﻿using ShopWPF.Commands;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ShopWPF.Services;
+﻿using System.Windows.Input;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.ViewModels.DiscountManagerViewModels;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels
 {

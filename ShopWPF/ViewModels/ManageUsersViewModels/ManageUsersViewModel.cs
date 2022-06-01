@@ -2,10 +2,11 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ShopWPF.Stores;
-using ShopWPF.Services;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Commands.UserManagerCommands;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels
 {

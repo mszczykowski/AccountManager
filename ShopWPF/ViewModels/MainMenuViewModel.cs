@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ShopWPF.Commands;
-using ShopWPF.Stores;
-using ShopWPF.Services;
+﻿using System.Windows.Input;
 using ShopWPF.Commands.MisicCommands;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels
 {

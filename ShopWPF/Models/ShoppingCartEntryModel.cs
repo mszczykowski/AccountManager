@@ -1,11 +1,4 @@
-﻿using ShopWPF.Models.UserModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ShopWPF.Models
+﻿namespace ShopWPF.Models
 {
     internal class ShoppingCartEntryModel
     {
@@ -37,6 +30,11 @@ namespace ShopWPF.Models
         }
 
         public int Quantity { get; set; }
+
+        public ShoppingCartEntryModel()
+        {
+
+        }
 
         public ShoppingCartEntryModel(ProductModel product)
         {

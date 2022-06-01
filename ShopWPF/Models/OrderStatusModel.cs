@@ -9,6 +9,6 @@ namespace ShopWPF.Models
     internal class OrderStatusModel
     {
         public int Id { get; set; }
-        public int Status { get; set; }
+        public string Status { get; set; }
     }
 }

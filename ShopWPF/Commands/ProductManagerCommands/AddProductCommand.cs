@@ -1,44 +1,35 @@
 ﻿using System.ComponentModel;
-using ShopWPF.Services;
 using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.Models;
 using System.Windows;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.ProductManagerCommands
 {
     internal class AddProductCommand : CommandBase
     {
-        private readonly AddProductViewModel _addProductViewModel;
+        private readonly ProductFormViewModel _productViewModel;
         private readonly NavigationService<ManageProductsViewModel> _manageProductsViewModelNavigationService;
         private readonly IProductManagerService _productsManagerService;
 
-        public AddProductCommand(AddProductViewModel addProductViewModel, 
+        public AddProductCommand(ProductFormViewModel productViewModel, 
             NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
             IProductManagerService productsManagerService)
         {
-            _addProductViewModel = addProductViewModel;
+            _productViewModel = productViewModel;
             _manageProductsViewModelNavigationService = manageProductsViewModelNavigationService;
             _productsManagerService = productsManagerService;
-
-            _addProductViewModel.PropertyChanged += OnViewModelPropertyChanged;
-        }
-
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            OnCanExecuteChanged();
-        }
-
-        public override bool CanExecute(object? parameter)
-        {
-            return !string.IsNullOrEmpty(_addProductViewModel.ProductName) && _addProductViewModel.Price > 0
-                && _addProductViewModel.Quantity >= 0 && base.CanExecute(parameter);
         }
 
         public override void Execute(object? parameter)
         {
-            _productsManagerService.AddProduct(new ProductModel(_addProductViewModel.ProductName, _addProductViewModel.Price,
-                _addProductViewModel.Quantity, _addProductViewModel.Category.CategoryId));
+            _productViewModel.ValidateForm();
+
+            if (_productViewModel.HasErrors) return;
+
+            _productsManagerService.AddProduct(new ProductModel(_productViewModel.ProductName, _productViewModel.Price,
+                _productViewModel.Quantity, _productViewModel.Category.CategoryId));
 
             MessageBox.Show("Product created!");
 

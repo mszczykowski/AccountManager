@@ -8,10 +8,14 @@ using ShopWPF.Models;
 
 namespace ShopWPF.Models.Discounts
 {
-    internal abstract class DiscountBaseModel
+    abstract class DiscountBaseModel
     {
-        [Key]
         public int DiscountId { get; set; }
+
+        public DiscountBaseModel(int id)
+        {
+            DiscountId = id;
+        }
 
         public abstract double GetDiscountValue(ICollection<ShoppingCartEntryModel> shoppingCart);
     }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using ShopWPF.ViewModels;
 using System.Windows;
-using ShopWPF.Services;
 using ShopWPF.Stores;
-using ShopWPF.Models.UserModels;
+using ShopWPF.Models;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.Commands.UserManagerCommands
 {
@@ -47,7 +47,12 @@ namespace ShopWPF.Commands.UserManagerCommands
 
             else
             {
-                _usersManagerService.EditUser(_userStore.User.UserId, new StandardUserModel(_editUserViewModel.Username, _editUserViewModel.Password));
+                _usersManagerService.EditUser(_userStore.User.UserId, new UserModel
+                {
+                    Name = _editUserViewModel.Username,
+                    Password = _editUserViewModel.Password,
+                    UserRole = Enums.UserRoles.Standard
+                });
 
                 MessageBox.Show("User edited");
                 _searchUserViewModelNavigationSercvice.Navigate();

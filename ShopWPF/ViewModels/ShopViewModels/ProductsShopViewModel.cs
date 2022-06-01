@@ -1,13 +1,11 @@
 ﻿using ShopWPF.Commands.ShopCommands;
-using ShopWPF.Services;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ProductsViewModels;
-using System;
-using System.Linq;
 using System.Windows.Input;
 using ShopWPF.Models;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels.ShopViewModels
 {

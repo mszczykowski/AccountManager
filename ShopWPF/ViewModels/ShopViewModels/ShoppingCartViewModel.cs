@@ -1,5 +1,4 @@
-﻿using ShopWPF.Services;
-using ShopWPF.Stores;
+﻿using ShopWPF.Stores;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,6 +9,7 @@ using ShopWPF.Commands.ShopCommands;
 using ShopWPF.Commands.MisicCommands;
 using ShopWPF.Services.Interfaces;
 using ShopWPF.Models.Discounts;
+using ShopWPF.Services.Common;
 
 namespace ShopWPF.ViewModels.ShopViewModels
 {

@@ -4,7 +4,7 @@ using ShopWPF.Commands.OrderManagerCommands;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
-using ShopWPF.Models.UserModels;
+using ShopWPF.Models;
 using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.OrdersViewModels

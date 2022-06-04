@@ -1,4 +1,4 @@
-﻿using ShopWPF.Models;
+﻿/*using ShopWPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,3 +12,4 @@ namespace ShopWPF.Stores
         public OrderModel Order { get; set; }
     }
 }
+*/

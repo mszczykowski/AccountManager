@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ShopWPF.Views.ManageProductsViews
+namespace ShopWPF.Views.AdminViews.ManageCategoriesViews
 {
     /// <summary>
-    /// Interaction logic for AddProductView.xaml
+    /// Interaction logic for AddCategoryView.xaml
     /// </summary>
-    public partial class AddProductView : UserControl
+    public partial class AddCategoryView : UserControl
     {
-        public AddProductView()
+        public AddCategoryView()
         {
             InitializeComponent();
         }

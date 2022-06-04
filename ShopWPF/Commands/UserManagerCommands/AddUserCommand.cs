@@ -1,54 +1,43 @@
 ﻿using ShopWPF.ViewModels;
 using System.Windows;
-using System.ComponentModel;
 using ShopWPF.Services.Interfaces;
 using ShopWPF.Services.Common;
 using ShopWPF.Models;
+using ShopWPF.ViewModels.ManageUsersViewModels;
 
 namespace ShopWPF.Commands.UserManagerCommands
 {
     internal class AddUserCommand : CommandBase
     {
         private readonly NavigationService<ManageUsersViewModel> _manageUsersViewNavigationService;
-        private readonly AddUserViewModel _addEditViewModel;
+        private readonly AddUserViewModel _userFormViewModel;
         private readonly IUserManagerService _usersManagerService;
 
 
-        public AddUserCommand(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService, 
-            AddUserViewModel addEditViewModel, IUserManagerService usersManagerService)
+        public AddUserCommand(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService,
+            AddUserViewModel userFormViewModel, IUserManagerService usersManagerService)
         {
             _manageUsersViewNavigationService = manageUsersViewNavigationService;
-            _addEditViewModel = addEditViewModel;
+            _userFormViewModel = userFormViewModel;
             _usersManagerService = usersManagerService;
-            _addEditViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
+        public async override void Execute(object? parameter)
         {
-            OnCanExecuteChanged();
-        }
+            _userFormViewModel.ValidateForm();
 
-        public override bool CanExecute(object? parameter)
-        {
-            return !string.IsNullOrEmpty(_addEditViewModel.Username) && !string.IsNullOrEmpty(_addEditViewModel.Password)
-                && base.CanExecute(parameter);
-        }
+            if (_userFormViewModel.HasErrors) return;
 
-        public override void Execute(object? parameter)
-        {
-            if (string.IsNullOrEmpty(_addEditViewModel.Username) && string.IsNullOrEmpty(_addEditViewModel.Password)) MessageBox.Show("Enter username and password!");
-            
-            if (_usersManagerService.GetUser(_addEditViewModel.Username) != null) MessageBox.Show("Username already used!");
+            if (await _usersManagerService.GetUser(_userFormViewModel.Username) != null) MessageBox.Show("Username already used!");
 
             else
             {
-                _usersManagerService.AddStandardUser(new UserModel
+                await _usersManagerService.AddStandardUser(new UserModel
                 {
-                    Name = _addEditViewModel.Username,
-                    Password = _addEditViewModel.Password,
+                    Name = _userFormViewModel.Username,
+                    Password = _userFormViewModel.Password,
                     UserRole = Enums.UserRoles.Standard
                 });
-                _addEditViewModel.ClearFields();
                 MessageBox.Show("User created");
                 _manageUsersViewNavigationService.Navigate();
             }

@@ -12,21 +12,24 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
 
         public string CustomerName => _customer.Name;
 
-
-
-        public ManageUserOrdersViewModel(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService, 
-            IOrderManagerService orderManagerService, UserStore customer, OrderStore orderStore,
-            NavigationService<ManageUserOrderDetailsViewModel> manageUserOrderDetailsViewNavigationService)
+        public ManageUserOrdersViewModel(NavigationService<EditUserViewModel> editUserViewNavigationService,
+            IOrderManagerService orderManagerService, IdStore idStore,
+            NavigationService<ManageUserOrderDetailsViewModel> manageUserOrderDetailsViewNavigationService,
+            IUserManagerService userManagerService)
             : base(orderManagerService)
         {
-            _customer = customer.User;
+            LoadCustomer(idStore.Id, userManagerService);
 
-            BackCommand = new NavigateCommand<ManageUsersViewModel>(manageUsersViewNavigationService);
+            BackCommand = new NavigateCommand<EditUserViewModel>(editUserViewNavigationService);
             UpdateOrdersCollection();
 
-            OrderOnClickCommand = new NavigateToOrderDetailsCommand(orderStore, manageUserOrderDetailsViewNavigationService);
+            OrderOnClickCommand =
+                new NaviagteAndStoreIdCommand<ManageUserOrderDetailsViewModel>(manageUserOrderDetailsViewNavigationService, idStore);
         }
 
-        
+        private async void LoadCustomer(int id, IUserManagerService userManagerService)
+        {
+            _customer = await userManagerService.GetUser(id);
+        }
     }
 }

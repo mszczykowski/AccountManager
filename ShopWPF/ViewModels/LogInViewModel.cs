@@ -44,10 +44,8 @@ namespace ShopWPF.ViewModels
         {
             CancelCommand = new NavigateCommand<MainMenuViewModel>(mainMenuViewNavigationService);
 
-
-            LogInCommand = new LogInCommand(this, usersManagerService, adminMenuViewNavigationService, userMenuViewNavigationService, loggedUserStore,
-                shoppingCartDatabaseService, productsManagerService);
-
+            LogInCommand = new LogInCommand(this, usersManagerService, adminMenuViewNavigationService, 
+                userMenuViewNavigationService, loggedUserStore);
         }
 
     }

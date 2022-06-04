@@ -10,23 +10,36 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
 {
     internal class EditProductViewModel : ProductFormViewModel
     {
-        public ICommand EditProductCommand { get; }
+        private int _id;
+        public int Id 
+        { 
+            get => _id; 
+            set => _id = value; 
+        }
 
-        private ProductStore _productStore;
+        public ICommand EditProductCommand { get; }
 
         public EditProductViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
             IProductManagerService productManagerService, 
-            ProductStore productStore) : base (manageProductsViewModelNavigationService)
+            IdStore idStore, ICategoryManagerService categoryManagerService) 
+            : base (manageProductsViewModelNavigationService, categoryManagerService)
         {
-            _productStore = productStore;
+            LoadProduct(idStore.Id, productManagerService);
 
-            ProductName = _productStore.Product.Name;
-            Price = _productStore.Product.Price;
-            Category = _productStore.Product.Category;
-            Quantity = _productStore.Product.Quantity;
+            EditProductCommand = 
+                new EditProductCommand(this, manageProductsViewModelNavigationService, productManagerService);
 
-            EditProductCommand = new EditProductCommand(this, manageProductsViewModelNavigationService, productManagerService, productStore);
+        }
 
+        private async void LoadProduct(int id, IProductManagerService productManagerService)
+        {
+            var product = await productManagerService.GetProduct(id);
+
+            Id = product.ProductId;
+            ProductName = product.Name;
+            Price = product.Price;
+            Category = product.Category;
+            Quantity = product.Quantity;
         }
     }
 }

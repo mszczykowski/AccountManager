@@ -10,11 +10,11 @@ namespace ShopWPF.Commands.ShopCommands
 {
     internal class PlaceOrderCommand : CommandBase
     {
-        private ShoppingCartViewModel _shopCartViewModel;
+        private readonly ShoppingCartViewModel _shopCartViewModel;
 
         private readonly LoggedUserStore _loggedUserStore;
 
-        private NavigationService<ProductsShopViewModel> _productsShopViewNavigationService;
+        private readonly NavigationService<ProductsShopViewModel> _productsShopViewNavigationService;
 
         private readonly IShopService _shopService;
 
@@ -45,14 +45,14 @@ namespace ShopWPF.Commands.ShopCommands
 
         public override async void Execute(object? parameter)
         {
-            if (MessageBox.Show("Place order?", "Order", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                await _shopService.PlaceOrder(_loggedUserStore.User);
-                
-                _productsShopViewNavigationService.Navigate();
+            if (MessageBox.Show("Place order?", "Order", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
 
-                MessageBox.Show("Order placed");
-            }
+            await _shopService.PlaceOrder(_loggedUserStore.User);
+
+            _productsShopViewNavigationService.Navigate();
+
+            MessageBox.Show("Order placed");
         }
     }
 }

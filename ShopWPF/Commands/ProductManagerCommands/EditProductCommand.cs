@@ -10,30 +10,29 @@ namespace ShopWPF.Commands.ProductManagerCommands
 {
     internal class EditProductCommand : CommandBase
     {
-        private readonly EditProductViewModel _editProductViewModel;
+        private readonly EditProductViewModel _productViewModel;
         private readonly NavigationService<ManageProductsViewModel> _manageProductsViewModelNavigationService;
         private readonly IProductManagerService _productsManagerService;
-        private readonly ProductStore _productStore;
 
         public EditProductCommand(EditProductViewModel editProductViewModel, 
             NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService,
-            IProductManagerService productsManagerService, ProductStore productStore)
+            IProductManagerService productsManagerService)
         {
-            _editProductViewModel = editProductViewModel;
+            _productViewModel = editProductViewModel;
             _manageProductsViewModelNavigationService = manageProductsViewModelNavigationService;
             _productsManagerService = productsManagerService;
-            _productStore = productStore;
         }
 
 
         public override void Execute(object? parameter)
         {
-            _editProductViewModel.ValidateForm();
+            _productViewModel.ValidateForm();
 
-            if (_editProductViewModel.HasErrors) return;
+            if (_productViewModel.HasErrors) return;
 
-            _productsManagerService.EditProduct(_productStore.Product.ProductId ,new ProductModel(_editProductViewModel.ProductName, _editProductViewModel.Price,
-                _editProductViewModel.Quantity, _editProductViewModel.Category.CategoryId));
+            _productsManagerService.EditProduct(_productViewModel.Id,
+                new ProductModel(_productViewModel.ProductName, _productViewModel.Price,
+                _productViewModel.Quantity, _productViewModel.Category.CategoryId));
 
             MessageBox.Show("Product edited!");
 

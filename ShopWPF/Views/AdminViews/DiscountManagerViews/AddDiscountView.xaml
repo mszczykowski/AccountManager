@@ -42,8 +42,10 @@
 
             <StackPanel Margin="10 0 0 0">
                 <Label Content="Category" Width="200" />
-                <ComboBox ItemsSource="{Binding Source={utils:EnumBindingSource enums:Categories}}"
-                  SelectedItem="{Binding Category, UpdateSourceTrigger=PropertyChanged}"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" 
+                  SelectedItem="{Binding Category}" SelectedIndex="0" 
+                  ItemsSource="{Binding Path=Categories}"
+                          DisplayMemberPath="Name"/>
             </StackPanel>
         </StackPanel>
 
@@ -68,7 +70,9 @@
         <StackPanel Grid.Row="1" HorizontalAlignment="Left">
             <Label Content="Discount type"/>
             <ComboBox ItemsSource="{Binding Source={utils:EnumBindingSource enums:DiscountTypes}}"
-                  SelectedItem="{Binding DiscountType, UpdateSourceTrigger=PropertyChanged}" SelectionChanged="DiscountTypeComboBox_SelectionChanged"/>
+                  SelectedItem="{Binding DiscountType, UpdateSourceTrigger=PropertyChanged}"
+                      SelectionChanged="DiscountTypeComboBox_SelectionChanged"
+                      SelectedIndex="0"/>
         </StackPanel>
 
 

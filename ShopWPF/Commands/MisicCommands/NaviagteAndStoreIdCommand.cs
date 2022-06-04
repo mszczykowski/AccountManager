@@ -1,6 +1,7 @@
 ﻿using ShopWPF.Services.Common;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels;
+using ShopWPF.ViewModels.Intefraces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,10 @@ namespace ShopWPF.Commands.MisicCommands
 
         public override void Execute(object? parameter)
         {
-            var id = parameter as int?;
-            _idStore.Id = id;
+            if (parameter == null) return;
+            
+            var viewWithId = (ViewModelWithId)parameter;
+            _idStore.Id = viewWithId.Id;
 
             base.Execute(parameter);
         }

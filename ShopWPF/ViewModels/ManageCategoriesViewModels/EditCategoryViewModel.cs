@@ -15,6 +15,7 @@ namespace ShopWPF.ViewModels.ManageCategoriesViewModels
     internal class EditCategoryViewModel : CategoryFormViewModel
     {
         public ICommand EditCategoryCommand { get; }
+        public ICommand DeleteCategoryCommand { get; }
 
         private CategoryModel categoryToEdit;
 
@@ -24,12 +25,16 @@ namespace ShopWPF.ViewModels.ManageCategoriesViewModels
         {
             LoadCategory(idStore.Id, categoryManagerService);
 
-            EditCategoryCommand = new EditCategoryCommand(manageCategoriesViewNavigationService, this, categoryManagerService, int id);
+            EditCategoryCommand = new EditCategoryCommand(manageCategoriesViewNavigationService, this, categoryManagerService, idStore.Id);
+
+            DeleteCategoryCommand = new DeleteCategoryCommand(categoryManagerService, idStore.Id, manageCategoriesViewNavigationService);
         }
 
         private async void LoadCategory(int id, ICategoryManagerService categoryManagerService)
         {
             categoryToEdit = await categoryManagerService.GetCategory(id);
+
+            CategoryName = categoryToEdit.Name;
         }
     }
 }

@@ -25,14 +25,15 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
         public ICommand UpdateStatusCommand { get; }
 
         public ManageUserOrderDetailsViewModel(IProductManagerService productManagerService,
-            NavigationService<ManageUserOrdersViewModel> manageUserOrdersViewNavigationService, OrderStore orderStrore, IOrderManagerService orderManagerService) : 
-            base(productManagerService, orderStrore, orderManagerService)
+            NavigationService<ManageUserOrdersViewModel> manageUserOrdersViewNavigationService, 
+            IOrderManagerService orderManagerService, IShopService shopService, IdStore idStore) : 
+            base(productManagerService, idStore, orderManagerService)
         {
-            _orderStatus = (OrderStatuses)orderStrore.Order.StatusId;
+            _orderStatus = (OrderStatuses)_order.StatusId;
 
             BackCommand = new NavigateCommand<ManageUserOrdersViewModel>(manageUserOrdersViewNavigationService);
 
-            UpdateStatusCommand = new UpdateOrderStatusCommand(this, productManagerService, orderManagerService);
+            UpdateStatusCommand = new UpdateOrderStatusCommand(this, orderManagerService, shopService);
         }
 
     }

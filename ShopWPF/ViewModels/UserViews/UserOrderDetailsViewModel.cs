@@ -21,8 +21,8 @@ namespace ShopWPF.ViewModels.UserViews
 
         public UserOrderDetailsViewModel(IProductManagerService productManagerService, 
             NavigationService<UserOrdersViewModel> userOrdersViewNavigationService,
-            OrderStore orderStore, IOrderManagerService orderManagerService,
-            IShopService shopService) : base(productManagerService, orderStore, orderManagerService)
+            IdStore idStore, IOrderManagerService orderManagerService,
+            IShopService shopService) : base(productManagerService, idStore, orderManagerService)
         {
             
             BackCommand = new NavigateCommand<UserOrdersViewModel>(userOrdersViewNavigationService);

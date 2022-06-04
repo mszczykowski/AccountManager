@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ShopWPF.Views
+namespace ShopWPF.Views.AdminViews.ManageCategoriesViews
 {
     /// <summary>
-    /// Interaction logic for SearchUserView.xaml
+    /// Interaction logic for EditCategoryView.xaml
     /// </summary>
-    public partial class SearchUserView : UserControl
+    public partial class EditCategoryView : UserControl
     {
-        public SearchUserView()
+        public EditCategoryView()
         {
             InitializeComponent();
         }

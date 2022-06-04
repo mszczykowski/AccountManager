@@ -9,19 +9,17 @@ namespace ShopWPF.Commands.OrderManagerCommands
 {
     internal class UpdateOrderStatusCommand : CommandBase
     {
-        private readonly IProductManagerService _productManager;
         private readonly IOrderManagerService _orderManager;
-
-        private ManageUserOrderDetailsViewModel _manageUserOrderDetailViewModel;
-        public UpdateOrderStatusCommand(ManageUserOrderDetailsViewModel manageUserOrderDetailViewModel,
-            IProductManagerService productManager, IOrderManagerService orderManager)
+        private readonly IShopService _shopService;
+        private ManageUserOrderDetailsViewModel _orderViewModel;
+        public UpdateOrderStatusCommand(ManageUserOrderDetailsViewModel orderViewModel,
+            IOrderManagerService orderManager, IShopService shopService)
         {
-            _productManager = productManager;
             _orderManager = orderManager;
-            _manageUserOrderDetailViewModel = manageUserOrderDetailViewModel;
+            _shopService = shopService;
+            _orderViewModel = orderViewModel;
 
-
-            _manageUserOrderDetailViewModel.PropertyChanged += OnViewModelPropertyChanged;
+            _orderViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
         private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -31,31 +29,27 @@ namespace ShopWPF.Commands.OrderManagerCommands
 
         public override bool CanExecute(object? parameter)
         {
-            return (int)_manageUserOrderDetailViewModel.OrderStatus != _manageUserOrderDetailViewModel.Order.StatusId
-                && _manageUserOrderDetailViewModel.Order.StatusId != (int)OrderStatuses.Canceled && base.CanExecute(parameter);
+            return (int)_orderViewModel.OrderStatus != _orderViewModel.Order.StatusId
+                && _orderViewModel.Order.StatusId != (int)OrderStatuses.Canceled && base.CanExecute(parameter);
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
-            if (_manageUserOrderDetailViewModel.OrderStatus == OrderStatuses.Canceled)
+            if (_orderViewModel.OrderStatus == OrderStatuses.Canceled)
             {
-                if (MessageBox.Show("Cancel order?", "Cancel", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                {
-                    _orderManager.UpdateStatus(_manageUserOrderDetailViewModel.Order.OrderId, OrderStatuses.Canceled);
+                if (MessageBox.Show("Cancel order?", "Cancel", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                    return;
 
-                    _manageUserOrderDetailViewModel.Order.Products.ToList().ForEach(p =>
-                    {
-                        _productManager.ChangeQuantity(p.ProductId, p.Product.Quantity + p.Quantity);
-                    });
-                }
+                await _shopService.CancelOrder(_orderViewModel.Order);
             }
 
             else
             {
-                _orderManager.UpdateStatus(_manageUserOrderDetailViewModel.Order.OrderId, _manageUserOrderDetailViewModel.OrderStatus);
+                await _orderManager.UpdateStatus(_orderViewModel.Order.OrderId, 
+                    _orderViewModel.OrderStatus);
             }
 
-            _manageUserOrderDetailViewModel.Order.StatusId = (int)_manageUserOrderDetailViewModel.OrderStatus;
+            _orderViewModel.Order.StatusId = (int)_orderViewModel.OrderStatus;
 
             OnCanExecuteChanged();
         }

@@ -54,15 +54,15 @@ namespace ShopWPF.Commands.ProductManagerCommands
 
         public override void Execute(object? parameter)
         {
-            if (MessageBox.Show("Delete selected items?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                foreach (var product in _productsViewModel)
-                {
-                    if (product.IsChecked) _productsManagerService.DeleteProduct(product.Product.ProductId);
-                }
+            if (MessageBox.Show("Delete selected items?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
 
-                _manageProductsViewModel.UpdateProductsCollection();
+            foreach (var product in _productsViewModel)
+            {
+                if (product.IsChecked) _productsManagerService.DeleteProduct(product.Product.ProductId);
             }
+
+            _manageProductsViewModel.UpdateProductsCollection();
         }
     }
 }

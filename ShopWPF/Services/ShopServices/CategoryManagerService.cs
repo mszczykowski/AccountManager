@@ -3,6 +3,7 @@ using ShopWPF.Data;
 using ShopWPF.Models;
 using ShopWPF.Services.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ShopWPF.Services.ShopServices
@@ -44,6 +45,11 @@ namespace ShopWPF.Services.ShopServices
         public async Task<CategoryModel> GetCategory(int categoryId)
         {
             return await _context.Categories.FindAsync(categoryId);
+        }
+
+        public async Task<CategoryModel> GetCategoryByName(string name)
+        {
+            return await _context.Categories.Where(c => c.Name == name).FirstOrDefaultAsync();
         }
     }
 }

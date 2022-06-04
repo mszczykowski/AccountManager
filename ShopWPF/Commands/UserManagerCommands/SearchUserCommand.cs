@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿/*using System.ComponentModel;
 using ShopWPF.ViewModels;
 using System.Windows;
 using ShopWPF.Stores;
@@ -48,4 +48,4 @@ namespace ShopWPF.Commands.UserManagerCommands
             }
         }
     }
-}
+}*/

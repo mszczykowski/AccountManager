@@ -30,11 +30,10 @@ namespace ShopWPF.Commands.OrderManagerCommands
 
         public override async void Execute(object? parameter)
         {
-            if (MessageBox.Show("Cancel order?", "Cancel", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                await _shopService.CancelOrder(_orderDetailsViewModel.Order);
-            }
+            if (MessageBox.Show("Cancel order?", "Cancel", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                return;
 
+            await _shopService.CancelOrder(_orderDetailsViewModel.Order);
             _userOrdersViewNavigationService.Navigate();
         }
     }

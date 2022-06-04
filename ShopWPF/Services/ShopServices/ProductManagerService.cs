@@ -19,6 +19,7 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task AddProduct(ProductModel product)
         {
+            
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
         }

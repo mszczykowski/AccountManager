@@ -3,12 +3,14 @@ using ShopWPF.Models;
 using ShopWPF.Services.Common;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
+using ShopWPF.Services.Interfaces;
 
 namespace ShopWPF.ViewModels.ManageProductsViewModels
 {
-    internal class ProductFormViewModel : ViewModelBase
+    internal class ProductFormViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         private string _productName;
         public string ProductName
@@ -56,19 +58,39 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
             }
         }
 
+        private List<CategoryModel> _categories;
+
+        public IEnumerable <CategoryModel> Categories { get => _categories; }
+
         public ICommand CancelCommand { get; }
 
         private readonly ErrorsViewModel _errorsViewModel;
 
-        public ProductFormViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService)
+        private readonly ICategoryManagerService _categoryManagerService;
+
+        public ProductFormViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService,
+            ICategoryManagerService categoryManagerService)
         {
             CancelCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewModelNavigationService);
 
             _errorsViewModel = new ErrorsViewModel();
 
+            _categoryManagerService = categoryManagerService;
+
+            InitialiseCategoriesList();
+
             _errorsViewModel.ErrorsChanged += ErrorsViewModel_ErrorsChanged;
         }
 
+        public async void InitialiseCategoriesList()
+        {
+            _categories = new List<CategoryModel>
+            {
+                new CategoryModel(-1, "No category")
+            };
+
+            _categories.AddRange(await _categoryManagerService.GetAllCategories());
+        }
 
 
         //validation

@@ -16,7 +16,7 @@ namespace ShopWPF.ViewModels
         public ICommand AddUserCommand { get; }
         public ICommand SearchCommand { get; }
         public ICommand BackCommand { get; }
-        public ICommand NavigateToUserOrdersCommand { get; }
+        public ICommand NavigateToEditUserCommand { get; }
 
 
         private readonly ObservableCollection<UserViewModel> _users;
@@ -24,18 +24,16 @@ namespace ShopWPF.ViewModels
         public IEnumerable<UserViewModel> Users => _users;
 
         public ManageUsersViewModel(NavigationService<AddUserViewModel> addUserViewNavigationService, 
-            NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
-            NavigationService<SearchUserViewModel> searchViewNavigationService, 
-            NavigationService<ManageUserOrdersViewModel> manageUserOrdersViewNavigationService,
-            IUserManagerService usersManagerService, UserStore userStore)
+            NavigationService<AdminMenuViewModel> adminMenuViewNavigationService, 
+            NavigationService<EditUserViewModel> editUserViewNavigationService,
+            IUserManagerService usersManagerService, IdStore idStore)
         {
             AddUserCommand = new NavigateCommand<AddUserViewModel>(addUserViewNavigationService);
 
             BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewNavigationService);
 
-            SearchCommand = new NavigateCommand<SearchUserViewModel>(searchViewNavigationService);
-
-            NavigateToUserOrdersCommand = new NavigateToUserOrdersCommand(userStore, manageUserOrdersViewNavigationService);
+            NavigateToEditUserCommand = 
+                new NaviagteAndStoreIdCommand<EditUserViewModel>(editUserViewNavigationService, idStore);
 
             _users = new ObservableCollection<UserViewModel>();
             _usersManagerService = usersManagerService;

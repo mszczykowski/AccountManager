@@ -11,16 +11,13 @@ namespace ShopWPF.Commands.MisicCommands
     {
         private readonly LogInViewModel _logInViewModel;
         private readonly LoggedUserStore _loggedUserStore;
-        private readonly IShoppingCartService _shoppingCartDatabaseService;
-        private readonly IProductManagerService _productsManagerService;
         private readonly IUserManagerService _usersManagerService;
         private readonly NavigationService<AdminMenuViewModel> _adminMenuViewNavigationService;
         private readonly NavigationService<UserMenuViewModel> _userMenuViewNavigationService;
 
         public LogInCommand(LogInViewModel logInViewModel, IUserManagerService usersManagerService, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
-            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore, 
-            IShoppingCartService shoppingCartDatabaseService, IProductManagerService productsManagerService)
+            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;
@@ -28,8 +25,6 @@ namespace ShopWPF.Commands.MisicCommands
             _userMenuViewNavigationService = userMenuViewNavigationService;
 
             _loggedUserStore = loggedUserStore;
-            _shoppingCartDatabaseService = shoppingCartDatabaseService;
-            _productsManagerService = productsManagerService;
             _logInViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -55,8 +50,6 @@ namespace ShopWPF.Commands.MisicCommands
             else
             {
                 _loggedUserStore.User = user;
-
-                _loggedUserStore.User.ShoppingCart = await _shoppingCartDatabaseService.LoadCart(user.UserId);
 
                 if (user.UserRole == Enums.UserRoles.Standard) _userMenuViewNavigationService.Navigate();
 

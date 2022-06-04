@@ -14,18 +14,23 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Edit user" Style="{StaticResource Header}"/>
 
             <TextBlock Grid.Row="1" Text="Name:" Margin="0 10"/>
-            <TextBox Grid.Row="2" Width="300" Margin="0 10" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="2" Width="300" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
             <TextBlock Grid.Row="3" Text="Password:" Margin="0 10"/>
-            <TextBox Grid.Row="4"  Width="300" Margin="0 10" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Grid.Row="4"  Width="300" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="5">
-            <Button Content="Save changes" Command="{Binding EditUserCommand}" />
-            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="10 0"/>
+            <Button Content="Save changes" Command="{Binding EditUserCommand}" Margin="0 10 10 10" />
+            <Button Content="Delete user" Command="{Binding DeleteUserCommand}" Margin="0 10 10 10"/>
+            <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="0 10 10 10"/>
         </StackPanel>
+
+        <Button Content="View orders" Command="{Binding ViewOrdersCommand}" 
+                Margin="0 10 50 10" Grid.Row="6"/>
     </Grid>
 </UserControl>

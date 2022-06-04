@@ -10,7 +10,7 @@ namespace ShopWPF.ViewModels.UserViews
     internal class UserOrdersViewModel : OrdersListViewModel
     {
         public UserOrdersViewModel(IOrderManagerService orderManagerService, LoggedUserStore loggedUser, 
-            NavigationService<UserMenuViewModel> userMenuViewNavigationService, OrderStore orderStore,
+            NavigationService<UserMenuViewModel> userMenuViewNavigationService, IdStore idStore,
             NavigationService<UserOrderDetailsViewModel> userOrderDetailsViewNavigationService) 
             : base(orderManagerService)
         {
@@ -18,10 +18,10 @@ namespace ShopWPF.ViewModels.UserViews
 
             BackCommand = new NavigateCommand<UserMenuViewModel>(userMenuViewNavigationService);
 
-            UpdateOrdersCollection();
+            OrderOnClickCommand =
+                new NaviagteAndStoreIdCommand<UserOrderDetailsViewModel>(userOrderDetailsViewNavigationService, idStore);
 
-            OrderOnClickCommand = new NavigateToOrderDetailsCommand(orderStore, 
-                userOrderDetailsViewNavigationService);
+            UpdateOrdersCollection();
         }
     }
 }

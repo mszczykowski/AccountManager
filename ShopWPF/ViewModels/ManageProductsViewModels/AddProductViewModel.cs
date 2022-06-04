@@ -15,7 +15,8 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
         public ICommand AddProductCommand { get; }
 
         public AddProductViewModel(NavigationService<ManageProductsViewModel> manageProductsViewModelNavigationService, 
-            IProductManagerService productsManagerService) : base(manageProductsViewModelNavigationService)
+            IProductManagerService productsManagerService,
+            ICategoryManagerService categoryManagerService) : base(manageProductsViewModelNavigationService, categoryManagerService)
         {
             AddProductCommand = new AddProductCommand(this, manageProductsViewModelNavigationService, productsManagerService);
         }

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.ViewModels.ProductsViewModels;
@@ -30,3 +30,4 @@ namespace ShopWPF.Commands.ProductManagerCommands
         }
     }
 }
+*/

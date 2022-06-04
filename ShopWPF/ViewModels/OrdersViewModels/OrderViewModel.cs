@@ -3,10 +3,11 @@ using ShopWPF.Models;
 using ShopWPF.Enums;
 using System.Windows.Input;
 using ShopWPF.Services.Interfaces;
+using ShopWPF.ViewModels.Intefraces;
 
 namespace ShopWPF.ViewModels.ManageOrdersViewModels
 {
-    internal class OrderViewModel : ViewModelBase
+    internal class OrderViewModel : ViewModelBase, ViewModelWithId
     {
 
         private OrderModel _order;
@@ -32,6 +33,8 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
                 OnPropertyChanged(nameof(Status));
             }
         }
+
+        public int Id => _order.OrderId;
 
         public OrderViewModel(OrderModel order, IOrderManagerService orderManagerService)
         {

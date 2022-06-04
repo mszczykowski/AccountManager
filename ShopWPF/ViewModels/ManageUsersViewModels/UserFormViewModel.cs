@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace ShopWPF.ViewModels.ManageUsersViewModels
 {
-    internal class UserFormViewModel : ViewModelBase
+    internal class UserFormViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         private string _userName;
         public string Username
@@ -42,21 +42,9 @@ namespace ShopWPF.ViewModels.ManageUsersViewModels
 
         private readonly ErrorsViewModel _errorsViewModel;
 
-
-        
-
         public UserFormViewModel(NavigationService<ManageUsersViewModel> userManagerViewNavigationService)
         {
             CancelCommand = new NavigateCommand<ManageUsersViewModel>(userManagerViewNavigationService);
-
-            _errorsViewModel = new ErrorsViewModel();
-
-            _errorsViewModel.ErrorsChanged += ErrorsViewModel_ErrorsChanged;
-        }
-
-        public UserFormViewModel(NavigationService<SearchUserViewModel> searchUserViewNavigationService)
-        {
-            CancelCommand = new NavigateCommand<SearchUserViewModel>(searchUserViewNavigationService);
 
             _errorsViewModel = new ErrorsViewModel();
 

@@ -10,39 +10,33 @@ namespace ShopWPF.Commands.UserManagerCommands
     internal class DeleteUserCommand : CommandBase
     {
         private readonly NavigationService<ManageUsersViewModel> _manageUsersViewModelNavigationSercvice;
-        private readonly UserStore _userStore;
         private readonly IUserManagerService _usersManagerService;
+        private readonly EditUserViewModel _userViewModel;
 
-        public DeleteUserCommand(SearchUserViewModel searchUserViewModel, NavigationService<ManageUsersViewModel> manageUsersViewModelNavigationSercvice, UserStore userStore,
+        public DeleteUserCommand(EditUserViewModel userViewModel, 
+            NavigationService<ManageUsersViewModel> manageUsersViewModelNavigationSercvice,
             IUserManagerService usersManagerService)
         {
             _manageUsersViewModelNavigationSercvice = manageUsersViewModelNavigationSercvice;
-            _userStore = userStore;
             _usersManagerService = usersManagerService;
-
-            _userStore.CurrentUserChanged += OnViewModelPropertyChanged;
-        }
-
-        private void OnViewModelPropertyChanged(object? sender, EventArgs e)
-        {
-            OnCanExecuteChanged();
-        }
-
-        public override bool CanExecute(object? parameter)
-        {
-            return (_usersManagerService.GetUser(_userStore.User?.Name) != null) && base.CanExecute(parameter);
+            _userViewModel = userViewModel;
         }
 
 
         public override void Execute(object? parameter)
         {
-            if (_userStore.User.UserRole == Enums.UserRoles.Admin) MessageBox.Show("Can't delete admin account!");
-            else if (MessageBox.Show("Delete user \"" + _userStore.User.Name + "\" ?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            if (_userViewModel.User.UserRole == Enums.UserRoles.Admin)
             {
-                _usersManagerService.DeleteUser(_userStore.User.UserId);
-                
-                _manageUsersViewModelNavigationSercvice.Navigate();
+                MessageBox.Show("Can't delete admin account!");
+                return;
             }
+            
+            if (MessageBox.Show("Delete user \"" + _userViewModel.User.Name + "\" ?", "Delete", MessageBoxButton.YesNo)
+                == MessageBoxResult.No) return;
+
+            _usersManagerService.DeleteUser(_userViewModel.User.UserId);
+
+            _manageUsersViewModelNavigationSercvice.Navigate();
         }
 
     }

@@ -16,7 +16,6 @@ namespace ShopWPF.Commands.OrderManagerCommands
             _ordersListViewModel = ordersListViewModel;
         }
 
-
         public override void Execute(object? parameter)
         {
             _ordersListViewModel.UpdateOrdersCollection();

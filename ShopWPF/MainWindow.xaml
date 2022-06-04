@@ -3,20 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ShopWPF"
         xmlns:views ="clr-namespace:ShopWPF.Views"
         xmlns:viewsProducts ="clr-namespace:ShopWPF.Views.ManageProductsViews"
         xmlns:viewsOrders ="clr-namespace:ShopWPF.Views.ManageOrdersViews"
         xmlns:viewsShop ="clr-namespace:ShopWPF.Views.ShopViews"
         xmlns:viewsUser ="clr-namespace:ShopWPF.Views.UserViews"
         xmlns:viewsDiscounts ="clr-namespace:ShopWPF.Views.DiscountManagerViews"
+        xmlns:viewsCategories ="clr-namespace:ShopWPF.Views.AdminViews.ManageCategoriesViews"
         xmlns:viewmodels ="clr-namespace:ShopWPF.ViewModels"
         xmlns:viewmodelsManageProducts ="clr-namespace:ShopWPF.ViewModels.ManageProductsViewModels"
-        xmlns:viewmodelsProducts ="clr-namespace:ShopWPF.ViewModels.ProductsViewModels"
         xmlns:viewmodelsOrders ="clr-namespace:ShopWPF.ViewModels.ManageOrdersViewModels"
         xmlns:viewmodelsShop ="clr-namespace:ShopWPF.ViewModels.ShopViewModels"
         xmlns:viewmodelsUser ="clr-namespace:ShopWPF.ViewModels.UserViews"
         xmlns:viewmodelsDiscounts ="clr-namespace:ShopWPF.ViewModels.DiscountManagerViewModels"
+        xmlns:viewmodelCategories ="clr-namespace:ShopWPF.ViewModels.ManageCategoriesViewModels"
         
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
@@ -39,9 +39,6 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewmodels:ManageUsersViewModel}">
                 <views:ManageUsersView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type viewmodels:SearchUserViewModel}">
-                <views:SearchUserView/>
             </DataTemplate>
 
             <DataTemplate DataType="{x:Type viewmodels:EditUserViewModel}">
@@ -96,7 +93,17 @@
                 <viewsOrders:ManageUserOrderDetailsView/>
             </DataTemplate>
 
-            
+            <DataTemplate DataType="{x:Type viewmodelCategories:AddCategroyViewModel}">
+                <viewsCategories:AddCategoryView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelCategories:EditCategoryViewModel}">
+                <viewsCategories:EditCategoryView/>
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewmodelCategories:ManageCategoriesViewModel}">
+                <viewsCategories:ManageCategoriesView/>
+            </DataTemplate>
 
         </Grid.Resources>
 

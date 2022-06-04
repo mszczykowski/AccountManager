@@ -3,6 +3,7 @@ using ShopWPF.Commands.MisicCommands;
 using ShopWPF.ViewModels.ManageProductsViewModels;
 using ShopWPF.ViewModels.DiscountManagerViewModels;
 using ShopWPF.Services.Common;
+using ShopWPF.ViewModels.ManageCategoriesViewModels;
 
 namespace ShopWPF.ViewModels
 {
@@ -18,10 +19,13 @@ namespace ShopWPF.ViewModels
 
         public ICommand LogOutCommand { get; }
 
+        public ICommand ManageCategoriesCommand { get; }
+
         public AdminMenuViewModel(NavigationService<ManageUsersViewModel> manageUsersViewNavigationService,
             NavigationService<ManageProductsViewModel> manageProductsViewNavigationService, 
             NavigationService<LogInViewModel> logInViewNavigationService, 
-            NavigationService<DiscountManagerViewModel> manageDiscountsViewNavigationService)
+            NavigationService<DiscountManagerViewModel> manageDiscountsViewNavigationService,
+            NavigationService<ManageCategoriesViewModel> manageCategoriesViewNavigationService)
         {
             ManageUsersCommand = new NavigateCommand<ManageUsersViewModel>(manageUsersViewNavigationService);
 
@@ -32,6 +36,8 @@ namespace ShopWPF.ViewModels
             ExitCommand = new ExitCommand();
 
             ManageProductsCommand = new NavigateCommand<ManageProductsViewModel>(manageProductsViewNavigationService);
+
+            ManageCategoriesCommand = new NavigateCommand<ManageCategoriesViewModel>(manageCategoriesViewNavigationService);
         }
     }
 }

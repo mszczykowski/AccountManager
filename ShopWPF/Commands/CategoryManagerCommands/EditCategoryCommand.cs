@@ -28,13 +28,19 @@ namespace ShopWPF.Commands.CategoryManagerCommands
             idToEdit = id;
         }
 
-        public override void Execute(object? parameter)
+        public async override void Execute(object? parameter)
         {
             _categoryViewModel.ValidateForm();
 
             if (_categoryViewModel.HasErrors) return;
 
-            _categoryManagerService.EditCategory(idToEdit, new CategoryModel
+            if (await _categoryManagerService.GetCategoryByName(_categoryViewModel.CategoryName) != null)
+            {
+                MessageBox.Show("Category already exists!");
+                return;
+            }
+
+            await _categoryManagerService.EditCategory(idToEdit, new CategoryModel
             {
                 Name = _categoryViewModel.CategoryName
             });

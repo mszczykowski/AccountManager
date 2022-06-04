@@ -8,12 +8,13 @@ namespace ShopWPF.Stores
 {
     internal class IdStore
     {
+        private int _id;
         public int Id 
         { 
-            get => Id; 
+            get => _id; 
             set
             {
-                Id = value;
+                _id = value;
                 OnIdChanged();
             }
         }

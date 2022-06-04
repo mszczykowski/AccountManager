@@ -26,18 +26,22 @@ namespace ShopWPF.Commands.CategoryManagerCommands
             _categoryManagerService = categoryManagerService;
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
             _categoryViewModel.ValidateForm();
 
             if (_categoryViewModel.HasErrors) return;
 
-            _categoryManagerService.AddCategory(new CategoryModel
+            if(await _categoryManagerService.GetCategoryByName(_categoryViewModel.CategoryName) != null)
+            {
+                MessageBox.Show("Category already exists!");
+                return;
+            }
+
+            await _categoryManagerService.AddCategory(new CategoryModel
             {
                 Name = _categoryViewModel.CategoryName
             });
-
-            MessageBox.Show("Category created!");
 
             _manageCategoriesViewNavigationService.Navigate();
         }

@@ -20,14 +20,15 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
             NavigationService<AddProductViewModel> addProductViewModelNavigationService,
             NavigationService<EditProductViewModel> editProductViewModelNavigationService, 
             IProductManagerService productManagerService, 
-            ProductStore productStore, ICategoryManagerService categoryManagerService) 
+            IdStore idStore, ICategoryManagerService categoryManagerService) 
             : base(productManagerService, categoryManagerService)
         {
             BackCommand = new NavigateCommand<AdminMenuViewModel>(adminMenuViewModelNavigationService);
 
             AddProductCommand = new NavigateCommand<AddProductViewModel>(addProductViewModelNavigationService);
 
-            EditProductCommand = new NavigateToEditProductCommand(productStore, editProductViewModelNavigationService);
+            EditProductCommand = 
+                new NaviagteAndStoreIdCommand<EditProductViewModel>(editProductViewModelNavigationService, idStore);
 
             DeleteSelectedCommand = new DeleteSelectedCommand(this, _productManagerService);
         }

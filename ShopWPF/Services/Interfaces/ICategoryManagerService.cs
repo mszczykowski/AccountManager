@@ -15,5 +15,7 @@ namespace ShopWPF.Services.Interfaces
         Task<CategoryModel> GetCategory(int categoryId);
 
         Task DeleteCategory(int categoryId);
+
+        Task<CategoryModel> GetCategoryByName(string name);
     }
 }

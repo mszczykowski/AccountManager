@@ -1,4 +1,4 @@
-﻿using ShopWPF.Services.Common;
+﻿/*using ShopWPF.Services.Common;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
@@ -30,4 +30,4 @@ namespace ShopWPF.Commands.UserManagerCommands
             _userOrdersViewNavigationService.Navigate();
         }
     }
-}
+}*/

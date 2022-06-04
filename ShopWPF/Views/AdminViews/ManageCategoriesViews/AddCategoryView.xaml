@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="ShopWPF.Views.AddUserView"
+﻿<UserControl x:Class="ShopWPF.Views.AdminViews.ManageCategoriesViews.AddCategoryView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ShopWPF.Views"
+             xmlns:local="clr-namespace:ShopWPF.Views.AdminViews.ManageCategoriesViews"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid HorizontalAlignment="Left">
@@ -12,19 +12,15 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Add user" Style="{StaticResource Header}"/>
+        <TextBlock Grid.Row="0" Text="Add category" Style="{StaticResource Header}"/>
 
         <TextBlock Grid.Row="1" Text="Name:" Margin="0 5"/>
-        <TextBox Grid.Row="2" Width="300" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBlock Grid.Row="3" Text="Password:" Margin="0 5"/>
-        <TextBox Grid.Row="4"  Width="300" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Row="2" Width="300" Margin="0 10" Text="{Binding CategoryName, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="5">
-            <Button Content="Add user" Command="{Binding AddUserCommand}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
+            <Button Content="Add user" Command="{Binding AddCategoryCommand}" />
             <Button Content="Cancel" Command="{Binding CancelCommand}" Margin="10 0"/>
         </StackPanel>
     </Grid>

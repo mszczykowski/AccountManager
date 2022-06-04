@@ -11,11 +11,12 @@ namespace ShopWPF.ViewModels.OrdersViewModels
 {
     internal abstract class OrderDetailsViewModel : ViewModelBase
     {
-        protected readonly OrderModel _order;
+        private readonly IProductManagerService _productManagerService;
+        private readonly IOrderManagerService _orderManagerService;
+
+        protected OrderModel _order;
 
         public OrderModel Order => _order;
-
-        private readonly IProductManagerService _productManagerService;
 
         public string OrderName => _order.Name;
 
@@ -42,18 +43,19 @@ namespace ShopWPF.ViewModels.OrdersViewModels
             }
         }
 
-        public OrderDetailsViewModel(IProductManagerService productManagerService, OrderStore orderStrore, 
+        public OrderDetailsViewModel(IProductManagerService productManagerService, IdStore idStore, 
             IOrderManagerService orderManagerService)
         {
-            _order = orderStrore.Order;
-
             _productManagerService = productManagerService;
+            _orderManagerService = orderManagerService;
 
+            InitialiseOrder(idStore.Id);
             InitialiseProductsList();
+        }
 
-            
-
-            
+        private async void InitialiseOrder(int id)
+        {
+            _order = await _orderManagerService.GetOrder(id);
         }
 
         private void InitialiseProductsList()

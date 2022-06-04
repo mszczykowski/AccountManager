@@ -1,4 +1,4 @@
-﻿using ShopWPF.Models;
+﻿/*using ShopWPF.Models;
 using System;
 
 
@@ -30,3 +30,4 @@ namespace ShopWPF.Stores
         }
     }
 }
+*/

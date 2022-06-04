@@ -8,10 +8,11 @@ using ShopWPF.Enums;
 using System.Windows.Input;
 using ShopWPF.Commands;
 using ShopWPF.Services;
+using ShopWPF.ViewModels.Intefraces;
 
 namespace ShopWPF.ViewModels.ProductsViewModels
 {
-    internal class ProductViewModel : ViewModelBase
+    internal class ProductViewModel : ViewModelBase, ViewModelWithId
     {
         private ProductModel _product;
 
@@ -35,6 +36,8 @@ namespace ShopWPF.ViewModels.ProductsViewModels
                 OnPropertyChanged(nameof(IsChecked));
             }
         }
+
+        public int Id => _product.ProductId;
 
         public ProductViewModel(ProductModel product)
         {

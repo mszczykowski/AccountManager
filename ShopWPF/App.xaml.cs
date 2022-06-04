@@ -16,6 +16,7 @@ using ShopWPF.Services.ShopServices;
 using ShopWPF.Services.Interfaces;
 using ShopWPF.Utils;
 using ShopWPF.Services.Common;
+using ShopWPF.ViewModels.ManageCategoriesViewModels;
 
 namespace ShopWPF
 {
@@ -39,11 +40,9 @@ namespace ShopWPF
                 services.AddScoped<IShopService, ShopService>();
                 services.AddScoped<ICategoryManagerService, CategoryManagerService>();
 
-                services.AddSingleton<UserStore>();
-                services.AddSingleton<ProductStore>();
-                services.AddSingleton<OrderStore>();
                 services.AddSingleton<NavigationStore>();
                 services.AddSingleton<LoggedUserStore>();
+                services.AddSingleton<IdStore>();
 
                 services.AddTransient<MainMenuViewModel>();
                 services.AddSingleton<Func<MainMenuViewModel>>((s) => () => s.GetRequiredService<MainMenuViewModel>());
@@ -68,10 +67,6 @@ namespace ShopWPF
                 services.AddTransient<EditUserViewModel>();
                 services.AddSingleton<Func<EditUserViewModel>>((s) => () => s.GetRequiredService<EditUserViewModel>());
                 services.AddSingleton<NavigationService<EditUserViewModel>>();
-
-                services.AddTransient<SearchUserViewModel>();
-                services.AddSingleton<Func<SearchUserViewModel>>((s) => () => s.GetRequiredService<SearchUserViewModel>());
-                services.AddSingleton<NavigationService<SearchUserViewModel>>();
 
                 services.AddTransient<ManageProductsViewModel>();
                 services.AddSingleton<Func<ManageProductsViewModel>>((s) => () => s.GetRequiredService<ManageProductsViewModel>());
@@ -122,6 +117,18 @@ namespace ShopWPF
                 services.AddSingleton<Func<ManageUserOrderDetailsViewModel>>((s) => () => s.GetRequiredService<ManageUserOrderDetailsViewModel>());
                 services.AddSingleton<NavigationService<ManageUserOrderDetailsViewModel>>();
 
+                services.AddTransient<AddCategroyViewModel>();
+                services.AddSingleton<Func<AddCategroyViewModel>>((s) => () => s.GetRequiredService<AddCategroyViewModel>());
+                services.AddSingleton<NavigationService<AddCategroyViewModel>>();
+
+                services.AddTransient<EditCategoryViewModel>();
+                services.AddSingleton<Func<EditCategoryViewModel>>((s) => () => s.GetRequiredService<EditCategoryViewModel>());
+                services.AddSingleton<NavigationService<EditCategoryViewModel>>();
+
+                services.AddTransient<ManageCategoriesViewModel>();
+                services.AddSingleton<Func<ManageCategoriesViewModel>>((s) => () => s.GetRequiredService<ManageCategoriesViewModel>());
+                services.AddSingleton<NavigationService<ManageCategoriesViewModel>>();
+
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton(s => new MainWindow()
                 {
@@ -129,6 +136,8 @@ namespace ShopWPF
                 });
 
             }).Build();
+
+            InitializeComponent();
         }
 
         protected override void OnStartup(StartupEventArgs e)

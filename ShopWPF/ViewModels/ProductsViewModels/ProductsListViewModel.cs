@@ -79,11 +79,13 @@ namespace ShopWPF.ViewModels.ProductsViewModels
 
             List<ProductModel> productsFiltered = new List<ProductModel>();
 
+            productsFiltered.AddRange(productsCache);
+
             if (!String.IsNullOrEmpty(Query))
                 productsFiltered = productsFiltered
                     .Where(product => product.Name.ToUpper().Contains(Query.ToUpper())).ToList();
 
-            if (_category == null || _category.CategoryId == -1)
+            if (_category != null && _category.CategoryId != -1)
                 productsFiltered = productsFiltered
                     .Where(product => product.CategoryId == _category.CategoryId).ToList();
 

@@ -21,12 +21,12 @@ namespace ShopWPF.Commands.DiscountCommands
 
         public override void Execute(object? parameter)
         {
-            if (MessageBox.Show("Delete \"" + _discount.ToString() + "\" ?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-            {
-                _discountsDatabaseService.DeleteDiscount(_discount.DiscountId);
+            if (MessageBox.Show("Delete \"" + _discount.ToString() + "\" ?", "Delete", MessageBoxButton.YesNo) 
+                == MessageBoxResult.No) return;
 
-                _discountManagerViewModel.UpdateDiscountsList();
-            }
+            _discountsDatabaseService.DeleteDiscount(_discount.DiscountId);
+
+            _discountManagerViewModel.UpdateDiscountsList();
         }
     }
 }

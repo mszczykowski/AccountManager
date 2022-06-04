@@ -1,4 +1,4 @@
-﻿using ShopWPF.Services.Common;
+﻿/*using ShopWPF.Services.Common;
 using ShopWPF.Stores;
 using ShopWPF.ViewModels.ManageOrdersViewModels;
 using ShopWPF.ViewModels.UserViews;
@@ -30,7 +30,7 @@ namespace ShopWPF.Commands.OrderManagerCommands
 
         public override void Execute(object? parameter)
         {
-            if (parameter == null) throw new ArgumentNullException(nameof(parameter));
+            if (parameter == null) return;
 
             OrderViewModel orderViewModel = parameter as OrderViewModel;
 
@@ -40,4 +40,4 @@ namespace ShopWPF.Commands.OrderManagerCommands
             else _manageOrderDetailsViewNavigationService.Navigate();
         }
     }
-}
+}*/

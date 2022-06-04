@@ -1,9 +1,12 @@
 ﻿using ShopWPF.Models;
+using ShopWPF.ViewModels.Intefraces;
 
 namespace ShopWPF.ViewModels
 {
-    internal class UserViewModel : ViewModelBase
+    internal class UserViewModel : ViewModelBase, ViewModelWithId
     {
+        public int Id => _user.UserId;
+
         private UserModel _user;
 
         public UserModel User { get => _user; }

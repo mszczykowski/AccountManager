@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace ShopWPF.ViewModels.ManageCategoriesViewModels
 {
-    internal abstract class CategoryFormViewModel : ViewModelBase
+    internal abstract class CategoryFormViewModel : ViewModelBase, INotifyDataErrorInfo
     {
         private string _categoryName;
         public string CategoryName

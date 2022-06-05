@@ -1,6 +1,7 @@
 ﻿<Application x:Class="ShopWPF.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:utils ="clr-namespace:ShopWPF.Utils">
 
 
     <Application.Resources>
@@ -37,6 +38,8 @@
             <Setter Property="Padding" Value="0 20"/>
             <Setter Property="FontSize" Value="28"/>
         </Style>
+
+        <utils:FloatConverter x:Key="FloatConverter" />
 
     </Application.Resources>
 </Application>

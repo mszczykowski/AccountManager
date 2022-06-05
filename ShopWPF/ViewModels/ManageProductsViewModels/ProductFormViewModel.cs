@@ -84,11 +84,7 @@ namespace ShopWPF.ViewModels.ManageProductsViewModels
 
         public async void InitialiseCategoriesList()
         {
-            _categories = new List<CategoryModel>
-            {
-                new CategoryModel(-1, "No category")
-            };
-
+            _categories = new List<CategoryModel>();
             _categories.AddRange(await _categoryManagerService.GetAllCategories());
         }
 

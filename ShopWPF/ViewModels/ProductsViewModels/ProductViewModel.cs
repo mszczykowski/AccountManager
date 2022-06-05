@@ -42,7 +42,7 @@ namespace ShopWPF.ViewModels.ProductsViewModels
         public ProductViewModel(ProductModel product)
         {
             _product = product;
-            Category = _product.Category.ToString();
+            Category = _product.Category.Name;
             Price = _product.Price.ToString("N2");
         }
     }

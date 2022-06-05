@@ -34,7 +34,7 @@
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Category:" Margin="0 5"/>
 
         <ComboBox Grid.Row="2" Grid.Column="1" Width="200" Margin="0 5 0 22" 
-                  SelectedItem="{Binding Category}" SelectedIndex="0" 
+                  SelectedItem="{Binding Category}"
                   ItemsSource="{Binding Path=Categories}"
                           DisplayMemberPath="Name"/>
 

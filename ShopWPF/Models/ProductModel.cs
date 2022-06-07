@@ -38,6 +38,14 @@ namespace ShopWPF.Models
             CategoryId = categoryId;
         }
 
+        public ProductModel(string name, double price, int quantity, CategoryModel category)
+        {
+            Name = name;
+            Price = price;
+            Quantity = quantity;
+            Category = category;
+        }
+
         public ProductModel(int id, string name, double price, int quantity, bool isDeleted, int categoryId)
         {
             ProductId = id;
@@ -53,7 +61,7 @@ namespace ShopWPF.Models
             Name = product.Name;
             Price = product.Price;
             Quantity = product.Quantity;
-            Category = product.Category;
+            CategoryId = product.CategoryId;
         }
 
         public override bool Equals(object? obj)

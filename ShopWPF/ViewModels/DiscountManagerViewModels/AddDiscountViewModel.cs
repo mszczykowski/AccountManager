@@ -52,6 +52,8 @@ namespace ShopWPF.ViewModels.DiscountManagerViewModels
         {
             _productsCollection = await _productsManagerService.GetAllProducts();
             _categories = await _categoryManagerService.GetAllCategories();
+
+            DiscountType = DiscountTypes.Total_price_discount;
         }
     }
 }

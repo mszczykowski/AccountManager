@@ -42,8 +42,8 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task EditProduct(int id, ProductModel product)
         {
-            product.ProductId = id;
-            _context.Products.Update(product);
+            var toEdit = await _context.Products.FindAsync(id);
+            toEdit.CopyData(product);
             await _context.SaveChangesAsync();
         }
 
@@ -60,7 +60,7 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task<ProductModel> GetProductIncludingDeleted(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.ProductId == id);
         }
     }
 }

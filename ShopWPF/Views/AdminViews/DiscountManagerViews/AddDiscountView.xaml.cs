@@ -47,7 +47,7 @@ namespace ShopWPF.Views.DiscountManagerViews
             switch (selected)
             {
                 case (DiscountTypes.Total_price_discount):
-                    TotalPricePanel.Visibility = Visibility.Visible;
+                    TotalPricePanel.Visibility = Visibility.Visible;               
                     break;
                 case (DiscountTypes.Category_discount):
                     CategoryPanel.Visibility = Visibility.Visible;

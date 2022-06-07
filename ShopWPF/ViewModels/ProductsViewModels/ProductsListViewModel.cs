@@ -20,6 +20,8 @@ namespace ShopWPF.ViewModels.ProductsViewModels
 
         public ICommand ClearAllFiltersCommand { get; }
 
+        public bool IsCacheValid { get; set; }
+
         private ICollection<ProductModel> productsCache;
 
         protected ObservableCollection<ProductViewModel> _products;
@@ -75,7 +77,11 @@ namespace ShopWPF.ViewModels.ProductsViewModels
 
         public async void UpdateProductsCollection()
         {
-            if (productsCache == null) productsCache = await _productManagerService.GetAllProducts();
+            if (productsCache == null || IsCacheValid == false)
+            {
+                IsCacheValid = true;
+                productsCache = await _productManagerService.GetAllProducts();
+            }
 
             List<ProductModel> productsFiltered = new List<ProductModel>();
 

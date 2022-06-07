@@ -26,7 +26,7 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task<OrderModel> GetOrder(int id)
         {
-            return await _context.Orders.FirstOrDefaultAsync(order => order.OrderId == id);
+            return await _context.Orders.Include(o => o.Products).FirstOrDefaultAsync(order => order.OrderId == id);
         }
 
         public async Task<IEnumerable<OrderModel>> GetUserOrders(int userId)

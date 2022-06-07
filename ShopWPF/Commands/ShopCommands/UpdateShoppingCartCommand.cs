@@ -40,7 +40,7 @@ namespace ShopWPF.Commands.ShopCommands
             if (e.PropertyName == nameof(ProductViewModel.IsChecked)) Execute(sender);
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
             var product = parameter as ProductViewModel;
 
@@ -48,19 +48,17 @@ namespace ShopWPF.Commands.ShopCommands
 
             if(_shoppingCart.Contains(shoppingCartEntry))
             {
-                _shoppingCart.Remove(shoppingCartEntry);
-                _shoppingCartDatabaseService.DeleteProductFromCart(_loggedUser.UserId, shoppingCartEntry.Product);
+                await _shoppingCartDatabaseService.DeleteProductFromCart(_loggedUser.UserId, shoppingCartEntry.Product);
             }
             
             else
             {
                 if(product.Quantity > 0)
                 {
-                    _shoppingCart.Add(shoppingCartEntry);
-                    _shoppingCartDatabaseService.AddProductToCart(_loggedUser.UserId, shoppingCartEntry.Product);
+                    await _shoppingCartDatabaseService.AddProductToCart(_loggedUser.UserId, shoppingCartEntry.Product);
                 }
             }
-            
+            _shoppingCart = await _shoppingCartDatabaseService.LoadCart(_loggedUser.UserId);
         }
     }
 }

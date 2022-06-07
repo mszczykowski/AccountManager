@@ -31,6 +31,7 @@ namespace ShopWPF.ViewModels.ManageOrdersViewModels
         {
             _orderStatus = (OrderStatuses)_order.StatusId;
 
+            idStore.Id = _order.CustomerId;
             BackCommand = new NavigateCommand<ManageUserOrdersViewModel>(manageUserOrdersViewNavigationService);
 
             UpdateStatusCommand = new UpdateOrderStatusCommand(this, orderManagerService, shopService);

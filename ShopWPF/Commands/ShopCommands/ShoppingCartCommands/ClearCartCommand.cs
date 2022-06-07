@@ -25,10 +25,10 @@ namespace ShopWPF.Commands.ShopCommands.ShoppingCartCommands
             _loggedUserStore = loggedUserStore;
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
             _loggedUserStore.User.ShoppingCart.Clear();
-            _shoppingCartDatabaseService.ClearCart(_loggedUserStore.User.UserId);
+            await _shoppingCartDatabaseService.ClearCart(_loggedUserStore.User.UserId);
             _shoppingCartViewModel.UpdateShoppingCartEntries();
             _shoppingCartViewModel.UpdateView();
         }

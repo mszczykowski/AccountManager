@@ -24,13 +24,13 @@ namespace ShopWPF.Commands.ProductManagerCommands
         }
 
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
             _productViewModel.ValidateForm();
 
             if (_productViewModel.HasErrors) return;
 
-            _productsManagerService.EditProduct(_productViewModel.Id,
+            await _productsManagerService.EditProduct(_productViewModel.Id,
                 new ProductModel(_productViewModel.ProductName, _productViewModel.Price,
                 _productViewModel.Quantity, _productViewModel.Category.CategoryId));
 

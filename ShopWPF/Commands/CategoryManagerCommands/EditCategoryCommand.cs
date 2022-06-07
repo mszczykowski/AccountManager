@@ -45,7 +45,7 @@ namespace ShopWPF.Commands.CategoryManagerCommands
                 Name = _categoryViewModel.CategoryName
             });
 
-            MessageBox.Show("Category created!");
+            MessageBox.Show("Category edited!");
 
             _manageCategoriesViewNavigationService.Navigate();
         }

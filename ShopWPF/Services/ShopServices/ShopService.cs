@@ -29,7 +29,7 @@ namespace ShopWPF.Services.ShopServices
 
             order.Products.ToList().ForEach(p =>
             {
-                _productManagerService.ChangeQuantity(p.ProductId, p.Product.Quantity - p.Quantity);
+                _productManagerService.ChangeQuantity(p.ProductId, p.Product.Quantity + p.Quantity);
             }); 
         }
 
@@ -58,6 +58,8 @@ namespace ShopWPF.Services.ShopServices
 
                 order.AddProduct(new OrderProductModel(entry.ProductId, entry.Product.Price, entry.Quantity));
             });
+
+            order.StatusId = (int)Enums.OrderStatuses.New;
 
             await _orderManagerService.AddOrder(order);
 

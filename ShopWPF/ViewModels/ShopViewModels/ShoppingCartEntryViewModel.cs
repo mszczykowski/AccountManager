@@ -32,7 +32,7 @@ namespace ShopWPF.ViewModels.ShopViewModels
 
         public int MaximumQuantity => _productModel.Quantity;
 
-        public string Category => _productModel.Category.ToString();
+        public string Category => _productModel.Category.Name;
 
         private string _totalPrice;
 

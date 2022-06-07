@@ -15,7 +15,7 @@ namespace ShopWPF.ViewModels.UserViews
 
         public ICommand UpdateStatusCommand { get; }
 
-        public string OrderStatus => _order.Status.ToString();
+        public string OrderStatus => OrderStausEnum.ToString();
 
         public OrderStatuses OrderStausEnum => (OrderStatuses)_order.StatusId;
 

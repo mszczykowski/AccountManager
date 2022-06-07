@@ -32,8 +32,10 @@ namespace ShopWPF.Services.ShopServices
 
         public async Task EditCategory(int id, CategoryModel category)
         {
-            category.CategoryId = id;
-            _context.Categories.Update(category);
+            var categroyToEdit = await _context.Categories.FindAsync(id);
+
+            categroyToEdit.Name = category.Name;
+
             await _context.SaveChangesAsync();
         }
 

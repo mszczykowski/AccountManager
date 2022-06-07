@@ -1,4 +1,6 @@
-﻿namespace ShopWPF.Models
+﻿using System;
+
+namespace ShopWPF.Models
 {
     internal class ShoppingCartEntryModel
     {
@@ -38,14 +40,25 @@
 
         public ShoppingCartEntryModel(ProductModel product)
         {
-            _product = product;
+            Product = product;
             Quantity = 1;
         }
 
         public ShoppingCartEntryModel(ProductModel product, int quantity)
         {
-            _product = product;
+            Product = product;
             Quantity = quantity;
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ShoppingCartEntryModel model &&
+                   ProductId == model.ProductId;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ProductId);
         }
     }
 }

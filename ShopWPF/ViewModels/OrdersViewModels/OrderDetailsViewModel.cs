@@ -67,7 +67,7 @@ namespace ShopWPF.ViewModels.OrdersViewModels
                 var product = await _productManagerService.GetProductIncludingDeleted(p.ProductId);
                 var totalPrice = p.Price * p.Quantity;
                 _products.Add(new ProductViewModel(new ProductModel(product.Name,
-                    totalPrice, p.Quantity, product.CategoryId)));
+                    totalPrice, p.Quantity, product.Category)));
             });
         }
     }

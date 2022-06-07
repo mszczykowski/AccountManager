@@ -15,53 +15,41 @@ namespace ShopWPF.Commands.ProductManagerCommands
     internal class DeleteSelectedCommand : CommandBase
     {
         private readonly ManageProductsViewModel _manageProductsViewModel;
-        private readonly IEnumerable<ProductViewModel> _productsViewModel;
+        private readonly IEnumerable<ProductViewModel> _productsList;
         private readonly IProductManagerService _productsManagerService;
 
         public DeleteSelectedCommand(ManageProductsViewModel manageProductsViewModel, IProductManagerService productsManagerService)
         {
             _manageProductsViewModel = manageProductsViewModel;
 
-            _productsViewModel = _manageProductsViewModel.Products;
+            _productsList = _manageProductsViewModel.Products;
             _productsManagerService = productsManagerService;
 
-            foreach(var product in _productsViewModel)
+            /*foreach(var product in _productsViewModel)
             {
                 product.PropertyChanged += OnViewModelPropertyChanged;
-            }
-        }
-
-        private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(ProductViewModel.IsChecked)) OnCanExecuteChanged();
-        }
-
-        public override bool CanExecute(object? parameter)
-        {
-            bool canExecute = false;
-            
-            foreach (var product in _productsViewModel)
-            {
-                if(product.IsChecked)
-                {
-                    canExecute = true;
-                    break;
-                }    
-            }
-
-            return canExecute && base.CanExecute(parameter);
+            }*/
         }
 
         public override void Execute(object? parameter)
         {
+            bool canExecute = false;
+
+            if (!_productsList.Any(p => p.IsChecked))
+            {
+                MessageBox.Show("Nothing selected!");
+                return;
+            }
+
             if (MessageBox.Show("Delete selected items?", "Delete", MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
-            foreach (var product in _productsViewModel)
+            foreach (var product in _productsList)
             {
                 if (product.IsChecked) _productsManagerService.DeleteProduct(product.Product.ProductId);
             }
 
+            _manageProductsViewModel.IsCacheValid = false;
             _manageProductsViewModel.UpdateProductsCollection();
         }
     }

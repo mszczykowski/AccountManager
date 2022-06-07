@@ -20,15 +20,19 @@ namespace ShopWPF.Commands.UserManagerCommands
             _userViewModel = userViewModel;
         }
 
-        public override void Execute(object? parameter)
+        public override async void Execute(object? parameter)
         {
-            if (string.IsNullOrEmpty(_userViewModel.Username) && string.IsNullOrEmpty(_userViewModel.Password)) MessageBox.Show("Enter username and password!");
+            _userViewModel.ValidateForm();
 
-            if (_usersManagerService.GetUser(_userViewModel.Username) != null) MessageBox.Show("Username already used!");
+            if (_userViewModel.HasErrors) return;
+
+            var user = await _usersManagerService.GetUser(_userViewModel.Username);
+
+            if (user != null && user.UserId != _userViewModel.User.UserId) MessageBox.Show("Username already used!");
 
             else
             {
-                _usersManagerService.EditUser(_userViewModel.User.UserId, new UserModel
+                await _usersManagerService.EditUser(_userViewModel.User.UserId, new UserModel
                 {
                     Name = _userViewModel.Username,
                     Password = _userViewModel.Password,

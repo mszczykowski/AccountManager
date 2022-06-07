@@ -36,7 +36,7 @@
             <StackPanel>
                 <Label Content="Discount details"/>
                 <ComboBox Width="300">
-                    <ComboBoxItem Content="50% off on second product form category" Tag="0" IsSelected="True"/>
+                    <ComboBoxItem Content="50% off on second product from category" Tag="0" IsSelected="True"/>
                 </ComboBox>
             </StackPanel>
 

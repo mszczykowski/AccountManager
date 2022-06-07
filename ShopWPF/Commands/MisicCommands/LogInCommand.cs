@@ -4,6 +4,8 @@ using System.Windows;
 using ShopWPF.Stores;
 using ShopWPF.Services.Interfaces;
 using ShopWPF.Services.Common;
+using System.Collections.Generic;
+using ShopWPF.Models;
 
 namespace ShopWPF.Commands.MisicCommands
 {
@@ -11,13 +13,15 @@ namespace ShopWPF.Commands.MisicCommands
     {
         private readonly LogInViewModel _logInViewModel;
         private readonly LoggedUserStore _loggedUserStore;
+        private readonly IShoppingCartService _shoppingCartService;
         private readonly IUserManagerService _usersManagerService;
         private readonly NavigationService<AdminMenuViewModel> _adminMenuViewNavigationService;
         private readonly NavigationService<UserMenuViewModel> _userMenuViewNavigationService;
 
         public LogInCommand(LogInViewModel logInViewModel, IUserManagerService usersManagerService, 
             NavigationService<AdminMenuViewModel> adminMenuViewNavigationService,
-            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore)
+            NavigationService<UserMenuViewModel> userMenuViewNavigationService, LoggedUserStore loggedUserStore,
+            IShoppingCartService shoppingCartService)
         {
             _logInViewModel = logInViewModel;
             _usersManagerService = usersManagerService;
@@ -25,6 +29,7 @@ namespace ShopWPF.Commands.MisicCommands
             _userMenuViewNavigationService = userMenuViewNavigationService;
 
             _loggedUserStore = loggedUserStore;
+            _shoppingCartService = shoppingCartService;
             _logInViewModel.PropertyChanged += OnViewModelPropertyChanged;
         }
 
@@ -50,6 +55,8 @@ namespace ShopWPF.Commands.MisicCommands
             else
             {
                 _loggedUserStore.User = user;
+
+                _loggedUserStore.User.ShoppingCart = await _shoppingCartService.LoadCart(user.UserId) ?? new List<ShoppingCartEntryModel>();
 
                 if (user.UserRole == Enums.UserRoles.Standard) _userMenuViewNavigationService.Navigate();
 
